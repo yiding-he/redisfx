@@ -1,6 +1,12 @@
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <BorderPane fx:controller="com.hyd.redisfx.controllers.MainController" xmlns:fx="javafx">
+
+    <stylesheets>
+        <URL value="@/css/style.css" />
+    </stylesheets>
+
     <top>
         <MenuBar>
             <Menu text="%mnu_connections">
@@ -12,6 +18,31 @@
         </MenuBar>
     </top>
     <center>
-        <Label text="Hello!"/>
+        <TabPane fx:id="tabs">
+            <Tab closable="false" text="%tab_title_key">
+                <fx:include source="tabs/KeyTab.fxml"/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_string">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_list">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_hash">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_set">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_zset">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_geo">
+                <BorderPane/>
+            </Tab>
+            <Tab closable="false" text="%tab_title_pubsub">
+                <BorderPane/>
+            </Tab>
+        </TabPane>
     </center>
 </BorderPane>

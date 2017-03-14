@@ -6,4 +6,12 @@
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>
     <entry key="mnu_connections_recent">Open recent connection...</entry>
+    <entry key="tab_title_geo">Geo</entry>
+    <entry key="tab_title_hash">Hash</entry>
+    <entry key="tab_title_key">Key</entry>
+    <entry key="tab_title_list">List</entry>
+    <entry key="tab_title_pubsub">Pub/Sub</entry>
+    <entry key="tab_title_set">Set</entry>
+    <entry key="tab_title_string">String</entry>
+    <entry key="tab_title_zset">ZSet</entry>
 </properties>
