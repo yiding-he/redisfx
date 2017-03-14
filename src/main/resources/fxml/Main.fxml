@@ -1,0 +1,17 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="com.hyd.redisfx.controllers.MainController" xmlns:fx="javafx">
+    <top>
+        <MenuBar>
+            <Menu text="Connections">
+                <MenuItem text="Choose to open..." onAction="#openConnectionManager"/>
+                <Menu text="Open recent connection...">
+                    <MenuItem text="(EMPTY)" disable="true"/>
+                </Menu>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <Label text="Hello!"/>
+    </center>
+</BorderPane>
