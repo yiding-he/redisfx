@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public class I18n {
 
-    private static final ResourceBundle UI_MAIN_BUNDLE = ResourceBundle.getBundle(
+    public static final ResourceBundle UI_MAIN_BUNDLE = ResourceBundle.getBundle(
             "i18n.uiMain", new XMLResourceBundleControl());
 
     public static String getString(String key) {

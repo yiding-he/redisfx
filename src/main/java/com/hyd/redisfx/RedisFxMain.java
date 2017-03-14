@@ -20,7 +20,9 @@ public class RedisFxMain extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        BorderPane mainPane = FXMLLoader.load(RedisFxMain.class.getResource("/fxml/Main.fxml"));
+        BorderPane mainPane = FXMLLoader.load(
+                RedisFxMain.class.getResource("/fxml/Main.fxml"),
+                I18n.UI_MAIN_BUNDLE);
 
         primaryStage.setTitle(I18n.getString("app_title"));
         primaryStage.setScene(new Scene(mainPane));

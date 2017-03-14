@@ -3,10 +3,10 @@
 <BorderPane fx:controller="com.hyd.redisfx.controllers.MainController" xmlns:fx="javafx">
     <top>
         <MenuBar>
-            <Menu text="Connections">
-                <MenuItem text="Choose to open..." onAction="#openConnectionManager"/>
-                <Menu text="Open recent connection...">
-                    <MenuItem text="(EMPTY)" disable="true"/>
+            <Menu text="%mnu_connections">
+                <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager"/>
+                <Menu text="%mnu_connections_recent">
+                    <MenuItem text="%empty_mark" disable="true"/>
                 </Menu>
             </Menu>
         </MenuBar>
