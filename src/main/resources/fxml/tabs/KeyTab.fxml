@@ -1,9 +1,7 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import java.lang.String?>
 <BorderPane fx:controller="com.hyd.redisfx.controllers.tabs.KeyTabController" xmlns:fx="javafx">
     <center>
@@ -27,8 +25,15 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <Button text="  List Keys  "/>
+                <Button onAction="#listKeys" text="  List Keys  "/>
             </HBox>
+
+            <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="keyColumn" text="Key"/>
+                    <TableColumn fx:id="typeColumn" text="Type"/>
+                </columns>
+            </TableView>
         </VBox>
     </center>
 </BorderPane>

@@ -12,4 +12,8 @@ public class JedisManager {
     public static void connect(String host, int port) {
         jedis = new Jedis(host, port);
     }
+
+    public static Jedis getJedis() {
+        return jedis;
+    }
 }
