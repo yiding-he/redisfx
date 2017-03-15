@@ -1,6 +1,7 @@
 package com.hyd.redisfx.controllers.tabs;
 
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * (description)
@@ -11,11 +12,15 @@ import javafx.scene.control.Label;
 @TabName("Key")
 public class KeyTabController extends AbstractTabController {
 
-    public Label txtCommand;
+    public TextField txtKeyPattern;
+
+    public ComboBox cmbLimit;
 
     @Override
     protected void onTabSelected() {
-        this.txtCommand.requestFocus();  // executed, but not work
+        if (cmbLimit.getValue() == null) {
+            cmbLimit.getSelectionModel().select(0);
+        }
     }
 }
 

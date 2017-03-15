@@ -21,7 +21,7 @@ public class MainController {
 
     private void initializeTabs() {
         this.tabs.getTabs().forEach(tab -> {
-            String tabName = tab.getText();
+            String tabName = (String) tab.getUserData();
             AbstractTabController tabController = Tabs.getTabController(tabName);
             if (tabController != null) {
                 tabController.setTab(tab);

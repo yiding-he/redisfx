@@ -23,6 +23,9 @@ public class Tabs {
     }
 
     public static AbstractTabController getTabController(String tabName) {
+        if (tabName == null) {
+            return null;
+        }
         return tabControllerMap.get(tabName);
     }
 }
