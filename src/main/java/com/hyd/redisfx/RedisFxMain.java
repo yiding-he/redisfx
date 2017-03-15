@@ -1,5 +1,6 @@
 package com.hyd.redisfx;
 
+import com.hyd.redisfx.controllers.MainController;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +22,13 @@ public class RedisFxMain extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        BorderPane mainPane = FXMLLoader.load(
+        FXMLLoader fxmlLoader = new FXMLLoader(
                 RedisFxMain.class.getResource("/fxml/Main.fxml"),
                 I18n.UI_MAIN_BUNDLE);
+
+        BorderPane mainPane = fxmlLoader.load();
+        MainController mainController = fxmlLoader.getController();
+        mainController.setPrimaryStage(primaryStage);
 
         primaryStage.setTitle(I18n.getString("app_title"));
         primaryStage.setScene(new Scene(mainPane));

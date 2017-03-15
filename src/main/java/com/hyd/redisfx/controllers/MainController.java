@@ -1,9 +1,12 @@
 package com.hyd.redisfx.controllers;
 
+import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
+import com.hyd.redisfx.i18n.I18n;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
 
 /**
  * (description)
@@ -15,8 +18,14 @@ public class MainController {
 
     public TabPane tabs;
 
+    private Stage primaryStage;
+
     public void initialize() {
         initializeTabs();
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     private void initializeTabs() {
@@ -31,5 +40,14 @@ public class MainController {
 
     public void openConnectionManager(ActionEvent actionEvent) {
 
+    }
+
+    public void openConnection(ActionEvent actionEvent) {
+        String host = "localhost";
+        int port = 6379;
+
+        JedisManager.connect(host, port);
+        tabs.setVisible(true);
+        primaryStage.setTitle(I18n.getString("app_title") + " - " + host + ":" + port);
     }
 }

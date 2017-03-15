@@ -12,13 +12,14 @@
             <Menu text="%mnu_connections">
                 <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager"/>
                 <Menu text="%mnu_connections_recent">
+                    <MenuItem text="localhost:6379" onAction="#openConnection"/>
                     <MenuItem text="%empty_mark" disable="true"/>
                 </Menu>
             </Menu>
         </MenuBar>
     </top>
     <center>
-        <TabPane fx:id="tabs">
+        <TabPane fx:id="tabs" visible="false">
             <Tab closable="false" text="%tab_title_raw" userData="Raw">
                 <fx:include source="tabs/RawCommand.fxml"/>
             </Tab>
