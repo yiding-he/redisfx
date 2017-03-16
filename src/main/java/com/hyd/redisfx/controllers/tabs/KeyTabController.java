@@ -5,10 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
@@ -40,6 +37,7 @@ public class KeyTabController extends AbstractTabController {
 
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
+        this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     @Override
@@ -88,6 +86,24 @@ public class KeyTabController extends AbstractTabController {
                 }
             }
         }
+    }
+
+    public void deleteKeys(ActionEvent actionEvent) {
+
+        ObservableList<KeyItem> selectedItems = this.tblKeys.getSelectionModel().getSelectedItems();
+        if (selectedItems.isEmpty()) {
+            return;
+        }
+
+        String message = "Are you sure to delete selected key(s)?";
+        new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
+                .showAndWait().ifPresent(result -> {
+            if (result == ButtonType.YES) {
+                selectedItems.forEach(item -> JedisManager.getJedis().del(item.getKey()));
+            }
+        });
+
+        listKeys(actionEvent);
     }
 
     //////////////////////////////////////////////////////////////

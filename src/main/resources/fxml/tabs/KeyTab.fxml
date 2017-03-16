@@ -34,6 +34,10 @@
                     <TableColumn fx:id="typeColumn" text="Type"/>
                 </columns>
             </TableView>
+
+            <HBox spacing="5">
+                <Button text="Delete" onAction="#deleteKeys"/>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>
