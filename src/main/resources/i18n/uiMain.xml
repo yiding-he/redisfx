@@ -2,6 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="app_title">RedisFx</entry>
+    <entry key="confirm_delete_key">Are you sure to delete selected key(s)?</entry>
     <entry key="empty_mark">( EMPTY )</entry>
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>

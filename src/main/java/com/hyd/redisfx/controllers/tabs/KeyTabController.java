@@ -1,6 +1,7 @@
 package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -95,7 +96,7 @@ public class KeyTabController extends AbstractTabController {
             return;
         }
 
-        String message = "Are you sure to delete selected key(s)?";
+        String message = I18n.getString("confirm_delete_key");
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
                 .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {

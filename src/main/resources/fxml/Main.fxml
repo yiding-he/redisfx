@@ -27,7 +27,7 @@
                 <fx:include source="tabs/KeyTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_string" userData="String">
-                <BorderPane/>
+                <fx:include source="tabs/StringTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_list" userData="List">
                 <BorderPane/>
