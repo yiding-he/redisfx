@@ -3,10 +3,19 @@
 <properties>
     <entry key="app_title">RedisFx</entry>
     <entry key="confirm_delete_key">Are you sure to delete selected key(s)?</entry>
+    <entry key="dlg_conn_lbl_connections">Connections</entry>
+    <entry key="dlg_conn_lbl_host">Host:</entry>
+    <entry key="dlg_conn_lbl_name">Name:</entry>
+    <entry key="dlg_conn_lbl_pass">Pass phase (Optional):</entry>
+    <entry key="dlg_conn_lbl_port">Port:</entry>
     <entry key="empty_mark">( EMPTY )</entry>
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>
     <entry key="mnu_connections_recent">Open recent connection...</entry>
+    <entry key="op_open_conn">Open Connection</entry>
+    <entry key="op_copy">Copy</entry>
+    <entry key="op_delete">Delete</entry>
+    <entry key="op_save">Save</entry>
     <entry key="tab_title_geo">Geo</entry>
     <entry key="tab_title_hash">Hash</entry>
     <entry key="tab_title_key">Key</entry>
@@ -16,4 +25,8 @@
     <entry key="tab_title_set">Set</entry>
     <entry key="tab_title_string">String</entry>
     <entry key="tab_title_zset">ZSet</entry>
+    <entry key="title_conn_manager">Connection Manager</entry>
+    <entry key="op_close">Close</entry>
+    <entry key="op_create">Create</entry>
+    <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
 </properties>

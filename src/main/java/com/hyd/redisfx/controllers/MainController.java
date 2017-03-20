@@ -1,10 +1,12 @@
 package com.hyd.redisfx.controllers;
 
+import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
@@ -17,6 +19,8 @@ import javafx.stage.Stage;
 public class MainController {
 
     public TabPane tabs;
+
+    public Menu mnuRecentConnections;
 
     private Stage primaryStage;
 
@@ -39,7 +43,8 @@ public class MainController {
     }
 
     public void openConnectionManager(ActionEvent actionEvent) {
-
+        String fxml = "/fxml/conn/ConnectionManager.fxml";
+        Fx.showDialog(primaryStage, I18n.getString("title_conn_manager"), fxml);
     }
 
     public void openConnection(ActionEvent actionEvent) {

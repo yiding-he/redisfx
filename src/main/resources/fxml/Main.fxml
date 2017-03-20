@@ -11,7 +11,7 @@
         <MenuBar>
             <Menu text="%mnu_connections">
                 <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager"/>
-                <Menu text="%mnu_connections_recent">
+                <Menu text="%mnu_connections_recent" fx:id="mnuRecentConnections">
                     <MenuItem text="localhost:6379" onAction="#openConnection"/>
                     <MenuItem text="%empty_mark" disable="true"/>
                 </Menu>

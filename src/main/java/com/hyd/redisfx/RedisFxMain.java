@@ -22,9 +22,7 @@ public class RedisFxMain extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                RedisFxMain.class.getResource("/fxml/Main.fxml"),
-                I18n.UI_MAIN_BUNDLE);
+        FXMLLoader fxmlLoader = Fx.getFxmlLoader("/fxml/Main.fxml");
 
         BorderPane mainPane = fxmlLoader.load();
         MainController mainController = fxmlLoader.getController();

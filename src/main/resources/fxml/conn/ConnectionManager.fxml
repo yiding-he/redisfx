@@ -1,0 +1,60 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController" xmlns:fx="javafx">
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" left="10" bottom="10"/>
+            </padding>
+            <Label text="%dlg_conn_lbl_connections"/>
+            <HBox spacing="10" VBox.vgrow="ALWAYS">
+                <VBox spacing="10">
+                    <ListView VBox.vgrow="ALWAYS" prefWidth="200">
+                        <placeholder>
+                            <Label text="%msg_please_create_connection"/>
+                        </placeholder>
+                    </ListView>
+                </VBox>
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Label text="%dlg_conn_lbl_name"/>
+                        <TextField HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Label text="%dlg_conn_lbl_host"/>
+                        <TextField HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Label text="%dlg_conn_lbl_port"/>
+                        <Spinner prefWidth="100"/>
+                    </HBox>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Label text="%dlg_conn_lbl_pass"/>
+                        <PasswordField HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Button text="%op_create"/>
+                        <Button text="%op_save"/>
+                        <Button text="%op_copy"/>
+                        <Button text="%op_delete"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox>
+            <Separator/>
+            <HBox alignment="BASELINE_RIGHT" spacing="10">
+                <padding>
+                    <Insets top="5" right="10" left="10" bottom="10"/>
+                </padding>
+
+                <Button text="%op_open_conn" disable="true"/>
+                <Button text="%op_close" onAction="#closeClicked"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>
