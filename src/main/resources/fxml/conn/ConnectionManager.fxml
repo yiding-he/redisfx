@@ -11,7 +11,7 @@
             <Label text="%dlg_conn_lbl_connections"/>
             <HBox spacing="10" VBox.vgrow="ALWAYS">
                 <VBox spacing="10">
-                    <ListView VBox.vgrow="ALWAYS" prefWidth="200">
+                    <ListView VBox.vgrow="ALWAYS" prefWidth="200" fx:id="lstConnections">
                         <placeholder>
                             <Label text="%msg_please_create_connection"/>
                         </placeholder>
@@ -32,7 +32,7 @@
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Label text="%dlg_conn_lbl_pass"/>
-                        <PasswordField HBox.hgrow="ALWAYS" fx:id="txtPassword"/>
+                        <PasswordField HBox.hgrow="ALWAYS" fx:id="txtPassphase"/>
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Button text="%op_create" fx:id="btnCreate" onAction="#createClicked"/>

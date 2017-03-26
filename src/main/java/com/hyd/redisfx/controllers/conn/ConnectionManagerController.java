@@ -2,13 +2,12 @@ package com.hyd.redisfx.controllers.conn;
 
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.conn.Connection;
+import com.hyd.redisfx.conn.ConnectionManager;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.control.TextField;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Protocol;
 
@@ -26,16 +25,40 @@ public class ConnectionManagerController extends BaseController {
 
     public Spinner<Integer> spnPort;
 
-    public PasswordField txtPassword;
+    public PasswordField txtPassphase;
 
-    private SimpleObjectProperty<Connection> currentSelectedConnection;
+    public Button btnCreate;
+
+    public Button btnTest;
+
+    public Button btnSave;
+
+    public Button btnCopy;
+
+    public Button btnDelete;
+
+    public ListView<Connection> lstConnections;
+
+    private SimpleObjectProperty<Connection> currentSelectedConnection = new SimpleObjectProperty<>();
 
     public void initialize() {
         this.spnPort.setValueFactory(new IntegerSpinnerValueFactory(1, 65535, DEFAULT_PORT));
         this.txtHost.textProperty().addListener((_ob, _old, _new) -> {
-            if (!StringUtils.isBlank(txtHost.getText())) {
+            btnSave.setDisable(StringUtils.isBlank(txtHost.getText()));
+        });
 
+        this.lstConnections.setItems(ConnectionManager.connectionsProperty());
+        this.lstConnections.getSelectionModel().selectedItemProperty().addListener((_ob, _old, _new) -> {
+            if (_new != null) {
+                this.currentSelectedConnection.set(_new);
             }
+        });
+
+        this.currentSelectedConnection.addListener((_ob, _old, _new) -> {
+            this.txtName.setText(_new.getName());
+            this.txtHost.setText(_new.getHost());
+            this.spnPort.getValueFactory().setValue(_new.getPort());
+            this.txtPassphase.setText(_new.getPassphase());
         });
     }
 
@@ -54,17 +77,23 @@ public class ConnectionManagerController extends BaseController {
         this.txtName.setText("");
         this.txtHost.setText("");
         this.spnPort.getValueFactory().setValue(DEFAULT_PORT);
-        this.txtPassword.setText("");
+        this.txtPassphase.setText("");
     }
 
     public void saveClicked(ActionEvent actionEvent) {
 
         if (StringUtils.isBlank(txtName.getText())) {
-            String name = txtHost
+            String name = txtHost.getText() + ":" + spnPort.getValue();
+            txtName.setText(name);
         }
 
         Connection connection = new Connection();
-        connection.setName();
+        connection.setName(txtName.getText());
+        connection.setHost(txtHost.getText());
+        connection.setPort(spnPort.getValue());
+        connection.setPassphase(txtPassphase.getText());
+
+        ConnectionManager.saveConnection(connection);
     }
 
     public void copyClicked(ActionEvent actionEvent) {

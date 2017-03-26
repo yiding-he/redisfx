@@ -47,4 +47,9 @@ public class Connection {
     public void setPassphase(String passphase) {
         this.passphase = passphase;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
