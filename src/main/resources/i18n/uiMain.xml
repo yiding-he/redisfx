@@ -29,4 +29,6 @@
     <entry key="op_close">Close</entry>
     <entry key="op_create">Create</entry>
     <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
+    <entry key="msg_create_confirm">Clear fields to create new connection?</entry>
+    <entry key="op_test">Test...</entry>
 </properties>

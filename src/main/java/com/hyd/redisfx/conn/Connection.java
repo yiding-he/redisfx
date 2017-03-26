@@ -8,11 +8,21 @@ package com.hyd.redisfx.conn;
  */
 public class Connection {
 
+    private String name;
+
     private String host;
 
     private int port;
 
     private String passphase;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getHost() {
         return host;
