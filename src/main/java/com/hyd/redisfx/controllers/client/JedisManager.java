@@ -1,19 +1,75 @@
 package com.hyd.redisfx.controllers.client;
 
+import com.hyd.redisfx.conn.Connection;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
+import java.util.function.Consumer;
 
 /**
  * @author yiding.he
  */
 public class JedisManager {
 
-    private static Jedis jedis;
+    private static JedisPool jedisPool;
 
-    public static void connect(String host, int port) {
-        jedis = new Jedis(host, port);
+    private static Connection connection;
+
+    public static void withJedis(Consumer<Jedis> operation) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            operation.accept(jedis);
+        }
     }
 
     public static Jedis getJedis() {
-        return jedis;
+        return jedisPool.getResource();
+    }
+
+    public static void connect(String host, int port) {
+        connect(host, port, null);
+    }
+
+    public static void connect(String host, int port, String passphase) {
+        Connection connection = new Connection();
+        connection.setHost(host);
+        connection.setPort(port);
+        connection.setPassphase(passphase);
+        connect(connection);
+    }
+
+    public static void connect(Connection connection) {
+        JedisPool jedisPool = createJedisPool(connection);
+
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.get("name");
+        }
+
+        // Assign values after successfully connected.
+        JedisManager.jedisPool = jedisPool;
+        JedisManager.connection = connection;
+    }
+
+    public static String getHost() {
+        return connection == null? null: connection.getHost();
+    }
+
+    public static int getPort() {
+        return connection == null ? 0 : connection.getPort();
+    }
+
+    public static JedisPool createJedisPool(Connection connection) {
+        return createJedisPool(connection.getHost(), connection.getPort(), connection.getPassphase());
+    }
+
+    public static JedisPool createJedisPool(String host, Integer port, String passphase) {
+        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+
+        if (!StringUtils.isBlank(passphase)) {
+            return new JedisPool(poolConfig, host, port, 10000, passphase);
+        } else {
+            return new JedisPool(poolConfig, host, port, 10000);
+        }
     }
 }

@@ -53,7 +53,7 @@
                     <Insets top="5" right="10" left="10" bottom="10"/>
                 </padding>
 
-                <Button text="%op_open_conn" disable="true"/>
+                <Button text="%op_open_conn" disable="true" fx:id="btnOpen" onAction="#openConnectionClicked"/>
                 <Button text="%op_close" onAction="#closeClicked"/>
             </HBox>
         </VBox>

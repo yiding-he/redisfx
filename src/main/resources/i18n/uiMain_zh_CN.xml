@@ -16,6 +16,8 @@
     <entry key="op_copy">复制</entry>
     <entry key="op_delete">删除</entry>
     <entry key="op_save">保存</entry>
+    <entry key="op_increase">加一</entry>
+    <entry key="op_decrease">减一</entry>
     <entry key="tab_title_geo">Geo</entry>
     <entry key="tab_title_hash">Hash</entry>
     <entry key="tab_title_key">Key</entry>
@@ -26,6 +28,7 @@
     <entry key="tab_title_string">String</entry>
     <entry key="tab_title_zset">ZSet</entry>
     <entry key="title_conn_manager">连接管理</entry>
+    <entry key="title_op_fail">操作失败</entry>
     <entry key="op_close">关闭</entry>
     <entry key="op_create">新建</entry>
     <entry key="msg_please_create_connection">（请在右边新建一个连接）</entry>

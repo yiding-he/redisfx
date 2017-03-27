@@ -1,6 +1,8 @@
 package com.hyd.redisfx;
 
 import com.hyd.redisfx.conn.ConnectionManager;
+import com.hyd.redisfx.event.EventBus;
+import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.preference.PreferenceManager;
 
 /**
@@ -9,6 +11,8 @@ import com.hyd.redisfx.preference.PreferenceManager;
  * @author yiding_he
  */
 public class App {
+
+    private static EventBus<EventType> eventBus = new EventBus<>();
 
     private static PreferenceManager preferenceManager = new PreferenceManager();
 
@@ -20,5 +24,9 @@ public class App {
 
     public static ConnectionManager getConnectionManager() {
         return connectionManager;
+    }
+
+    public static EventBus<EventType> getEventBus() {
+        return eventBus;
     }
 }

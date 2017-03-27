@@ -19,8 +19,8 @@
         <TextArea fx:id="txtValue" VBox.vgrow="ALWAYS"/>
 
         <HBox spacing="5" alignment="BASELINE_LEFT">
-            <Button text="Save" onAction="#saveKey"/>
-            <Button text="Delete" onAction="#deleteKey"/>
+            <Button text="%op_save" onAction="#saveKey"/>
+            <Button text="%op_delete" onAction="#deleteKey"/>
             <Label fx:id="lblLength"/>
         </HBox>
 
@@ -34,9 +34,9 @@
                 </padding>
 
                 <Spinner fx:id="spnIncrement" prefWidth="100"/>
-                <Button text="Increment" onAction="#increment"/>
+                <Button text="%op_increase" onAction="#increment"/>
                 <Spinner fx:id="spnDecrement" prefWidth="100"/>
-                <Button text="Decrement" onAction="#decrement"/>
+                <Button text="%op_decrease" onAction="#decrement"/>
             </HBox>
         </Tab>
     </TabPane>

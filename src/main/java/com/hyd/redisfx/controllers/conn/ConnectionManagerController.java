@@ -1,22 +1,22 @@
 package com.hyd.redisfx.controllers.conn;
 
+import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.conn.Connection;
 import com.hyd.redisfx.conn.ConnectionManager;
+import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Protocol;
 
 /**
- *
  * @author yiding_he
  */
 public class ConnectionManagerController extends BaseController {
@@ -43,6 +43,8 @@ public class ConnectionManagerController extends BaseController {
 
     public Button btnDelete;
 
+    public Button btnOpen;
+
     public ListView<Connection> lstConnections;
 
     private SimpleObjectProperty<Connection> currentSelectedConnection = new SimpleObjectProperty<>();
@@ -53,6 +55,7 @@ public class ConnectionManagerController extends BaseController {
             btnSave.setDisable(StringUtils.isBlank(txtHost.getText()));
             btnTest.setDisable(StringUtils.isBlank(txtHost.getText()));
             btnCopy.setDisable(StringUtils.isBlank(txtHost.getText()));
+            btnOpen.setDisable(StringUtils.isBlank(txtHost.getText()));
         });
 
         initListView();
@@ -102,8 +105,8 @@ public class ConnectionManagerController extends BaseController {
             txtName.setText(name);
         }
 
-        Connection connection = this.currentSelectedConnection.get() != null?
-                this.currentSelectedConnection.get(): new Connection();
+        Connection connection = this.currentSelectedConnection.get() != null ?
+                this.currentSelectedConnection.get() : new Connection();
 
         connection.setName(txtName.getText());
         connection.setHost(txtHost.getText());
@@ -138,10 +141,10 @@ public class ConnectionManagerController extends BaseController {
         Runnable runnable = () -> {
             String host = txtHost.getText();
             Integer port = spnPort.getValue();
+            String passphase = txtPassphase.getText();
 
-            try (JedisPool jedisPool = createJedisPool(host, port)) {
-
-                jedisPool.getResource();
+            try {
+                JedisManager.connect(host, port, passphase);
                 Fx.info("连接成功", "连接到 " + host + ":" + port + " 成功。");
             } catch (Exception e) {
                 LOG.error("", e);
@@ -154,14 +157,22 @@ public class ConnectionManagerController extends BaseController {
         new Thread(runnable).start();
     }
 
-    private JedisPool createJedisPool(String host, Integer port) {
-        String passphase = txtPassphase.getText();
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+    public void openConnectionClicked(ActionEvent actionEvent) {
+        Connection connection = new Connection();
 
-        if (!StringUtils.isBlank(passphase)) {
-            return new JedisPool(poolConfig, host, port, 10000, passphase);
-        } else {
-            return new JedisPool(poolConfig, host, port, 10000);
+        connection.setName(txtName.getText());
+        connection.setHost(txtHost.getText());
+        connection.setPort(spnPort.getValue());
+        connection.setPassphase(txtPassphase.getText());
+
+        try {
+            JedisManager.connect(connection);
+            App.getEventBus().post(EventType.ConnectionOpened);
+            this.getStage().close();
+        } catch (Exception e) {
+            LOG.error("", e);
+            Fx.error("连接失败", "连接到 " + connection.getHost() +
+                    ":" + connection.getPort() + " 失败：\n\n" + e.toString());
         }
     }
 }

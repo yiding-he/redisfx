@@ -1,5 +1,6 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,6 +8,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
@@ -21,6 +24,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @TabName("Key")
 public class KeyTabController extends AbstractTabController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(KeyTabController.class);
 
     public TextField txtKeyPattern;
 
@@ -49,6 +54,15 @@ public class KeyTabController extends AbstractTabController {
     }
 
     public void listKeys(ActionEvent actionEvent) {
+        try {
+            listKeys0();
+        } catch (Exception e) {
+            LOG.error("", e);
+            Fx.error(I18n.getString("title_op_fail"), e.toString());
+        }
+    }
+
+    private void listKeys0() {
         String pattern = this.txtKeyPattern.getText();
         int limit = Integer.parseInt(String.valueOf(cmbLimit.getValue()));
 
@@ -62,28 +76,29 @@ public class KeyTabController extends AbstractTabController {
             String cursor = "0";
             ScanParams scanParams = new ScanParams();
             scanParams.match(pattern);
-            Jedis jedis = JedisManager.getJedis();
 
-            while (result == null || counter.get() < limit) {
+            try (Jedis jedis = JedisManager.getJedis()) {
+                while (result == null || counter.get() < limit) {
 
-                if (result == null) {
-                    result = jedis.scan(cursor, scanParams);
-                } else {
-                    result = jedis.scan(cursor);
-                }
-
-                for (String key : result.getResult()) {
-                    if (counter.incrementAndGet() <= limit) {
-                        String type = jedis.type(key);
-                        items.add(new KeyItem(key, type));
+                    if (result == null) {
+                        result = jedis.scan(cursor, scanParams);
                     } else {
+                        result = jedis.scan(cursor);
+                    }
+
+                    for (String key : result.getResult()) {
+                        if (counter.incrementAndGet() <= limit) {
+                            String type = jedis.type(key);
+                            items.add(new KeyItem(key, type));
+                        } else {
+                            break;
+                        }
+                    }
+
+                    cursor = result.getStringCursor();
+                    if (cursor.equals("0")) {
                         break;
                     }
-                }
-
-                cursor = result.getStringCursor();
-                if (cursor.equals("0")) {
-                    break;
                 }
             }
         }
@@ -100,7 +115,9 @@ public class KeyTabController extends AbstractTabController {
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
                 .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {
-                selectedItems.forEach(item -> JedisManager.getJedis().del(item.getKey()));
+                try (Jedis jedis = JedisManager.getJedis()) {
+                    selectedItems.forEach(item -> jedis.del(item.getKey()));
+                }
             }
         });
 
