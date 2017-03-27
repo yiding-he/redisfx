@@ -16,7 +16,6 @@ public class AbstractTabController {
         this.tab = tab;
         this.tab.setOnSelectionChanged(event -> {
             if (tab.isSelected()) {
-                System.out.println("tab " + tab.getText() + " selected.");
                 onTabSelected();
             }
         });
@@ -24,6 +23,10 @@ public class AbstractTabController {
 
     public void initialize() {
         Tabs.register(this);
+    }
+
+    protected Tab getTab() {
+        return tab;
     }
 
     //////////////////////////////////////////////////////////////

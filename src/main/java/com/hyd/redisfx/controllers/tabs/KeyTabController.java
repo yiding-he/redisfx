@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -63,12 +64,16 @@ public class KeyTabController extends AbstractTabController {
     }
 
     private void listKeys0() {
+        if (StringUtils.isBlank(this.txtKeyPattern.getText())) {
+            this.txtKeyPattern.setText("*");
+        }
+
         String pattern = this.txtKeyPattern.getText();
         int limit = Integer.parseInt(String.valueOf(cmbLimit.getValue()));
+        AtomicInteger counter = new AtomicInteger();
 
         ObservableList<KeyItem> items = this.tblKeys.getItems();
         items.clear();
-        AtomicInteger counter = new AtomicInteger();
 
         if (pattern.trim().length() > 0) {
 
@@ -115,9 +120,9 @@ public class KeyTabController extends AbstractTabController {
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
                 .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {
-                try (Jedis jedis = JedisManager.getJedis()) {
-                    selectedItems.forEach(item -> jedis.del(item.getKey()));
-                }
+                JedisManager.withJedis(jedis ->
+                        selectedItems.forEach(item ->
+                                jedis.del(item.getKey())));
             }
         });
 

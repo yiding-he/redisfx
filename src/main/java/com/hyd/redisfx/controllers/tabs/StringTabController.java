@@ -43,17 +43,19 @@ public class StringTabController extends AbstractTabController {
             return;
         }
 
-        String value = JedisManager.getJedis().get(key);
+        JedisManager.withJedis(jedis -> {
+            String value = jedis.get(key);
 
-        if (value == null) {
-            this.lblMessage.setText("Value is null.");
-            this.lblLength.setText("");
-            this.txtValue.setText("");
-        } else {
-            this.lblMessage.setText("Value:");
-            this.lblLength.setText("Length: " + value.length());
-            this.txtValue.setText(value);
-        }
+            if (value == null) {
+                this.lblMessage.setText("Value is null.");
+                this.lblLength.setText("");
+                this.txtValue.setText("");
+            } else {
+                this.lblMessage.setText("Value:");
+                this.lblLength.setText("Length: " + value.length());
+                this.txtValue.setText(value);
+            }
+        });
     }
 
     public void deleteKey(ActionEvent actionEvent) {
@@ -67,7 +69,7 @@ public class StringTabController extends AbstractTabController {
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
                 .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {
-                JedisManager.getJedis().del(key);
+                JedisManager.withJedis(jedis -> jedis.del(key));
                 showValue(key);
             }
         });
@@ -81,7 +83,7 @@ public class StringTabController extends AbstractTabController {
         }
 
         String value = this.txtValue.getText();
-        JedisManager.getJedis().set(key, value);
+        JedisManager.withJedis(jedis -> jedis.set(key, value));
         this.lblMessage.setText("Value saved.");
     }
 
@@ -90,7 +92,7 @@ public class StringTabController extends AbstractTabController {
         Integer incr = this.spnIncrement.getValue();
 
         try {
-            JedisManager.getJedis().incrBy(key, incr);
+            JedisManager.withJedis(jedis -> jedis.incrBy(key, incr));
             showValue(key);
         } catch (Exception e) {
             this.lblMessage.setText(e.getMessage());
@@ -102,7 +104,7 @@ public class StringTabController extends AbstractTabController {
         Integer decr = this.spnDecrement.getValue();
 
         try {
-            JedisManager.getJedis().decrBy(key, decr);
+            JedisManager.withJedis(jedis -> jedis.decrBy(key, decr));
             showValue(key);
         } catch (Exception e) {
             this.lblMessage.setText(e.getMessage());

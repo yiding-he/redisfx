@@ -1,7 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<SplitPane orientation="VERTICAL"
+<SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.StringTabController" xmlns:fx="javafx">
     <VBox spacing="10">
 
@@ -16,7 +16,7 @@
 
         <Label fx:id="lblMessage" text="Value:"/>
 
-        <TextArea fx:id="txtValue" VBox.vgrow="ALWAYS"/>
+        <TextArea fx:id="txtValue" VBox.vgrow="ALWAYS" wrapText="true"/>
 
         <HBox spacing="5" alignment="BASELINE_LEFT">
             <Button text="%op_save" onAction="#saveKey"/>
