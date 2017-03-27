@@ -92,11 +92,12 @@ public class Fx {
     }
 
     private static void alert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType, message, ButtonType.OK);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-
-        runInFxApplicationThread(alert::showAndWait);
+        runInFxApplicationThread(() -> {
+            Alert alert = new Alert(alertType, message, ButtonType.OK);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        });
     }
 
     public static boolean confirmOkCancel(String title, String message) {

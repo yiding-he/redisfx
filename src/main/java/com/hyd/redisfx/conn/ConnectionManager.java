@@ -49,7 +49,13 @@ public class ConnectionManager {
     }
 
     public static void saveConnection(Connection connection) {
-        connections.add(connection);
+
+        if (!connections.contains(connection)) {
+            connections.add(connection);
+        } else {
+            int index = connections.indexOf(connection);
+            connections.set(index, connection);
+        }
 
         try {
             File file = new File(saveFilePath);

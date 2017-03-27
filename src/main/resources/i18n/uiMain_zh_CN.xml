@@ -30,5 +30,6 @@
     <entry key="op_create">新建</entry>
     <entry key="msg_please_create_connection">（请在右边新建一个连接）</entry>
     <entry key="msg_create_confirm">清空现有内容并新建连接吗？</entry>
+    <entry key="msg_delete_confirm">确定要删除该连接吗？</entry>
     <entry key="op_test">测试...</entry>
 </properties>

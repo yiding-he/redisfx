@@ -36,7 +36,7 @@
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Button text="%op_create" fx:id="btnCreate" onAction="#createClicked"/>
-                        <Button text="%op_test" fx:id="btnTest" onAction="#testClicked"/>
+                        <Button text="%op_test" fx:id="btnTest" onAction="#testClicked" disable="true"/>
                         <Button text="%op_save" fx:id="btnSave" onAction="#saveClicked" disable="true"/>
                         <Button text="%op_copy" fx:id="btnCopy" onAction="#copyClicked" disable="true"/>
                         <Button text="%op_delete" fx:id="btnDelete" onAction="#deleteClicked"/>
