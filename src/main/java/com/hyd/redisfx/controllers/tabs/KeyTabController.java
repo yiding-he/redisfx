@@ -116,7 +116,7 @@ public class KeyTabController extends AbstractTabController {
             return;
         }
 
-        String message = I18n.getString("confirm_delete_key");
+        String message = I18n.getString("msg_confirm_delete_key");
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
                 .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {

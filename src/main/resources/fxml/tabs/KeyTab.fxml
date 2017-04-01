@@ -25,18 +25,18 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <Button onAction="#listKeys" text="  List Keys  "/>
+                <Button onAction="#listKeys" text="%op_list_key"/>
             </HBox>
 
             <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="keyColumn" text="Key"/>
-                    <TableColumn fx:id="typeColumn" text="Type"/>
+                    <TableColumn fx:id="typeColumn" text="%lbl_type"/>
                 </columns>
             </TableView>
 
             <HBox spacing="5">
-                <Button text="Delete" onAction="#deleteKeys"/>
+                <Button text="%op_delete" onAction="#deleteKeys"/>
             </HBox>
         </VBox>
     </center>

@@ -2,7 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="app_title">RedisFx</entry>
-    <entry key="confirm_delete_key">确定要删除指定的 KEY 吗？</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>
     <entry key="dlg_conn_lbl_host">主机：</entry>
     <entry key="dlg_conn_lbl_name">名称：</entry>
@@ -12,6 +11,10 @@
     <entry key="mnu_connections">连接</entry>
     <entry key="mnu_connections_choose">选择连接...</entry>
     <entry key="mnu_connections_recent">打开最近的连接...</entry>
+    <entry key="lbl_type">类型</entry>
+    <entry key="lbl_or">或</entry>
+    <entry key="lbl_to"> 到 </entry>
+    <entry key="op_list_key">列出 Key</entry>
     <entry key="op_open_conn">打开连接</entry>
     <entry key="op_copy">复制</entry>
     <entry key="op_delete">删除</entry>
@@ -34,5 +37,20 @@
     <entry key="msg_please_create_connection">（请在右边新建一个连接）</entry>
     <entry key="msg_create_confirm">清空现有内容并新建连接吗？</entry>
     <entry key="msg_delete_confirm">确定要删除该连接吗？</entry>
+    <entry key="msg_confirm_delete_key">确定要删除指定的 KEY 吗？</entry>
+    <entry key="msg_confirm_delete_value">确定要删除指定的值吗？</entry>
     <entry key="op_test">测试...</entry>
+
+    <!-- List Tab -->
+    <entry key="list_lbl_length">列表长度： </entry>
+    <entry key="list_lbl_display">，显示范围：从 </entry>
+    <entry key="list_lbl_from">范围：从</entry>
+    <entry key="list_lbl_to">到</entry>
+    <entry key="list_op_list_values">列出元素</entry>
+    <entry key="list_op_append">添加</entry>
+    <entry key="list_op_delete">删除选择项</entry>
+    <entry key="list_op_replace_selected">替换选择项</entry>
+    <entry key="list_op_insert">插入</entry>
+    <entry key="list_lbl_before_selected">在选择项之前</entry>
+    <entry key="list_lbl_after_selected">在选择项之后</entry>
 </properties>

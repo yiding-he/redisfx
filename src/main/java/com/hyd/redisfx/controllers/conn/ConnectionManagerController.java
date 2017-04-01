@@ -67,15 +67,22 @@ public class ConnectionManagerController extends BaseController {
                 this.txtHost.setText(_new.getHost());
                 this.spnPort.getValueFactory().setValue(_new.getPort());
                 this.txtPassphase.setText(_new.getPassphase());
+            } else {
+                resetFields();
             }
         });
     }
 
     private void initListView() {
         this.lstConnections.setItems(ConnectionManager.connectionsProperty());
-        this.lstConnections.getSelectionModel().selectedItemProperty().addListener((_ob, _old, _new) -> {
-            if (_new != null) {
-                this.currentSelectedConnection.set(_new);
+        this.lstConnections.getSelectionModel().selectedItemProperty()
+                .addListener((_ob, _old, _new) -> this.currentSelectedConnection.set(_new));
+
+        this.lstConnections.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                if (this.currentSelectedConnection.get() != null) {
+                    openConnection(this.currentSelectedConnection.get());
+                }
             }
         });
     }
@@ -130,7 +137,6 @@ public class ConnectionManagerController extends BaseController {
         }
 
         this.lstConnections.getItems().remove(this.currentSelectedConnection.get());
-        this.currentSelectedConnection.set(null);
         resetFields();
     }
 
@@ -165,6 +171,10 @@ public class ConnectionManagerController extends BaseController {
         connection.setPort(spnPort.getValue());
         connection.setPassphase(txtPassphase.getText());
 
+        openConnection(connection);
+    }
+
+    private void openConnection(Connection connection) {
         try {
             JedisManager.connect(connection);
             App.getEventBus().post(EventType.ConnectionOpened);

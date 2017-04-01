@@ -2,7 +2,6 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="app_title">RedisFx</entry>
-    <entry key="confirm_delete_key">Are you sure to delete selected key(s)?</entry>
     <entry key="dlg_conn_lbl_connections">Connections</entry>
     <entry key="dlg_conn_lbl_host">Host:</entry>
     <entry key="dlg_conn_lbl_name">Name:</entry>
@@ -12,6 +11,10 @@
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>
     <entry key="mnu_connections_recent">Open recent connection...</entry>
+    <entry key="lbl_type">Type</entry>
+    <entry key="lbl_or">OR</entry>
+    <entry key="lbl_to"> to </entry>
+    <entry key="op_list_key">List Keys</entry>
     <entry key="op_open_conn">Open Connection</entry>
     <entry key="op_copy">Copy</entry>
     <entry key="op_delete">Delete</entry>
@@ -34,5 +37,20 @@
     <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
     <entry key="msg_create_confirm">Clear fields to create new connection?</entry>
     <entry key="msg_delete_confirm">Are you sure to delete this connection?</entry>
+    <entry key="msg_confirm_delete_key">Are you sure to delete selected key(s)?</entry>
+    <entry key="msg_confirm_delete_value">Are you sure to delete selected value(s)?</entry>
     <entry key="op_test">Test...</entry>
+
+    <!-- List Tab -->
+    <entry key="list_lbl_length">Length: </entry>
+    <entry key="list_lbl_display">, Display from </entry>
+    <entry key="list_lbl_from">Range: from</entry>
+    <entry key="list_lbl_to">to</entry>
+    <entry key="list_op_list_values">List Values</entry>
+    <entry key="list_op_append">Append</entry>
+    <entry key="list_op_delete">Delete Selected</entry>
+    <entry key="list_op_replace_selected">Update Selected</entry>
+    <entry key="list_op_insert">Insert</entry>
+    <entry key="list_lbl_before_selected">Before Selected</entry>
+    <entry key="list_lbl_after_selected">After Selected</entry>
 </properties>

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Spinner;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -117,5 +118,25 @@ public class Fx {
         alert.setTitle(title);
         alert.setHeaderText(null);
         return alert.showAndWait().orElse(ButtonType.CANCEL);
+    }
+
+    //////////////////////////////////////////////////////////////
+
+    @SafeVarargs
+    public static void fixIntegerSpinners(Spinner<Integer>... spinners) {
+        for (Spinner<Integer> spinner : spinners) {
+            fixIntegerSpinner(spinner);
+        }
+    }
+
+    public static void fixIntegerSpinner(Spinner<Integer> spinner) {
+        spinner.getEditor().textProperty().addListener((_ob, _old, _new) -> {
+            try {
+                int value = Integer.parseInt(_new);
+                spinner.getValueFactory().setValue(value);
+            } catch (NumberFormatException e) {
+                // nothing
+            }
+        });
     }
 }

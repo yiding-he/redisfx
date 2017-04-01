@@ -11,12 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * (description)
- * created at 17/03/20
- *
- * @author yiding_he
- */
 public class ConnectionManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionManager.class);
@@ -36,7 +30,9 @@ public class ConnectionManager {
                 if (!parent.exists() && !parent.mkdirs()) {
                     canSave = false;
                 }
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    canSave = false;
+                }
                 connections = FXCollections.observableArrayList();
             } else {
                 String json = FileUtils.readFileToString(file, "UTF-8");

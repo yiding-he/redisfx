@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,9 @@ public class MainController {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        this.primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+            openConnectionManager(null);
+        });
     }
 
     private void initializeTabs() {

@@ -1,0 +1,43 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<SplitPane orientation="VERTICAL" dividerPositions="0.7"
+           fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
+    <VBox spacing="10">
+
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+
+        <HBox alignment="BASELINE_LEFT" spacing="10">
+            <Label text="Key:"/>
+            <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
+            <Label text="%list_lbl_from"/>
+            <Spinner fx:id="spnFromIndex" prefWidth="80" editable="true"/>
+            <Label text="%list_lbl_to"/>
+            <Spinner fx:id="spnToIndex" prefWidth="80" editable="true"/>
+            <Button onAction="#listValues" text="%list_op_list_values"/>
+        </HBox>
+
+        <Label fx:id="lblMessage" text="Value:"/>
+
+        <ListView fx:id="lstValues"/>
+
+        <HBox>
+            <Button text="%list_op_delete" fx:id="btnDelete" onAction="#deleteItem"/>
+        </HBox>
+
+        <HBox alignment="BASELINE_LEFT" spacing="10">
+            <TextField HBox.hgrow="ALWAYS" fx:id="txtNewItemValue"/>
+            <Button text="%list_op_append" fx:id="btnAppend" onAction="#appendItem"/>
+            <Button text="%list_op_replace_selected" fx:id="btnReplace" onAction="#replaceItem"/>
+            <Label text="%lbl_or"/>
+            <ComboBox fx:id="cmbInsertType"/>
+            <Button text="%list_op_insert" fx:id="btnInsert" onAction="#insertItem"/>
+        </HBox>
+    </VBox>
+    <TabPane>
+        <Tab text="INCR/DECR" closable="false">
+        </Tab>
+    </TabPane>
+</SplitPane>
