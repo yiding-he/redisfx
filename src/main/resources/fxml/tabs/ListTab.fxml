@@ -37,7 +37,9 @@
         </HBox>
     </VBox>
     <TabPane>
-        <Tab text="INCR/DECR" closable="false">
+        <Tab text="LTRIM" closable="false">
+        </Tab>
+        <Tab text="RPOPLPUSH" closable="false">
         </Tab>
     </TabPane>
 </SplitPane>

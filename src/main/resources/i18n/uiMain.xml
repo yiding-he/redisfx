@@ -53,4 +53,5 @@
     <entry key="list_op_insert">Insert</entry>
     <entry key="list_lbl_before_selected">Before Selected</entry>
     <entry key="list_lbl_after_selected">After Selected</entry>
+    <entry key="list_msg_op_failed">Operation Failed.</entry>
 </properties>

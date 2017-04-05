@@ -53,4 +53,5 @@
     <entry key="list_op_insert">插入</entry>
     <entry key="list_lbl_before_selected">在选择项之前</entry>
     <entry key="list_lbl_after_selected">在选择项之后</entry>
+    <entry key="list_msg_op_failed">操作失败，可能是网络错误或 key 已经被修改。</entry>
 </properties>

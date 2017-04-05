@@ -8,11 +8,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import redis.clients.jedis.BinaryClient;
+import redis.clients.jedis.Transaction;
 
 import java.util.List;
 
 @TabName("List")
 public class ListTabController extends AbstractTabController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ListTabController.class);
 
     public TextField txtKey;
 
@@ -80,6 +86,8 @@ public class ListTabController extends AbstractTabController {
     }
 
     private void showList(String key, int from, int to) {
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+
         JedisManager.withJedis(jedis -> {
             Long length = jedis.llen(key);
             lblMessage.setText(
@@ -90,6 +98,11 @@ public class ListTabController extends AbstractTabController {
             List<String> values = jedis.lrange(key, from, to);
             lstValues.getItems().clear();
             lstValues.getItems().addAll(values);
+
+            // restore selection
+            if (selectedIndex != -1) {
+                lstValues.getSelectionModel().select(selectedIndex);
+            }
 
             currentFrom = from;
             currentTo = to;
@@ -112,11 +125,20 @@ public class ListTabController extends AbstractTabController {
         }
 
         int listIndex = selectedIndex + currentFrom;
-        JedisManager.withJedis(jedis -> {
-            String toBeDeletedValue = "__TO_BE_DELETED/" + System.currentTimeMillis();
-            jedis.lset(currentKey, listIndex, toBeDeletedValue);
-            jedis.lrem(currentKey, 1, toBeDeletedValue);
-        });
+
+        try {
+            JedisManager.withJedis(jedis -> {
+                String toBeDeletedValue = "__TO_BE_DELETED/" + System.currentTimeMillis();
+                jedis.watch(currentKey);
+                Transaction transaction = jedis.multi();
+                transaction.lset(currentKey, listIndex, toBeDeletedValue);
+                transaction.lrem(currentKey, 1, toBeDeletedValue);
+                transaction.exec();
+            });
+        } catch (Exception e) {
+            LOG.error("delete failed", e);
+            Fx.error(I18n.getString("title_op_fail"), I18n.getString("list_msg_op_failed"));
+        }
 
         refreshList();
     }
@@ -140,10 +162,63 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void replaceItem(ActionEvent actionEvent) {
+        if (currentKey == null) {
+            return;
+        }
 
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) {
+            return;
+        }
+
+        String value = txtNewItemValue.getText();
+        if (StringUtils.isBlank(value)) {
+            return;
+        }
+
+        int listIndex = selectedIndex + currentFrom;
+        JedisManager.withJedis(jedis -> jedis.lset(currentKey, listIndex, value));
+        refreshList();
     }
 
     public void insertItem(ActionEvent actionEvent) {
+        if (currentKey == null) {
+            return;
+        }
 
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) {
+            return;
+        }
+
+        String value = txtNewItemValue.getText();
+        if (StringUtils.isBlank(value)) {
+            return;
+        }
+
+        int listIndex = selectedIndex + currentFrom;
+        int typeIndex = cmbInsertType.getSelectionModel().getSelectedIndex();
+        int restoreIndex = typeIndex == 0 ? listIndex + 1 : listIndex;
+        BinaryClient.LIST_POSITION position = typeIndex == 0?
+                BinaryClient.LIST_POSITION.BEFORE: BinaryClient.LIST_POSITION.AFTER;
+
+        try {
+            JedisManager.withJedis(jedis -> {
+                String originalValue = jedis.lrange(currentKey, listIndex, listIndex).get(0);
+                String tempValue = "__TEMP_VALUE/" + System.currentTimeMillis();
+
+                jedis.watch(currentKey);
+                Transaction transaction = jedis.multi();
+                transaction.lset(currentKey, listIndex, tempValue);
+                transaction.linsert(currentKey, position, tempValue, value);
+                transaction.lset(currentKey, restoreIndex, originalValue);
+                transaction.exec();
+            });
+        } catch (Exception e) {
+            LOG.error("insert failed", e);
+            Fx.error(I18n.getString("title_op_fail"), I18n.getString("list_msg_op_failed"));
+        }
+
+        refreshList();
     }
 }
