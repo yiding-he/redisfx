@@ -24,11 +24,12 @@
         <ListView fx:id="lstValues"/>
 
         <HBox>
-            <Button text="%list_op_delete" fx:id="btnDelete" onAction="#deleteItem"/>
+            <TextField HBox.hgrow="ALWAYS" fx:id="txtNewItemValue"/>
         </HBox>
 
         <HBox alignment="BASELINE_LEFT" spacing="10">
-            <TextField HBox.hgrow="ALWAYS" fx:id="txtNewItemValue"/>
+            <Button text="%list_op_delete" fx:id="btnDelete" onAction="#deleteItem"/>
+            <Label text=" " prefWidth="20"/>
             <Button text="%list_op_append" fx:id="btnAppend" onAction="#appendItem"/>
             <Button text="%list_op_replace_selected" fx:id="btnReplace" onAction="#replaceItem"/>
             <Label text="%lbl_or"/>

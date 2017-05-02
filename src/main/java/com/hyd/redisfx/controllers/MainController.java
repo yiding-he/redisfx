@@ -32,6 +32,8 @@ public class MainController {
     private Stage primaryStage;
 
     public void initialize() {
+        App.setMainController(this);
+        Tabs.setTabs(tabs);
         initializeTabs();
     }
 
@@ -74,5 +76,9 @@ public class MainController {
             LOG.error("", e);
             Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e.toString());
         }
+    }
+
+    public void switchTab(int tabIndex) {
+
     }
 }

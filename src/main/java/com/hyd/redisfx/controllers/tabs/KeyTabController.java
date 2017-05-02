@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,27 @@ public class KeyTabController extends AbstractTabController {
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
+    }
+
+    private void tableMouseClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            tableItemDoubleClicked();
+        }
+    }
+
+    private void tableItemDoubleClicked() {
+        KeyItem selectedItem = tblKeys.getSelectionModel().getSelectedItem();
+        if (selectedItem == null) {
+            return;
+        }
+
+        String type = selectedItem.getType();
+        if (type.equals("string")) {
+            Tabs.switchTab(StringTabController.class, c -> c.showValue(selectedItem.getKey()));
+        } else if (type.equals("list")) {
+            Tabs.switchTab(ListTabController.class, c -> c.showList(selectedItem.getKey()));
+        }
     }
 
     @Override

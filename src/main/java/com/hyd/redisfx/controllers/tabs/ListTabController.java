@@ -75,9 +75,16 @@ public class ListTabController extends AbstractTabController {
 
     public void listValues(ActionEvent actionEvent) {
         String key = txtKey.getText();
+        showList(key);
+    }
+
+    public void showList(String key) {
         if (StringUtils.isBlank(key)) {
             return;
         }
+
+        // 如果是外部调用，则需要在界面上回填 key
+        this.txtKey.setText(key);
 
         int from = spnFromIndex.getValue();
         int to = spnToIndex.getValue();

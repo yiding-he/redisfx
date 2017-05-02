@@ -36,12 +36,15 @@ public class StringTabController extends AbstractTabController {
         this.lblLength.setText("Length: " + value.length());
     }
 
-    private void showValue(String key) {
+    public void showValue(String key) {
 
         if (key.length() == 0) {
             this.lblMessage.setText("Please type a key.");
             return;
         }
+
+        // 如果是外部调用，则需要在界面上回填 key
+        this.txtKey.setText(key);
 
         JedisManager.withJedis(jedis -> {
             String value = jedis.get(key);
