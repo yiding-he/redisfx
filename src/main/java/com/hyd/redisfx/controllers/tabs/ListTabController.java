@@ -83,9 +83,6 @@ public class ListTabController extends AbstractTabController {
             return;
         }
 
-        // 如果是外部调用，则需要在界面上回填 key
-        this.txtKey.setText(key);
-
         int from = spnFromIndex.getValue();
         int to = spnToIndex.getValue();
 
@@ -114,11 +111,26 @@ public class ListTabController extends AbstractTabController {
             currentFrom = from;
             currentTo = to;
             currentKey = key;
+
+            // 在界面上回填 key
+            this.txtKey.setText(key);
         });
     }
 
+    // return true if a list is displaying
+    private boolean prepareList() {
+        if (currentKey != null) {
+            return true;
+        } else if (StringUtils.isNotBlank(txtKey.getText())) {
+            showList(txtKey.getText());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void deleteItem(ActionEvent actionEvent) {
-        if (currentKey == null) {
+        if (!prepareList()) {
             return;
         }
 
@@ -155,7 +167,7 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void appendItem(ActionEvent actionEvent) {
-        if (currentKey == null) {
+        if (!prepareList()) {
             return;
         }
 
@@ -169,7 +181,7 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void replaceItem(ActionEvent actionEvent) {
-        if (currentKey == null) {
+        if (!prepareList()) {
             return;
         }
 
@@ -189,7 +201,7 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void insertItem(ActionEvent actionEvent) {
-        if (currentKey == null) {
+        if (!prepareList()) {
             return;
         }
 
