@@ -2,9 +2,9 @@ package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.i18n.I18n;
+import com.hyd.redisfx.nodes.DoubleSpinner;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 
 @TabName("String")
 public class StringTabController extends AbstractTabController {
@@ -17,9 +17,9 @@ public class StringTabController extends AbstractTabController {
 
     public Label lblLength;
 
-    public Spinner<Integer> spnIncrement;
+    public DoubleSpinner spnIncrement;
 
-    public Spinner<Integer> spnDecrement;
+    public DoubleSpinner spnDecrement;
 
     @Override
     public void initialize() {
@@ -27,9 +27,6 @@ public class StringTabController extends AbstractTabController {
 
         this.txtKey.textProperty().addListener((_ob, _old, _new) -> showValue(_new));
         this.txtValue.textProperty().addListener((_ob, _old, _new) -> updateLength(_new));
-
-        this.spnIncrement.setValueFactory(new IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
-        this.spnDecrement.setValueFactory(new IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1));
     }
 
     private void updateLength(String value) {
@@ -92,10 +89,10 @@ public class StringTabController extends AbstractTabController {
 
     public void increment(ActionEvent actionEvent) {
         String key = txtKey.getText();
-        Integer incr = this.spnIncrement.getValue();
+        double incr = this.spnIncrement.getValue();
 
         try {
-            JedisManager.withJedis(jedis -> jedis.incrBy(key, incr));
+            JedisManager.withJedis(jedis -> jedis.incrByFloat(key, incr));
             showValue(key);
         } catch (Exception e) {
             this.lblMessage.setText(e.getMessage());
@@ -104,10 +101,10 @@ public class StringTabController extends AbstractTabController {
 
     public void decrement(ActionEvent actionEvent) {
         String key = txtKey.getText();
-        Integer decr = this.spnDecrement.getValue();
+        double incr = this.spnDecrement.getValue();
 
         try {
-            JedisManager.withJedis(jedis -> jedis.decrBy(key, decr));
+            JedisManager.withJedis(jedis -> jedis.incrByFloat(key, -incr));
             showValue(key);
         } catch (Exception e) {
             this.lblMessage.setText(e.getMessage());

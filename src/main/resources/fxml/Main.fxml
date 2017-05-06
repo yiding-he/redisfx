@@ -33,19 +33,35 @@
                 <fx:include source="tabs/ListTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_hash">
-                <BorderPane/>
+                <fx:include source="tabs/HashTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_set">
-                <BorderPane/>
+                <BorderPane>
+                    <center>
+                        <Label text="Not implemented yet."/>
+                    </center>
+                </BorderPane>
             </Tab>
             <Tab closable="false" text="%tab_title_zset">
-                <BorderPane/>
+                <BorderPane>
+                    <center>
+                        <Label text="Not implemented yet."/>
+                    </center>
+                </BorderPane>
             </Tab>
             <Tab closable="false" text="%tab_title_geo">
-                <BorderPane/>
+                <BorderPane>
+                    <center>
+                        <Label text="Not implemented yet."/>
+                    </center>
+                </BorderPane>
             </Tab>
             <Tab closable="false" text="%tab_title_pubsub">
-                <BorderPane/>
+                <BorderPane>
+                    <center>
+                        <Label text="Not implemented yet."/>
+                    </center>
+                </BorderPane>
             </Tab>
         </TabPane>
     </center>

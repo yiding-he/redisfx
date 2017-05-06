@@ -1,3 +1,4 @@
+<?import com.hyd.redisfx.nodes.DoubleSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -33,9 +34,9 @@
                     <Insets bottom="10" left="10" right="10" top="10"/>
                 </padding>
 
-                <Spinner fx:id="spnIncrement" prefWidth="100"/>
+                <DoubleSpinner fx:id="spnIncrement" prefWidth="100"/>
                 <Button text="%op_increase" onAction="#increment"/>
-                <Spinner fx:id="spnDecrement" prefWidth="100"/>
+                <DoubleSpinner fx:id="spnDecrement" prefWidth="100"/>
                 <Button text="%op_decrease" onAction="#decrement"/>
             </HBox>
         </Tab>

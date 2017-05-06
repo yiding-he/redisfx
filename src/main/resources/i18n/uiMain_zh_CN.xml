@@ -19,8 +19,8 @@
     <entry key="op_copy">复制</entry>
     <entry key="op_delete">删除</entry>
     <entry key="op_save">保存</entry>
-    <entry key="op_increase">加一</entry>
-    <entry key="op_decrease">减一</entry>
+    <entry key="op_increase">加</entry>
+    <entry key="op_decrease">减</entry>
     <entry key="tab_title_geo">Geo</entry>
     <entry key="tab_title_hash">Hash</entry>
     <entry key="tab_title_key">Key</entry>
