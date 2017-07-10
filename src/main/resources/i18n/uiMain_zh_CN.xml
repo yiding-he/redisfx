@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+    <entry key="word_key">键</entry>
+    <entry key="word_value">值</entry>
+
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>
     <entry key="dlg_conn_lbl_host">主机：</entry>
@@ -54,4 +57,6 @@
     <entry key="list_lbl_before_selected">在选择项之前</entry>
     <entry key="list_lbl_after_selected">在选择项之后</entry>
     <entry key="list_msg_op_failed">操作失败，可能是网络错误或 key 已经被修改。</entry>
+
+    <!-- Hash Tab -->
 </properties>

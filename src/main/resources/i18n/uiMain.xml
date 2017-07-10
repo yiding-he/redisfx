@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+    <entry key="word_key">Key</entry>
+    <entry key="word_value">Value</entry>
+
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">Connections</entry>
     <entry key="dlg_conn_lbl_host">Host:</entry>
@@ -54,4 +57,7 @@
     <entry key="list_lbl_before_selected">Before Selected</entry>
     <entry key="list_lbl_after_selected">After Selected</entry>
     <entry key="list_msg_op_failed">Operation Failed.</entry>
+
+    <!-- Hash Tab -->
+    <entry key="hash_op_list_values">List Values</entry>
 </properties>

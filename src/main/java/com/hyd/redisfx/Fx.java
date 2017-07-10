@@ -63,6 +63,8 @@ public class Fx {
             ((BaseController) controller).setStage(dialogStage);
         }
 
+        Icons.Logo.setToStage(dialogStage);
+
         dialogStage.setScene(new Scene(fxmlLoader.getRoot()));
         dialogStage.show();
         return fxmlLoader;

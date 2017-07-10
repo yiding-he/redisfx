@@ -66,6 +66,8 @@ public class KeyTabController extends AbstractTabController {
             Tabs.switchTab(StringTabController.class, c -> c.showValue(selectedItem.getKey()));
         } else if (type.equals("list")) {
             Tabs.switchTab(ListTabController.class, c -> c.showList(selectedItem.getKey()));
+        } else if (type.equals("hash")) {
+            Tabs.switchTab(HashTabController.class, c -> c.showValue(selectedItem.getKey()));
         }
     }
 

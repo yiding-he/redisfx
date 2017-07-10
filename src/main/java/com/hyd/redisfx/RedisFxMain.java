@@ -28,6 +28,8 @@ public class RedisFxMain extends Application {
         MainController mainController = fxmlLoader.getController();
         mainController.setPrimaryStage(primaryStage);
 
+        Icons.Logo.setToStage(primaryStage);
+
         primaryStage.setTitle(I18n.getString("app_title"));
         primaryStage.setScene(new Scene(mainPane));
         primaryStage.setWidth(950);

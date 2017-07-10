@@ -30,8 +30,8 @@
 
             <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="keyColumn" text="Key"/>
-                    <TableColumn fx:id="typeColumn" text="%lbl_type"/>
+                    <TableColumn fx:id="keyColumn" text="Key" prefWidth="500"/>
+                    <TableColumn fx:id="typeColumn" text="%lbl_type" prefWidth="50"/>
                 </columns>
             </TableView>
 

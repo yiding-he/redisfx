@@ -1,7 +1,28 @@
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
-        <Label text="Not implemented yet."/>
+        <VBox spacing="5">
+
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+
+            <HBox spacing="10" alignment="BASELINE_LEFT">
+                <Label text="Key:"/>
+                <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
+                <Button onAction="#listValues" text="%hash_op_list_values"/>
+            </HBox>
+
+            <TableView fx:id="tblHashValues">
+                <columns>
+                    <TableColumn fx:id="colHashKey" text="%word_key" prefWidth="200"/>
+                    <TableColumn fx:id="colHashValue" text="%word_value" prefWidth="200"/>
+                </columns>
+            </TableView>
+        </VBox>
     </center>
 </BorderPane>

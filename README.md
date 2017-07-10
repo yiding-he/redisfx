@@ -2,7 +2,9 @@
 
 (This project is now under development)
 
-A JavaFX Client for Redis
+A JavaFX Client for Redis.
+
+All icons are from [icons8.com](https://icons8.com/). Very much appreciated.
 
 What it looks like for now:
 ![java_2017-03-15_23-56-05](https://cloud.githubusercontent.com/assets/900606/23957984/b3a30cd8-09db-11e7-8c23-eed5c2d850ba.png)
