@@ -59,4 +59,8 @@
     <entry key="list_msg_op_failed">操作失败，可能是网络错误或 key 已经被修改。</entry>
 
     <!-- Hash Tab -->
+    <entry key="hash_op_list_values">查询</entry>
+    <entry key="hash_op_add_value">添加属性...</entry>
+    <entry key="hash_op_edit_item">编辑...</entry>
+    <entry key="hash_op_delete_item">删除</entry>
 </properties>

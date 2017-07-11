@@ -45,6 +45,7 @@ public class KeyTabController extends AbstractTabController {
 
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
+        this.cmbLimit.getSelectionModel().select(0);
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
     }

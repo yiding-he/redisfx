@@ -1,3 +1,66 @@
 .tab-pane {
     -fx-tab-min-width: 60px;
 }
+
+* {
+    /*-fx-font-smoothing-type: gray;*/
+}
+
+.separator {
+    -fx-pref-height: 1.5em;
+}
+
+.button {
+    -fx-padding: 0.5em 1em;
+    -fx-min-width: 6em;
+}
+
+.button.smallButton {
+    -fx-padding: 0.2em 0.5em;
+    -fx-min-width: 1em;
+}
+
+.button.accept {
+    /*-fx-background-color: #1eb400;-fx-text-fill: white;*/
+}
+
+.button.deny {
+    /*-fx-background-color: #8c1100;-fx-text-fill: white;*/
+}
+
+.spinner.paper-margin {
+    -fx-pref-width: 5em;
+}
+
+.menu-item {
+    -fx-padding: 0.3em 2em 0.3em 0.5em;
+}
+
+.menu-item .label {
+    -fx-padding: 0 0 0 0.25em;
+}
+
+.vbox.verical_form .combo-box {
+    -fx-pref-width: 120px;
+    -fx-min-width: 120px;
+    -fx-max-width: 120px;
+}
+
+.description {
+    -fx-text-fill: #777777;
+}
+
+.dialog-container {
+    -fx-padding: 15px 15px 5px;
+}
+
+.dialog-body {
+    -fx-spacing: 10px;
+    -fx-vgap: 10px;
+    -fx-hgap: 10px;
+}
+
+.dialog-buttons {
+    -fx-alignment: center-right;
+    -fx-spacing: 10px;
+}

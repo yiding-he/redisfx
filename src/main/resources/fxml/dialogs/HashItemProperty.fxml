@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="dialog-container"
+      stylesheets="@/css/style.css"
+      fx:controller="com.hyd.redisfx.controllers.dialogs.HashItemPropertyController">
+    <VBox styleClass="dialog-body">
+    </VBox>
+    <Separator/>
+    <HBox styleClass="dialog-buttons">
+        <Button styleClass="accept" onAction="#okButtonClicked">确定</Button>
+        <Button styleClass="deny" onAction="#cancelButtonClicked">取消</Button>
+    </HBox>
+</VBox>

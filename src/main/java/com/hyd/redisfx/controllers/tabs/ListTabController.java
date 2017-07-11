@@ -14,6 +14,7 @@ import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Transaction;
 
 import java.util.List;
+import java.util.Objects;
 
 @TabName("List")
 public class ListTabController extends AbstractTabController {
@@ -97,6 +98,11 @@ public class ListTabController extends AbstractTabController {
         int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
 
         JedisManager.withJedis(jedis -> {
+
+            if (!Objects.equals("list", jedis.type(key))) {
+                return;
+            }
+
             Long length = jedis.llen(key);
             lblMessage.setText(
                     I18n.getString("list_lbl_length") + length +

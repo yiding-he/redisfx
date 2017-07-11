@@ -13,7 +13,7 @@
 
             <HBox alignment="BASELINE_LEFT" spacing="10">
                 <Label text="Key Pattern:"/>
-                <TextField fx:id="txtKeyPattern" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="txtKeyPattern" HBox.hgrow="ALWAYS" text="*"/>
                 <Label text="Limit:"/>
                 <ComboBox fx:id="cmbLimit" editable="true" prefWidth="80">
                     <items>

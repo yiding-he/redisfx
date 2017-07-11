@@ -3,9 +3,11 @@ package com.hyd.redisfx.controllers.tabs;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 
 @TabName("Hash")
@@ -19,11 +21,33 @@ public class HashTabController extends AbstractTabController {
 
     public TableColumn<HashItem, String> colHashValue;
 
+    public ContextMenu mnuHashValues;
+
     public void initialize() {
         super.initialize();
 
         colHashKey.setCellValueFactory(item -> item.getValue().keyProperty());
         colHashValue.setCellValueFactory(item -> item.getValue().valueProperty());
+
+        txtKey.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                listValues();
+            }
+        });
+
+        tblHashValues.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && tblHashValues.getSelectionModel().getSelectedIndex() != -1) {
+                editHashValue(tblHashValues.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        mnuHashValues.getItems().forEach(menuItem ->
+                menuItem.disableProperty().bind(
+                        tblHashValues.getSelectionModel().selectedIndexProperty().isEqualTo(-1)));
+    }
+
+    private void editHashValue(HashItem selectedItem) {
+
     }
 
     public void listValues() {
@@ -35,6 +59,8 @@ public class HashTabController extends AbstractTabController {
     }
 
     public void showValue(String key) {
+        txtKey.setText(key);
+
         JedisManager.withJedis(jedis -> {
             tblHashValues.getItems().clear();
             jedis.hgetAll(key).forEach((k, v) -> tblHashValues.getItems().add(new HashItem(k, v)));

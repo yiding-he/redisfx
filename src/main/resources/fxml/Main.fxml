@@ -20,9 +20,11 @@
     </top>
     <center>
         <TabPane fx:id="tabs" visible="false">
+<!--
             <Tab closable="false" text="%tab_title_raw" userData="Raw">
                 <fx:include source="tabs/RawCommand.fxml"/>
             </Tab>
+-->
             <Tab closable="false" text="%tab_title_key" userData="Key">
                 <fx:include source="tabs/KeyTab.fxml"/>
             </Tab>

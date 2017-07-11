@@ -60,4 +60,7 @@
 
     <!-- Hash Tab -->
     <entry key="hash_op_list_values">List Values</entry>
+    <entry key="hash_op_add_value">Add Value...</entry>
+    <entry key="hash_op_edit_item">Edit...</entry>
+    <entry key="hash_op_delete_item">Delete</entry>
 </properties>
