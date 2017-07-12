@@ -12,7 +12,7 @@
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <Label text="Key:"/>
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-                <Button onAction="#listValues" text="%hash_op_list_values"/>
+                <Button onAction="#showValue" text="%hash_op_list_values"/>
             </HBox>
 
             <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS">

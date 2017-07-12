@@ -24,6 +24,8 @@ public class HashTabController extends AbstractTabController {
 
     public ContextMenu mnuHashValues;
 
+    private String currentKey;
+
     public void initialize() {
         super.initialize();
 
@@ -32,7 +34,7 @@ public class HashTabController extends AbstractTabController {
 
         txtKey.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                listValues();
+                showValue();
             }
         });
 
@@ -49,10 +51,16 @@ public class HashTabController extends AbstractTabController {
 
     private void editHashValue(HashItem selectedItem) {
         HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(selectedItem);
+        hashPropertyDialog.setOnItemSubmit(() -> submitValue(selectedItem));
         hashPropertyDialog.show();
     }
 
-    public void listValues() {
+    private void submitValue(HashItem hashItem) {
+        JedisManager.withJedis(jedis ->
+                jedis.hset(this.currentKey, hashItem.getKey(), hashItem.getValue()));
+    }
+
+    public void showValue() {
         if (StringUtils.isBlank(txtKey.getText())) {
             return;
         }
@@ -62,6 +70,7 @@ public class HashTabController extends AbstractTabController {
 
     public void showValue(String key) {
         txtKey.setText(key);
+        this.currentKey = key;
 
         JedisManager.withJedis(jedis -> {
             tblHashValues.getItems().clear();

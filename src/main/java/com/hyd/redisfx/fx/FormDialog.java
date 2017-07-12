@@ -3,6 +3,7 @@ package com.hyd.redisfx.fx;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Icons;
 import com.hyd.redisfx.i18n.I18n;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -14,6 +15,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * (description)
@@ -26,6 +31,8 @@ public abstract class FormDialog extends Stage {
     private final Button cancelButton = new Button(I18n.getString("word_cancel"));
 
     private final Button okButton = new Button(I18n.getString("word_ok"));
+
+    private final VBox contentPane = new VBox();
 
     public FormDialog() {
         this(App.getMainController().getPrimaryStage());
@@ -51,22 +58,29 @@ public abstract class FormDialog extends Stage {
 
         Icons.Logo.setToStage(this);
 
-        okButton.setOnAction(event -> this.okButtonClicked());
-        cancelButton.setOnAction(event -> this.cancelButtonClicked());
+        okButton.setOnAction(this::okButtonClicked);
+        cancelButton.setOnAction(this::cancelButtonClicked);
+        this.setOnCloseRequest(this::closeButtonClicked);
     }
 
     //////////////////////////////////////////////////////////////
 
-    protected abstract void okButtonClicked();
+    protected abstract void okButtonClicked(ActionEvent event);
 
-    protected abstract void cancelButtonClicked();
+    protected void cancelButtonClicked(ActionEvent event) {
+        this.close();
+    }
+
+    protected void closeButtonClicked(WindowEvent event) {
+        this.close();
+    }
 
     //////////////////////////////////////////////////////////////
 
     private VBox getContentPane() {
-        VBox vBox = new VBox();
-        VBox.setVgrow(vBox, Priority.ALWAYS);
-        return vBox;
+        contentPane.setSpacing(10);
+        VBox.setVgrow(contentPane, Priority.ALWAYS);
+        return contentPane;
     }
 
     private HBox getButtonsPane() {
@@ -74,5 +88,23 @@ public abstract class FormDialog extends Stage {
         hBox.setAlignment(Pos.BASELINE_RIGHT);
         hBox.getChildren().addAll(okButton, cancelButton);
         return hBox;
+    }
+
+    //////////////////////////////////////////////////////////////
+
+    private List<FormField> formFields = new ArrayList<>();
+
+    protected void addField(FormField formField) {
+        this.formFields.add(formField);
+        layoutFormFields();
+
+        this.getContentPane().getChildren().add(formField);
+    }
+
+    private void layoutFormFields() {
+        formFields.stream()
+                .mapToDouble(FormField::getDefaultLabelWidth)
+                .max()
+                .ifPresent(maxWidth -> formFields.forEach(f -> f.setLabelWidth(maxWidth)));
     }
 }
