@@ -23,15 +23,15 @@
                 <contextMenu>
                     <ContextMenu fx:id="mnuHashValues">
                         <items>
-                            <MenuItem text="%hash_op_edit_item"/>
-                            <MenuItem text="%hash_op_delete_item"/>
+                            <MenuItem text="%hash_op_edit_item" onAction="#mnuEditHashValue"/>
+                            <MenuItem text="%hash_op_delete_item" onAction="#mnuDeleteHashValue"/>
                         </items>
                     </ContextMenu>
                 </contextMenu>
             </TableView>
 
             <HBox spacing="10" alignment="BASELINE_LEFT">
-                <Button text="%hash_op_add_value"/>
+                <Button text="%hash_op_add_value" onAction="#addValue"/>
             </HBox>
         </VBox>
     </center>

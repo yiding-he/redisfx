@@ -4,10 +4,7 @@ import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 
@@ -76,6 +73,33 @@ public class HashTabController extends AbstractTabController {
             tblHashValues.getItems().clear();
             jedis.hgetAll(key).forEach((k, v) -> tblHashValues.getItems().add(new HashItem(k, v)));
         });
+    }
+
+    public void addValue() {
+        HashItem hashItem = new HashItem();
+        HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(hashItem);
+        hashPropertyDialog.setOnItemSubmit(() -> {
+            submitValue(hashItem);
+            tblHashValues.getItems().add(hashItem);
+        });
+        hashPropertyDialog.show();
+    }
+
+    public void mnuEditHashValue() {
+        editHashValue(tblHashValues.getSelectionModel().getSelectedItem());
+    }
+
+    public void mnuDeleteHashValue() {
+        Alert alert = new Alert(Alert.AlertType.WARNING, "确定要删除该属性吗？", ButtonType.YES, ButtonType.NO);
+        alert.setTitle("删除属性");
+        alert.setHeaderText(null);
+        ButtonType buttonType = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (buttonType == ButtonType.YES) {
+            HashItem selectedItem = tblHashValues.getSelectionModel().getSelectedItem();
+            JedisManager.withJedis(jedis -> jedis.hdel(this.currentKey, selectedItem.getKey()));
+            tblHashValues.getItems().remove(selectedItem);
+        }
     }
 
     //////////////////////////////////////////////////////////////
