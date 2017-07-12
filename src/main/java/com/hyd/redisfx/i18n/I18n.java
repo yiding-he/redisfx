@@ -1,5 +1,6 @@
 package com.hyd.redisfx.i18n;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -14,7 +15,11 @@ public class I18n {
             "i18n.uiMain", new XMLResourceBundleControl());
 
     public static String getString(String key) {
-        return UI_MAIN_BUNDLE.getString(key);
+        try {
+            return UI_MAIN_BUNDLE.getString(key);
+        } catch (MissingResourceException e) {
+            return "%" + key + "%";
+        }
     }
 
     public static String[] getStringArray(String key) {

@@ -3,6 +3,10 @@
 <properties>
     <entry key="word_key">Key</entry>
     <entry key="word_value">Value</entry>
+    <entry key="word_ok">OK</entry>
+    <entry key="word_cancel">Cancel</entry>
+    <entry key="word_yes">Yes</entry>
+    <entry key="word_no">No</entry>
 
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">Connections</entry>

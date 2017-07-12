@@ -44,6 +44,10 @@ public class MainController {
         });
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     private void initializeTabs() {
         this.tabs.getTabs().forEach(tab -> {
             String tabName = (String) tab.getUserData();

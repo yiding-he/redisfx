@@ -3,6 +3,10 @@
 <properties>
     <entry key="word_key">键</entry>
     <entry key="word_value">值</entry>
+    <entry key="word_ok">确定</entry>
+    <entry key="word_cancel">取消</entry>
+    <entry key="word_yes">是</entry>
+    <entry key="word_no">否</entry>
 
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>

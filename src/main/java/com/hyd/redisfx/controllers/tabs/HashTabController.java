@@ -1,6 +1,7 @@
 package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ContextMenu;
@@ -47,7 +48,8 @@ public class HashTabController extends AbstractTabController {
     }
 
     private void editHashValue(HashItem selectedItem) {
-
+        HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(selectedItem);
+        hashPropertyDialog.show();
     }
 
     public void listValues() {
