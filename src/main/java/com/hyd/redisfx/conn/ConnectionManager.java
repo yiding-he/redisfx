@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionManager {
 
@@ -36,7 +37,13 @@ public class ConnectionManager {
                 connections = FXCollections.observableArrayList();
             } else {
                 String json = FileUtils.readFileToString(file, "UTF-8");
-                connections = FXCollections.observableArrayList(JSON.parseArray(json, Connection.class));
+                List<Connection> connectionList = JSON.parseArray(json, Connection.class);
+
+                if (connectionList != null) {
+                    connections = FXCollections.observableArrayList(connectionList);
+                } else {
+                    connections = FXCollections.observableArrayList();
+                }
             }
         } catch (IOException e) {
             LOG.error("", e);
