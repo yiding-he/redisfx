@@ -3,6 +3,7 @@ package com.hyd.redisfx.controllers;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.controllers.dialogs.ChangeDatabaseDialog;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.event.EventType;
@@ -59,8 +60,20 @@ public class MainController {
 
         App.getEventBus().on(EventType.ConnectionOpened, event -> {
             tabs.setVisible(true);
-            primaryStage.setTitle(I18n.getString("app_title") +
-                    " - " + JedisManager.getHost() + ":" + JedisManager.getPort());
+            updateTitle();
+        });
+
+        App.getEventBus().on(EventType.DatabaseChanged, event -> updateTitle());
+    }
+
+    private void updateTitle() {
+
+        JedisManager.withJedis(jedis -> {
+            primaryStage.setTitle(
+                    I18n.getString("app_title") +
+                            " - " + JedisManager.getHost() +
+                            ":" + JedisManager.getPort() +
+                            ":" + jedis.getDB());
         });
     }
 
@@ -82,7 +95,14 @@ public class MainController {
         }
     }
 
-    public void switchTab(int tabIndex) {
+    public void changeDatabaseClicked() {
+        ChangeDatabaseDialog dialog = new ChangeDatabaseDialog(App.getDatabases());
+        dialog.show();
+    }
 
+    public void switchDatabaseClicked() {
+    }
+
+    public void clearDatabaseClicked() {
     }
 }

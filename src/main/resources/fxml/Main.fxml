@@ -16,6 +16,12 @@
                     <MenuItem text="%empty_mark" disable="true"/>
                 </Menu>
             </Menu>
+            <Menu text="%mnu_databases">
+                <MenuItem text="%mnu_change_database" onAction="#changeDatabaseClicked"/>
+                <MenuItem text="%mnu_switch_database" onAction="#switchDatabaseClicked" disable="true"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="%mnu_clear_database" onAction="#clearDatabaseClicked" disable="true"/>
+            </Menu>
         </MenuBar>
     </top>
     <center>

@@ -7,6 +7,15 @@
     <entry key="word_cancel">Cancel</entry>
     <entry key="word_yes">Yes</entry>
     <entry key="word_no">No</entry>
+    <entry key="word_database">Database</entry>
+
+    <entry key="mnu_connections">Connections</entry>
+    <entry key="mnu_connections_choose">Choose to open...</entry>
+    <entry key="mnu_connections_recent">Open recent connection...</entry>
+    <entry key="mnu_databases">Databases</entry>
+    <entry key="mnu_change_database">Change database...</entry>
+    <entry key="mnu_switch_database">Switch database...</entry>
+    <entry key="mnu_clear_database">Clear database</entry>
 
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">Connections</entry>
@@ -15,9 +24,6 @@
     <entry key="dlg_conn_lbl_pass">Pass phase (Optional):</entry>
     <entry key="dlg_conn_lbl_port">Port:</entry>
     <entry key="empty_mark">( EMPTY )</entry>
-    <entry key="mnu_connections">Connections</entry>
-    <entry key="mnu_connections_choose">Choose to open...</entry>
-    <entry key="mnu_connections_recent">Open recent connection...</entry>
     <entry key="lbl_type">Type</entry>
     <entry key="lbl_or">OR</entry>
     <entry key="lbl_to"> to </entry>

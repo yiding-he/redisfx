@@ -2,6 +2,7 @@ package com.hyd.redisfx;
 
 import com.hyd.redisfx.conn.ConnectionManager;
 import com.hyd.redisfx.controllers.MainController;
+import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventBus;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.preference.PreferenceManager;
@@ -20,6 +21,26 @@ public class App {
     private static ConnectionManager connectionManager = new ConnectionManager();
 
     private static MainController mainController;
+
+    private static int databases;
+
+    //////////////////////////////////////////////////////////////
+
+    static {
+        eventBus.on(EventType.ConnectionOpened, event ->
+                JedisManager.withJedis(jedis ->
+                        databases = Integer.parseInt(jedis.configGet("databases").get(1))));
+    }
+
+    //////////////////////////////////////////////////////////////
+
+    public static int getDatabases() {
+        return databases;
+    }
+
+    public static void setDatabases(int databases) {
+        App.databases = databases;
+    }
 
     public static void setMainController(MainController mainController) {
         App.mainController = mainController;

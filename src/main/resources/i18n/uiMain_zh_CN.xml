@@ -7,6 +7,15 @@
     <entry key="word_cancel">取消</entry>
     <entry key="word_yes">是</entry>
     <entry key="word_no">否</entry>
+    <entry key="word_database">数据库</entry>
+
+    <entry key="mnu_connections">连接</entry>
+    <entry key="mnu_connections_choose">选择连接...</entry>
+    <entry key="mnu_connections_recent">打开最近的连接...</entry>
+    <entry key="mnu_databases">数据库</entry>
+    <entry key="mnu_change_database">切换数据库...</entry>
+    <entry key="mnu_switch_database">交换数据库...</entry>
+    <entry key="mnu_clear_database">清空数据库</entry>
 
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>
@@ -15,9 +24,6 @@
     <entry key="dlg_conn_lbl_pass">密码（可选）：</entry>
     <entry key="dlg_conn_lbl_port">端口：</entry>
     <entry key="empty_mark">（空）</entry>
-    <entry key="mnu_connections">连接</entry>
-    <entry key="mnu_connections_choose">选择连接...</entry>
-    <entry key="mnu_connections_recent">打开最近的连接...</entry>
     <entry key="lbl_type">类型</entry>
     <entry key="lbl_or">或</entry>
     <entry key="lbl_to"> 到 </entry>

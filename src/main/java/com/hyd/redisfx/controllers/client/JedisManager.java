@@ -17,8 +17,19 @@ public class JedisManager {
 
     private static Connection connection;
 
+    private static int currentDatabase;
+
+    public static void setCurrentDatabase(int currentDatabase) {
+        JedisManager.currentDatabase = currentDatabase;
+    }
+
+    public static int getCurrentDatabase() {
+        return currentDatabase;
+    }
+
     public static void withJedis(Consumer<Jedis> operation) {
         try (Jedis jedis = jedisPool.getResource()) {
+            jedis.select(currentDatabase);
             operation.accept(jedis);
         }
     }

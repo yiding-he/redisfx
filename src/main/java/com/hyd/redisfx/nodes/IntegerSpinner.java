@@ -24,8 +24,16 @@ public class IntegerSpinner extends Spinner<Integer> {
         });
     }
 
+    public void setMin(int min) {
+        getVF().setMin(min);
+    }
+
+    public void setMax(int max) {
+        getVF().setMax(max);
+    }
+
     private void checkEditorText() {
-        IntegerSpinnerValueFactory valueFactory = (IntegerSpinnerValueFactory) getValueFactory();
+        IntegerSpinnerValueFactory valueFactory = getVF();
 
         try {
             int value = Integer.parseInt(getEditor().getText());
@@ -40,6 +48,10 @@ public class IntegerSpinner extends Spinner<Integer> {
         } catch (NumberFormatException e) {
             getEditor().setText(String.valueOf(valueFactory.getValue()));
         }
+    }
+
+    private IntegerSpinnerValueFactory getVF() {
+        return (IntegerSpinnerValueFactory) getValueFactory();
     }
 
     @Override

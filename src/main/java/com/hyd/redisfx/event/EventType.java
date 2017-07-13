@@ -8,5 +8,5 @@ package com.hyd.redisfx.event;
  */
 public enum EventType {
 
-    ConnectionOpened
+    ConnectionOpened, DatabaseChanged
 }

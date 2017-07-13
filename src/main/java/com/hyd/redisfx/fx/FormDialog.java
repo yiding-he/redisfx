@@ -34,6 +34,8 @@ public abstract class FormDialog extends Stage {
 
     private final VBox contentPane = new VBox();
 
+    private double prefLabelWidth = -1;
+
     public FormDialog() {
         this(App.getMainController().getPrimaryStage());
     }
@@ -101,10 +103,20 @@ public abstract class FormDialog extends Stage {
         this.getContentPane().getChildren().add(formField);
     }
 
+    protected void setPrefLabelWidth(double prefLabelWidth) {
+        this.prefLabelWidth = prefLabelWidth;
+        layoutFormFields();
+    }
+
     private void layoutFormFields() {
-        formFields.stream()
-                .mapToDouble(FormField::getDefaultLabelWidth)
-                .max()
-                .ifPresent(maxWidth -> formFields.forEach(f -> f.setLabelWidth(maxWidth)));
+        if (this.prefLabelWidth > 0) {
+            formFields.forEach(f -> f.setLabelWidth(prefLabelWidth));
+        } else {
+            formFields.stream()
+                    .mapToDouble(FormField::getDefaultLabelWidth)
+                    .max()
+                    .ifPresent(maxWidth -> formFields.forEach(f -> f.setLabelWidth(maxWidth)));
+        }
+
     }
 }
