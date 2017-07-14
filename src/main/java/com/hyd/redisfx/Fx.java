@@ -119,6 +119,10 @@ public class Fx {
         Alert alert = new Alert(alertType, message, buttonTypes);
         alert.setTitle(title);
         alert.setHeaderText(null);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        Icons.Logo.setToStage(stage);
+
         return alert.showAndWait().orElse(ButtonType.CANCEL);
     }
 

@@ -8,7 +8,6 @@ import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import org.apache.commons.lang3.StringUtils;
@@ -87,11 +86,11 @@ public class ConnectionManagerController extends BaseController {
         });
     }
 
-    public void closeClicked(ActionEvent actionEvent) {
+    public void closeClicked() {
         this.getStage().close();
     }
 
-    public void createClicked(ActionEvent actionEvent) {
+    public void createClicked() {
         resetFields();
         this.currentSelectedConnection.set(null);
         this.txtHost.requestFocus();
@@ -105,7 +104,7 @@ public class ConnectionManagerController extends BaseController {
         this.btnDelete.setDisable(true);
     }
 
-    public void saveClicked(ActionEvent actionEvent) {
+    public void saveClicked() {
 
         if (StringUtils.isBlank(txtName.getText())) {
             String name = txtHost.getText() + ":" + spnPort.getValue();
@@ -124,11 +123,17 @@ public class ConnectionManagerController extends BaseController {
         lstConnections.getSelectionModel().select(connection);
     }
 
-    public void copyClicked(ActionEvent actionEvent) {
+    public void copyClicked() {
+        if (this.currentSelectedConnection.get() == null) {
+            return;
+        }
 
+        Connection connection = this.currentSelectedConnection.get().clone();
+        connection.setName(connection.getName() + "_COPY");
+        ConnectionManager.saveConnection(connection);
     }
 
-    public void deleteClicked(ActionEvent actionEvent) {
+    public void deleteClicked() {
 
         String title = I18n.getString("op_delete");
         String message = I18n.getString("msg_delete_confirm");
@@ -138,9 +143,10 @@ public class ConnectionManagerController extends BaseController {
 
         this.lstConnections.getItems().remove(this.currentSelectedConnection.get());
         resetFields();
+        ConnectionManager.saveConnections();
     }
 
-    public void testClicked(ActionEvent actionEvent) {
+    public void testClicked() {
 
         btnTest.setDisable(true);
 
@@ -163,7 +169,7 @@ public class ConnectionManagerController extends BaseController {
         new Thread(runnable).start();
     }
 
-    public void openConnectionClicked(ActionEvent actionEvent) {
+    public void openConnectionClicked() {
         Connection connection = new Connection();
 
         connection.setName(txtName.getText());

@@ -60,6 +60,10 @@ public class ConnectionManager {
             connections.set(index, connection);
         }
 
+        saveConnections();
+    }
+
+    public static void saveConnections() {
         try {
             File file = new File(saveFilePath);
             FileUtils.write(file, JSON.toJSONString(new ArrayList<>(connections), true), "UTF-8");

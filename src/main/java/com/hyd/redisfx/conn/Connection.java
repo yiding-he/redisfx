@@ -6,7 +6,7 @@ package com.hyd.redisfx.conn;
  *
  * @author yiding_he
  */
-public class Connection {
+public class Connection implements Cloneable {
 
     private String name;
 
@@ -15,6 +15,16 @@ public class Connection {
     private int port;
 
     private String passphase;
+
+    public Connection() {
+    }
+
+    public Connection(String name, String host, int port, String passphase) {
+        this.name = name;
+        this.host = host;
+        this.port = port;
+        this.passphase = passphase;
+    }
 
     public String getName() {
         return name;
@@ -51,5 +61,14 @@ public class Connection {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    @Override
+    public Connection clone() {
+        try {
+            return (Connection) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return new Connection(name, host, port, passphase);
+        }
     }
 }
