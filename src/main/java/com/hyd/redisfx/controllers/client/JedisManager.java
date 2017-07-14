@@ -35,7 +35,9 @@ public class JedisManager {
     }
 
     public static Jedis getJedis() {
-        return jedisPool.getResource();
+        Jedis jedis = jedisPool.getResource();
+        jedis.select(currentDatabase);
+        return jedis;
     }
 
     public static void connect(String host, int port) {

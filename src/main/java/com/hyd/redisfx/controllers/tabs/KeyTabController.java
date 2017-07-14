@@ -99,6 +99,7 @@ public class KeyTabController extends AbstractTabController {
 
         ObservableList<KeyItem> items = this.tblKeys.getItems();
         items.clear();
+        System.out.println("Keys cleared.");
 
         if (pattern.trim().length() > 0) {
 
