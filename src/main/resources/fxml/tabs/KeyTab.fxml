@@ -28,7 +28,7 @@
                 <Button onAction="#listKeys" text="%op_list_key"/>
             </HBox>
 
-            <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">
                 <columns>
                     <TableColumn fx:id="keyColumn" text="Key" prefWidth="500"/>
                     <TableColumn fx:id="typeColumn" text="%lbl_type" prefWidth="50"/>

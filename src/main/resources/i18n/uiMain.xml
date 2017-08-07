@@ -3,6 +3,11 @@
 <properties>
     <entry key="word_key">Key</entry>
     <entry key="word_value">Value</entry>
+    <entry key="word_copy">Copy</entry>
+    <entry key="word_paste">Paste</entry>
+    <entry key="word_edit">Edit</entry>
+    <entry key="word_delete">Delete</entry>
+    <entry key="word_delete_confirm">Confirm Deletion</entry>
     <entry key="word_ok">OK</entry>
     <entry key="word_cancel">Cancel</entry>
     <entry key="word_yes">Yes</entry>
@@ -61,16 +66,21 @@
     <entry key="list_lbl_to">to</entry>
     <entry key="list_op_list_values">List Values</entry>
     <entry key="list_op_append">Append</entry>
+    <entry key="list_op_edit">Edit...</entry>
     <entry key="list_op_delete">Delete Selected</entry>
     <entry key="list_op_replace_selected">Update Selected</entry>
     <entry key="list_op_insert">Insert</entry>
     <entry key="list_lbl_before_selected">Before Selected</entry>
     <entry key="list_lbl_after_selected">After Selected</entry>
     <entry key="list_msg_op_failed">Operation Failed.</entry>
+    <entry key="list_msg_type_error">Key not exists or is not a list.</entry>
+    <entry key="list_msg_delete_confirm">Saving item with empty value will delete it.&#10;&#10;Are you sure to delete this item?</entry>
 
     <!-- Hash Tab -->
     <entry key="hash_op_list_values">List Values</entry>
     <entry key="hash_op_add_value">Add Value...</entry>
     <entry key="hash_op_edit_item">Edit...</entry>
     <entry key="hash_op_delete_item">Delete</entry>
+    <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
+
 </properties>

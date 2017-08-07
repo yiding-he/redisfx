@@ -15,7 +15,7 @@
                 <Button onAction="#showValue" text="%hash_op_list_values"/>
             </HBox>
 
-            <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">
                 <columns>
                     <TableColumn fx:id="colHashKey" text="%word_key" prefWidth="200"/>
                     <TableColumn fx:id="colHashValue" text="%word_value" prefWidth="200"/>

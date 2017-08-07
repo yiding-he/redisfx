@@ -36,6 +36,8 @@ public abstract class FormDialog extends Stage {
 
     private double prefLabelWidth = -1;
 
+    private boolean ok;
+
     public FormDialog() {
         this(App.getMainController().getPrimaryStage());
     }
@@ -65,6 +67,10 @@ public abstract class FormDialog extends Stage {
         this.setOnCloseRequest(this::closeButtonClicked);
     }
 
+    public boolean isOk() {
+        return ok;
+    }
+
     //////////////////////////////////////////////////////////////
 
     protected abstract void okButtonClicked(ActionEvent event);
@@ -90,6 +96,16 @@ public abstract class FormDialog extends Stage {
         hBox.setAlignment(Pos.BASELINE_RIGHT);
         hBox.getChildren().addAll(okButton, cancelButton);
         return hBox;
+    }
+
+    protected void closeOK() {
+        this.ok = true;
+        this.close();
+    }
+
+    protected void closeNotOK() {
+        this.ok = false;
+        this.close();
     }
 
     //////////////////////////////////////////////////////////////

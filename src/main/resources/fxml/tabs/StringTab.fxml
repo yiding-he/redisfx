@@ -17,7 +17,7 @@
 
         <Label fx:id="lblMessage" text="Value:"/>
 
-        <TextArea fx:id="txtValue" VBox.vgrow="ALWAYS" wrapText="true"/>
+        <TextArea fx:id="txtValue" VBox.vgrow="ALWAYS" wrapText="true" style="-fx-font-family: monospace"/>
 
         <HBox spacing="5" alignment="BASELINE_LEFT">
             <Button text="%op_save" onAction="#saveKey"/>

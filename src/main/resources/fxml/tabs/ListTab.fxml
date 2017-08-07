@@ -21,7 +21,18 @@
 
         <Label fx:id="lblMessage" text="Value:"/>
 
-        <ListView fx:id="lstValues"/>
+        <ListView fx:id="lstValues" style="-fx-font-family: monospace">
+            <contextMenu>
+                <ContextMenu>
+                    <items>
+                        <MenuItem text="%word_copy" onAction="#listItemCopyClicked"/>
+                        <MenuItem text="%list_op_edit" onAction="#editListItem"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="%word_delete" onAction="#deleteItem"/>
+                    </items>
+                </ContextMenu>
+            </contextMenu>
+        </ListView>
 
         <HBox>
             <TextField HBox.hgrow="ALWAYS" fx:id="txtNewItemValue"/>

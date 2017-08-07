@@ -2,10 +2,13 @@ package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -75,7 +78,35 @@ public class ListTabController extends AbstractTabController {
 
         //////////////////////////////////////////////////////////////
 
+        // List key events
+        lstValues.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.C && event.isControlDown()) {    // Ctrl+C
+                listItemCopyClicked();
+            } else if (event.getCode() == KeyCode.DELETE) {                 // Delete
+                deleteItem();
+            }
+        });
 
+        // List mouse events
+        lstValues.setOnMouseClicked(event -> {
+            String value = lstValues.getSelectionModel().getSelectedItem();
+            if (event.getClickCount() == 2 && value != null) {
+                editListItem();
+            }
+        });
+    }
+
+    public void editListItem() {
+        EditStringValueDialog dialog = new EditStringValueDialog(lstValues.getSelectionModel().getSelectedItem());
+        dialog.showAndWait();
+
+        if (dialog.isOk()) {
+            if (dialog.getValue().equals("")) {
+                deleteItem0();
+            } else {
+                replaceItem0(dialog.getValue());
+            }
+        }
     }
 
     public void listValues(ActionEvent actionEvent) {
@@ -100,6 +131,8 @@ public class ListTabController extends AbstractTabController {
         JedisManager.withJedis(jedis -> {
 
             if (!Objects.equals("list", jedis.type(key))) {
+                lstValues.getItems().clear();
+                lblMessage.setText(I18n.getString("list_msg_type_error"));
                 return;
             }
 
@@ -139,7 +172,7 @@ public class ListTabController extends AbstractTabController {
         }
     }
 
-    public void deleteItem(ActionEvent actionEvent) {
+    public void deleteItem() {
         if (!prepareList()) {
             return;
         }
@@ -150,6 +183,16 @@ public class ListTabController extends AbstractTabController {
         }
 
         if (!Fx.confirmYesNo(I18n.getString("op_delete"), I18n.getString("msg_confirm_delete_value"))) {
+            return;
+        }
+
+        deleteItem0();
+    }
+
+    private void deleteItem0() {
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex < 0) {
             return;
         }
 
@@ -190,7 +233,7 @@ public class ListTabController extends AbstractTabController {
         refreshList();
     }
 
-    public void replaceItem(ActionEvent actionEvent) {
+    public void replaceItem() {
         if (!prepareList()) {
             return;
         }
@@ -202,6 +245,15 @@ public class ListTabController extends AbstractTabController {
 
         String value = txtNewItemValue.getText();
         if (StringUtils.isBlank(value)) {
+            return;
+        }
+
+        replaceItem0(value);
+    }
+
+    private void replaceItem0(String value) {
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < 0) {
             return;
         }
 
@@ -249,5 +301,14 @@ public class ListTabController extends AbstractTabController {
         }
 
         refreshList();
+    }
+
+    public void listItemCopyClicked() {
+        String value = lstValues.getSelectionModel().getSelectedItem();
+        if (value != null) {
+            ClipboardContent content = new ClipboardContent();
+            content.putString(value);
+            Clipboard.getSystemClipboard().setContent(content);
+        }
     }
 }

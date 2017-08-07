@@ -3,6 +3,11 @@
 <properties>
     <entry key="word_key">键</entry>
     <entry key="word_value">值</entry>
+    <entry key="word_copy">复制</entry>
+    <entry key="word_paste">粘贴</entry>
+    <entry key="word_edit">编辑</entry>
+    <entry key="word_delete">删除</entry>
+    <entry key="word_delete_confirm">确认删除</entry>
     <entry key="word_ok">确定</entry>
     <entry key="word_cancel">取消</entry>
     <entry key="word_yes">是</entry>
@@ -61,16 +66,21 @@
     <entry key="list_lbl_to">到</entry>
     <entry key="list_op_list_values">列出元素</entry>
     <entry key="list_op_append">添加</entry>
+    <entry key="list_op_edit">编辑...</entry>
     <entry key="list_op_delete">删除选择项</entry>
     <entry key="list_op_replace_selected">替换选择项</entry>
     <entry key="list_op_insert">插入</entry>
     <entry key="list_lbl_before_selected">在选择项之前</entry>
     <entry key="list_lbl_after_selected">在选择项之后</entry>
     <entry key="list_msg_op_failed">操作失败，可能是网络错误或 key 已经被修改。</entry>
+    <entry key="list_msg_type_error">Key 不存在或值不是 List。</entry>
+    <entry key="list_msg_delete_confirm">保存为空值等同于删除该项。&#10;&#10;确定要删除该项吗？</entry>
 
     <!-- Hash Tab -->
     <entry key="hash_op_list_values">查询</entry>
     <entry key="hash_op_add_value">添加属性...</entry>
     <entry key="hash_op_edit_item">编辑...</entry>
     <entry key="hash_op_delete_item">删除</entry>
+    <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
+
 </properties>

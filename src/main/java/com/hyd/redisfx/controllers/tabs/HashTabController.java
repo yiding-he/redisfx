@@ -2,9 +2,13 @@ package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
+import com.hyd.redisfx.fx.Alerts;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 
@@ -90,12 +94,7 @@ public class HashTabController extends AbstractTabController {
     }
 
     public void mnuDeleteHashValue() {
-        Alert alert = new Alert(Alert.AlertType.WARNING, "确定要删除该属性吗？", ButtonType.YES, ButtonType.NO);
-        alert.setTitle("删除属性");
-        alert.setHeaderText(null);
-        ButtonType buttonType = alert.showAndWait().orElse(ButtonType.CANCEL);
-
-        if (buttonType == ButtonType.YES) {
+        if (Alerts.confirm("word_delete_confirm", "hash_msg_confirm_delete")) {
             HashItem selectedItem = tblHashValues.getSelectionModel().getSelectedItem();
             JedisManager.withJedis(jedis -> jedis.hdel(this.currentKey, selectedItem.getKey()));
             tblHashValues.getItems().remove(selectedItem);

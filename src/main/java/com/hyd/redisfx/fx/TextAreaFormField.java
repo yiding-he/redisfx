@@ -18,15 +18,19 @@ public class TextAreaFormField extends FormField {
     public TextAreaFormField(String labelName, String defaultValue, int rowCount, boolean vGrow) {
         super(labelName);
         this.textArea.setText(defaultValue);
-        this.getChildren().add(this.textArea);
+        this.textArea.setStyle("-fx-font-family: monospace");
+
         HBox.setHgrow(this.textArea, Priority.ALWAYS);
 
         if (vGrow) {
             VBox.setVgrow(this, Priority.ALWAYS);
             this.textArea.prefHeightProperty().bind(this.heightProperty());
+            this.setPrefHeight(rowCount * 20);
         } else {
             this.textArea.setPrefRowCount(rowCount);
         }
+
+        this.getChildren().add(this.textArea);
     }
 
     public String getText() {
