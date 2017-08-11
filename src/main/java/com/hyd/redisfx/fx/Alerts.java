@@ -13,10 +13,17 @@ import javafx.scene.control.ButtonType;
 public class Alerts {
 
     public static boolean confirm(String titleKey, String messageKey) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, I18n.getString(messageKey), ButtonType.YES, ButtonType.NO);
-        alert.setTitle(I18n.getString(titleKey));
+
+        Alert.AlertType alertType = Alert.AlertType.WARNING;
+        String title = I18n.getString(titleKey);
+        String message = I18n.getString(messageKey);
+        ButtonType[] buttons = {ButtonType.YES, ButtonType.NO};
+
+        Alert alert = new Alert(alertType, message, buttons);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        ButtonType buttonType = alert.showAndWait().orElse(ButtonType.CANCEL);
-        return buttonType == ButtonType.YES;
+
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        return result == ButtonType.YES;
     }
 }
