@@ -1,7 +1,7 @@
 package com.hyd.redisfx.fx;
 
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 /**
@@ -17,8 +17,6 @@ public class TextFormField extends FormField {
     public TextFormField(String labelName, String defaultValue) {
         super(labelName);
         this.textField.setText(defaultValue);
-        this.getChildren().add(textField);
-        HBox.setHgrow(this.textField, Priority.ALWAYS);
     }
 
     public TextField getTextField() {
@@ -27,5 +25,12 @@ public class TextFormField extends FormField {
 
     public String getText() {
         return this.textField.getText();
+    }
+
+    @Override
+    public void renderTo(GridPane contentPane, int rowIndex) {
+        GridPane.setHgrow(this.textField, Priority.ALWAYS);
+        contentPane.add(getLabel(), 0, rowIndex);
+        contentPane.add(textField, 1, rowIndex);
     }
 }

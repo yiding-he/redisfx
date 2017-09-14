@@ -1,5 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
@@ -16,7 +18,13 @@
             <Spinner fx:id="spnFromIndex" prefWidth="80" editable="true"/>
             <Label text="%list_lbl_to"/>
             <Spinner fx:id="spnToIndex" prefWidth="80" editable="true"/>
-            <Button onAction="#listValues" text="%list_op_list_values"/>
+            <Button onAction="#listValues" styleClass="iconButton">
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24">
+                        <Image url="@/icons/search.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
         </HBox>
 
         <Label fx:id="lblMessage" text="Value:"/>

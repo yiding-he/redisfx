@@ -20,6 +20,11 @@
     -fx-min-width: 1em;
 }
 
+.button.iconButton {
+    -fx-padding: 0.2em 0.5em;
+    -fx-min-width: 5em;
+}
+
 .button.accept {
     /*-fx-background-color: #1eb400;-fx-text-fill: white;*/
 }

@@ -52,6 +52,7 @@
     <entry key="tab_title_zset">ZSet</entry>
     <entry key="title_conn_manager">连接管理</entry>
     <entry key="title_op_fail">操作失败</entry>
+    <entry key="title_op_error">错误</entry>
     <entry key="op_close">关闭</entry>
     <entry key="op_create">新建</entry>
     <entry key="msg_please_create_connection">（请在右边新建一个连接）</entry>
@@ -86,5 +87,6 @@
     <entry key="hash_op_copy_key">复制键</entry>
     <entry key="hash_op_copy_value">复制值</entry>
     <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
+    <entry key="hash_msg_nokey">请先键入 Key 值</entry>
 
 </properties>

@@ -26,7 +26,6 @@ public class ChangeDatabaseDialog extends FormDialog {
         databaseField.setValue(JedisManager.getCurrentDatabase());
 
         this.addField(databaseField);
-        this.setPrefLabelWidth(100);
     }
 
     @Override

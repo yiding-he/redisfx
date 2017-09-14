@@ -1,8 +1,9 @@
 package com.hyd.redisfx.fx;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
+
+import static javafx.scene.layout.Region.USE_PREF_SIZE;
 
 /**
  * (description)
@@ -10,26 +11,18 @@ import javafx.scene.layout.HBox;
  *
  * @author yidin
  */
-public abstract class FormField extends HBox {
+public abstract class FormField {
 
     private Label label;
 
     public FormField(String labelName) {
-        this.setSpacing(10);
-        this.setAlignment(Pos.BASELINE_LEFT);
         this.label = new Label(labelName);
-        this.getChildren().add(this.label);
+        this.label.setMinWidth(USE_PREF_SIZE);
     }
 
-    public void setLabelWidth(double width) {
-        this.label.setPrefWidth(width);
-        this.label.setMinWidth(width);
+    protected Label getLabel() {
+        return label;
     }
 
-    public double getDefaultLabelWidth() {
-        // https://stackoverflow.com/questions/30983584/how-to-get-the-size-of-a-label-before-it-is-laid-out
-        this.label.applyCss();
-        this.label.layout();
-        return this.label.getWidth() + 20;
-    }
+    public abstract void renderTo(GridPane contentPane, int rowIndex);
 }

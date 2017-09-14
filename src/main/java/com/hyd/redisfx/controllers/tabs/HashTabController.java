@@ -83,6 +83,16 @@ public class HashTabController extends AbstractTabController {
     }
 
     public void addValue() {
+
+        if (StringUtils.isBlank(this.currentKey)) {
+            showValue();
+        }
+
+        if (StringUtils.isBlank(this.currentKey)) {
+            Alerts.error("title_op_error", "hash_msg_nokey");
+            return;
+        }
+
         HashItem hashItem = new HashItem();
         HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(hashItem);
         hashPropertyDialog.setOnItemSubmit(() -> {

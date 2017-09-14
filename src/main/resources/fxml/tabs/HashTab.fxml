@@ -1,5 +1,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
@@ -12,7 +14,13 @@
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <Label text="Key:"/>
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-                <Button onAction="#showValue" text="%hash_op_list_values"/>
+                <Button onAction="#showValue" styleClass="iconButton">
+                    <graphic>
+                        <ImageView fitWidth="24" fitHeight="24">
+                            <Image url="@/icons/search.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </HBox>
 
             <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">

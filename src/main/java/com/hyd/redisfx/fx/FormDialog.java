@@ -3,16 +3,17 @@ package com.hyd.redisfx.fx;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Icons;
 import com.hyd.redisfx.i18n.I18n;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -32,9 +33,7 @@ public abstract class FormDialog extends Stage {
 
     private final Button okButton = new Button(I18n.getString("word_ok"));
 
-    private final VBox contentPane = new VBox();
-
-    private double prefLabelWidth = -1;
+    private final GridPane contentPane = new GridPane();
 
     private boolean ok;
 
@@ -85,8 +84,29 @@ public abstract class FormDialog extends Stage {
 
     //////////////////////////////////////////////////////////////
 
-    private VBox getContentPane() {
-        contentPane.setSpacing(10);
+    private GridPane getContentPane() {
+        contentPane.setHgap(10);
+        contentPane.setVgap(10);
+
+        // top-align all child nodes
+        contentPane.getChildren().addListener((ListChangeListener<Node>) c -> {
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    c.getAddedSubList().forEach(node ->
+                            GridPane.setValignment(node, VPos.TOP));
+                }
+            }
+        });
+
+        ColumnConstraints titleCC = new ColumnConstraints();
+        titleCC.setPrefWidth(100);
+
+        ColumnConstraints valueCC = new ColumnConstraints();
+        valueCC.setFillWidth(true);
+        valueCC.setHgrow(Priority.ALWAYS);
+
+        contentPane.getColumnConstraints().addAll(titleCC, valueCC);
+
         VBox.setVgrow(contentPane, Priority.ALWAYS);
         return contentPane;
     }
@@ -114,25 +134,11 @@ public abstract class FormDialog extends Stage {
 
     protected void addField(FormField formField) {
         this.formFields.add(formField);
-        layoutFormFields();
-
-        this.getContentPane().getChildren().add(formField);
+        layoutFormField(formField, this.formFields.size() - 1);
     }
 
-    protected void setPrefLabelWidth(double prefLabelWidth) {
-        this.prefLabelWidth = prefLabelWidth;
-        layoutFormFields();
+    private void layoutFormField(FormField formField, int rowIndex) {
+        formField.renderTo(this.contentPane, rowIndex);
     }
 
-    private void layoutFormFields() {
-        if (this.prefLabelWidth > 0) {
-            formFields.forEach(f -> f.setLabelWidth(prefLabelWidth));
-        } else {
-            formFields.stream()
-                    .mapToDouble(FormField::getDefaultLabelWidth)
-                    .max()
-                    .ifPresent(maxWidth -> formFields.forEach(f -> f.setLabelWidth(maxWidth)));
-        }
-
-    }
 }

@@ -126,6 +126,10 @@ public class ListTabController extends AbstractTabController {
     private void showList(String key, int from, int to) {
         int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
 
+        currentFrom = from;
+        currentTo = to;
+        currentKey = key;
+
         JedisManager.withJedis(jedis -> {
 
             if (!Objects.equals("list", jedis.type(key))) {
@@ -148,10 +152,6 @@ public class ListTabController extends AbstractTabController {
             if (selectedIndex != -1) {
                 lstValues.getSelectionModel().select(selectedIndex);
             }
-
-            currentFrom = from;
-            currentTo = to;
-            currentKey = key;
 
             // 在界面上回填 key
             this.txtKey.setText(key);
@@ -217,7 +217,7 @@ public class ListTabController extends AbstractTabController {
         showList(currentKey, currentFrom, currentTo);
     }
 
-    public void appendItem(ActionEvent actionEvent) {
+    public void appendItem() {
         if (!prepareList()) {
             return;
         }

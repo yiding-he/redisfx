@@ -52,6 +52,7 @@
     <entry key="tab_title_zset">ZSet</entry>
     <entry key="title_conn_manager">Connection Manager</entry>
     <entry key="title_op_fail">Operation Failed</entry>
+    <entry key="title_op_error">Error</entry>
     <entry key="op_close">Close</entry>
     <entry key="op_create">Create</entry>
     <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
@@ -86,5 +87,6 @@
     <entry key="hash_op_copy_key">Copy Key</entry>
     <entry key="hash_op_copy_value">Copy Value</entry>
     <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
+    <entry key="hash_msg_nokey">Please enter Key first.</entry>
 
 </properties>
