@@ -25,6 +25,8 @@
                         <items>
                             <MenuItem text="%hash_op_edit_item" onAction="#mnuEditHashValue"/>
                             <MenuItem text="%hash_op_delete_item" onAction="#mnuDeleteHashValue"/>
+                            <MenuItem text="%hash_op_copy_key" onAction="#mnuCopyHashKey" accelerator="Shortcut+C"/>
+                            <MenuItem text="%hash_op_copy_value" onAction="#mnuCopyHashValue" accelerator="Shortcut+B"/>
                         </items>
                     </ContextMenu>
                 </contextMenu>

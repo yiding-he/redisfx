@@ -16,7 +16,7 @@ public class ChangeDatabaseDialog extends FormDialog {
     private IntegerSpinnerFormField databaseField;
 
     public ChangeDatabaseDialog(int databases) {
-        this.setTitle(I18n.getString("mnu_change_database"));
+        this.setTitle(I18n.getString("title_change_database"));
 
         int maxDatabase = databases - 1;
         String labelName = I18n.getString("word_database") + "(0~" + maxDatabase + "): ";

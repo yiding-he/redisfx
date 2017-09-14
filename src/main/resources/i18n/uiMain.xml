@@ -22,6 +22,8 @@
     <entry key="mnu_switch_database">Switch database...</entry>
     <entry key="mnu_clear_database">Clear database</entry>
 
+    <entry key="title_change_database">Change database</entry>
+
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">Connections</entry>
     <entry key="dlg_conn_lbl_host">Host:</entry>
@@ -81,6 +83,8 @@
     <entry key="hash_op_add_value">Add Value...</entry>
     <entry key="hash_op_edit_item">Edit...</entry>
     <entry key="hash_op_delete_item">Delete</entry>
+    <entry key="hash_op_copy_key">Copy Key</entry>
+    <entry key="hash_op_copy_value">Copy Value</entry>
     <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
 
 </properties>

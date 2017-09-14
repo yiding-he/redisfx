@@ -1,13 +1,16 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -48,6 +51,23 @@ public class KeyTabController extends AbstractTabController {
         this.cmbLimit.getSelectionModel().select(0);
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
+
+        this.tblKeys.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.C && event.isControlDown()) {  // Ctrl+C
+                KeyItem selectedItem = this.tblKeys.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    Fx.copyText(selectedItem.getKey());
+                }
+            }
+        });
+
+        App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
+    }
+
+    private void reset() {
+        this.txtKeyPattern.setText("*");
+        this.cmbLimit.getSelectionModel().select(0);
+        this.tblKeys.getItems().clear();
     }
 
     private void tableMouseClicked(MouseEvent event) {

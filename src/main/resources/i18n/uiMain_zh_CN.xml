@@ -3,24 +3,26 @@
 <properties>
     <entry key="word_key">键</entry>
     <entry key="word_value">值</entry>
-    <entry key="word_copy">复制</entry>
-    <entry key="word_paste">粘贴</entry>
-    <entry key="word_edit">编辑</entry>
-    <entry key="word_delete">删除</entry>
+    <entry key="word_copy">复制(_C)</entry>
+    <entry key="word_paste">粘贴(_P)</entry>
+    <entry key="word_edit">编辑(_E)</entry>
+    <entry key="word_delete">删除(_D)</entry>
     <entry key="word_delete_confirm">确认删除</entry>
-    <entry key="word_ok">确定</entry>
-    <entry key="word_cancel">取消</entry>
-    <entry key="word_yes">是</entry>
-    <entry key="word_no">否</entry>
+    <entry key="word_ok">确定(_O)</entry>
+    <entry key="word_cancel">取消(_C)</entry>
+    <entry key="word_yes">是(_Y)</entry>
+    <entry key="word_no">否(_N)</entry>
     <entry key="word_database">数据库</entry>
 
-    <entry key="mnu_connections">连接</entry>
-    <entry key="mnu_connections_choose">选择连接...</entry>
-    <entry key="mnu_connections_recent">打开最近的连接...</entry>
-    <entry key="mnu_databases">数据库</entry>
-    <entry key="mnu_change_database">切换数据库...</entry>
-    <entry key="mnu_switch_database">交换数据库...</entry>
-    <entry key="mnu_clear_database">清空数据库</entry>
+    <entry key="mnu_connections">连接(_C)</entry>
+    <entry key="mnu_connections_choose">选择连接(_O)...</entry>
+    <entry key="mnu_connections_recent">打开最近的连接(_R)...</entry>
+    <entry key="mnu_databases">数据库(_D)</entry>
+    <entry key="mnu_change_database">切换数据库(_D)...</entry>
+    <entry key="mnu_switch_database">交换数据库(_W)...</entry>
+    <entry key="mnu_clear_database">清空数据库(_C)</entry>
+
+    <entry key="title_change_database">切换数据库</entry>
 
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>
@@ -81,6 +83,8 @@
     <entry key="hash_op_add_value">添加属性...</entry>
     <entry key="hash_op_edit_item">编辑...</entry>
     <entry key="hash_op_delete_item">删除</entry>
+    <entry key="hash_op_copy_key">复制键</entry>
+    <entry key="hash_op_copy_value">复制值</entry>
     <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
 
 </properties>

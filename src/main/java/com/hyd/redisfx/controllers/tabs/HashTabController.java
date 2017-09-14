@@ -1,5 +1,6 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
@@ -11,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Optional;
 
 @TabName("Hash")
 public class HashTabController extends AbstractTabController {
@@ -99,6 +102,16 @@ public class HashTabController extends AbstractTabController {
             JedisManager.withJedis(jedis -> jedis.hdel(this.currentKey, selectedItem.getKey()));
             tblHashValues.getItems().remove(selectedItem);
         }
+    }
+
+    public void mnuCopyHashKey() {
+        Optional.ofNullable(tblHashValues.getSelectionModel().getSelectedItem())
+                .ifPresent(hashItem -> Fx.copyText(hashItem.getKey()));
+    }
+
+    public void mnuCopyHashValue() {
+        Optional.ofNullable(tblHashValues.getSelectionModel().getSelectedItem())
+                .ifPresent(hashItem -> Fx.copyText(hashItem.getValue()));
     }
 
     //////////////////////////////////////////////////////////////

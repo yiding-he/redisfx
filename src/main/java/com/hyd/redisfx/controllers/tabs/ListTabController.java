@@ -7,8 +7,6 @@ import com.hyd.redisfx.i18n.I18n;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -306,9 +304,7 @@ public class ListTabController extends AbstractTabController {
     public void listItemCopyClicked() {
         String value = lstValues.getSelectionModel().getSelectedItem();
         if (value != null) {
-            ClipboardContent content = new ClipboardContent();
-            content.putString(value);
-            Clipboard.getSystemClipboard().setContent(content);
+            Fx.copyText(value);
         }
     }
 }

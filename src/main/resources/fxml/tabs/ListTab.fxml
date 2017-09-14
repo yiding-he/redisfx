@@ -25,7 +25,7 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem text="%word_copy" onAction="#listItemCopyClicked"/>
+                        <MenuItem text="%word_copy" onAction="#listItemCopyClicked" accelerator="Shortcut+C"/>
                         <MenuItem text="%list_op_edit" onAction="#editListItem"/>
                         <SeparatorMenuItem/>
                         <MenuItem text="%word_delete" onAction="#deleteItem"/>
