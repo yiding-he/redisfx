@@ -1,5 +1,5 @@
 .tab-pane {
-    -fx-tab-min-width: 60px;
+    -fx-tab-min-width: 60;
 }
 
 * {
@@ -11,18 +11,24 @@
 }
 
 .button {
-    -fx-padding: 0.5em 1em;
-    -fx-min-width: 6em;
+    -fx-padding: 5 15;
+    -fx-min-width: 60;
 }
 
 .button.smallButton {
-    -fx-padding: 0.2em 0.5em;
-    -fx-min-width: 1em;
+    -fx-padding: 3 5;
+    -fx-min-width: 20;
 }
 
 .button.iconButton {
-    -fx-padding: 0.2em 0.5em;
-    -fx-min-width: 5em;
+    -fx-padding: 3 5;
+    -fx-min-width: 20;
+}
+
+.normalPane {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: baseline-left;
 }
 
 .button.accept {

@@ -13,6 +13,8 @@
     <entry key="word_yes">Yes</entry>
     <entry key="word_no">No</entry>
     <entry key="word_database">Database</entry>
+    <entry key="word_from">From</entry>
+    <entry key="word_to">To</entry>
 
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>
@@ -68,13 +70,10 @@
     <entry key="list_lbl_from">Range: from</entry>
     <entry key="list_lbl_to">to</entry>
     <entry key="list_op_list_values">List Values</entry>
-    <entry key="list_op_append">Append</entry>
     <entry key="list_op_edit">Edit...</entry>
-    <entry key="list_op_delete">Delete Selected</entry>
-    <entry key="list_op_replace_selected">Update Selected</entry>
-    <entry key="list_op_insert">Insert</entry>
-    <entry key="list_lbl_before_selected">Before Selected</entry>
-    <entry key="list_lbl_after_selected">After Selected</entry>
+    <entry key="list_op_insert_before">Insert Before...</entry>
+    <entry key="list_op_insert_after">Insert After...</entry>
+    <entry key="list_op_trim">Trim</entry>
     <entry key="list_msg_op_failed">Operation Failed.</entry>
     <entry key="list_msg_type_error">Key not exists or is not a list.</entry>
     <entry key="list_msg_delete_confirm">Saving item with empty value will delete it.&#10;&#10;Are you sure to delete this item?</entry>

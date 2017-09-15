@@ -4,14 +4,17 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
-import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import com.hyd.redisfx.nodes.IntegerSpinner;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.BinaryClient;
+import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.Transaction;
 
 import java.util.List;
@@ -32,17 +35,9 @@ public class ListTabController extends AbstractTabController {
 
     public Label lblMessage;
 
-    public TextField txtNewItemValue;
+    public IntegerSpinner spnTrimFrom;
 
-    public Button btnDelete;
-
-    public Button btnAppend;
-
-    public Button btnReplace;
-
-    public Button btnInsert;
-
-    public ComboBox<String> cmbInsertType;
+    public IntegerSpinner spnTrimTo;
 
     private String currentKey;           // key of currently displayed list
 
@@ -50,14 +45,6 @@ public class ListTabController extends AbstractTabController {
 
     public void initialize() {
         super.initialize();
-
-        //////////////////////////////////////////////////////////////
-
-        cmbInsertType.getItems().addAll(
-                I18n.getString("list_lbl_before_selected"),
-                I18n.getString("list_lbl_after_selected")
-        );
-        cmbInsertType.getSelectionModel().select(0);
 
         //////////////////////////////////////////////////////////////
 
@@ -70,7 +57,7 @@ public class ListTabController extends AbstractTabController {
 
         txtKey.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                listValues(null);
+                listValues();
             }
         });
 
@@ -95,24 +82,39 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void editListItem() {
-        EditStringValueDialog dialog = new EditStringValueDialog(lstValues.getSelectionModel().getSelectedItem());
-        dialog.showAndWait();
+        if (lstValues.getSelectionModel().getSelectedIndex() == -1) {
+            return;
+        }
 
-        if (dialog.isOk()) {
-            if (dialog.getValue().equals("")) {
+        String currentValue = lstValues.getSelectionModel().getSelectedItem();
+        String newValue = getStringByDialog(currentValue);
+
+        if (newValue != null) {
+            if (newValue.equals("")) {
                 deleteItem0();
             } else {
-                replaceItem0(dialog.getValue());
+                replaceItem0(newValue);
             }
         }
     }
 
-    public void listValues(ActionEvent actionEvent) {
+    private String getStringByDialog(String currentValue) {
+        EditStringValueDialog dialog = new EditStringValueDialog(currentValue);
+        dialog.showAndWait();
+
+        String newValue = null;
+        if (dialog.isOk()) {
+            newValue = dialog.getValue();
+        }
+        return newValue;
+    }
+
+    public void listValues() {
         String key = txtKey.getText();
         showList(key);
     }
 
-    public void showList(String key) {
+    void showList(String key) {
         if (StringUtils.isBlank(key)) {
             return;
         }
@@ -217,38 +219,6 @@ public class ListTabController extends AbstractTabController {
         showList(currentKey, currentFrom, currentTo);
     }
 
-    public void appendItem() {
-        if (!prepareList()) {
-            return;
-        }
-
-        String value = txtNewItemValue.getText();
-        if (StringUtils.isBlank(value)) {
-            return;
-        }
-
-        JedisManager.withJedis(jedis -> jedis.rpush(currentKey, value));
-        refreshList();
-    }
-
-    public void replaceItem() {
-        if (!prepareList()) {
-            return;
-        }
-
-        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
-        if (selectedIndex < 0) {
-            return;
-        }
-
-        String value = txtNewItemValue.getText();
-        if (StringUtils.isBlank(value)) {
-            return;
-        }
-
-        replaceItem0(value);
-    }
-
     private void replaceItem0(String value) {
         int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
         if (selectedIndex < 0) {
@@ -260,26 +230,34 @@ public class ListTabController extends AbstractTabController {
         refreshList();
     }
 
-    public void insertItem(ActionEvent actionEvent) {
+    private void insertItem(LIST_POSITION position) {
         if (!prepareList()) {
             return;
         }
 
-        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
-        if (selectedIndex < 0) {
+        // append if list is empty
+        long[] length = {0};
+        JedisManager.withJedis(jedis -> {
+            length[0] = jedis.llen(currentKey);
+        });
+        if (length[0] == 0) {
+            appendItem();
             return;
         }
 
-        String value = txtNewItemValue.getText();
+        // do insert
+
+        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
+        final LIST_POSITION finalPosition = selectedIndex < 0 ? LIST_POSITION.AFTER : position;
+
+        String value = getStringByDialog("");
         if (StringUtils.isBlank(value)) {
             return;
         }
 
         int listIndex = selectedIndex + currentFrom;
-        int typeIndex = cmbInsertType.getSelectionModel().getSelectedIndex();
-        int restoreIndex = typeIndex == 0 ? listIndex + 1 : listIndex;
-        BinaryClient.LIST_POSITION position = typeIndex == 0?
-                BinaryClient.LIST_POSITION.BEFORE: BinaryClient.LIST_POSITION.AFTER;
+        int restoreIndex = finalPosition == LIST_POSITION.BEFORE ? listIndex + 1 : listIndex;
+        int restoreSelectionIndex = finalPosition == LIST_POSITION.BEFORE ? selectedIndex + 1 : selectedIndex;
 
         try {
             JedisManager.withJedis(jedis -> {
@@ -289,7 +267,7 @@ public class ListTabController extends AbstractTabController {
                 jedis.watch(currentKey);
                 Transaction transaction = jedis.multi();
                 transaction.lset(currentKey, listIndex, tempValue);
-                transaction.linsert(currentKey, position, tempValue, value);
+                transaction.linsert(currentKey, finalPosition, tempValue, value);
                 transaction.lset(currentKey, restoreIndex, originalValue);
                 transaction.exec();
             });
@@ -299,6 +277,21 @@ public class ListTabController extends AbstractTabController {
         }
 
         refreshList();
+        if (restoreSelectionIndex < lstValues.getItems().size()) {
+            lstValues.getSelectionModel().select(restoreSelectionIndex);
+        } else {
+            lstValues.getSelectionModel().clearSelection();
+        }
+    }
+
+    private void appendItem() {
+        String value = getStringByDialog("");
+        if (StringUtils.isBlank(value)) {
+            return;
+        }
+
+        JedisManager.withJedis(jedis -> jedis.lpush(currentKey, value));
+        refreshList();
     }
 
     public void listItemCopyClicked() {
@@ -306,5 +299,13 @@ public class ListTabController extends AbstractTabController {
         if (value != null) {
             Fx.copyText(value);
         }
+    }
+
+    public void insertItemBefore() {
+        insertItem(LIST_POSITION.BEFORE);
+    }
+
+    public void insertItemAfter() {
+        insertItem(LIST_POSITION.AFTER);
     }
 }

@@ -1,8 +1,10 @@
+<?import com.hyd.redisfx.nodes.IntegerSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
     <VBox spacing="10">
@@ -36,28 +38,24 @@
                         <MenuItem text="%word_copy" onAction="#listItemCopyClicked" accelerator="Shortcut+C"/>
                         <MenuItem text="%list_op_edit" onAction="#editListItem"/>
                         <SeparatorMenuItem/>
-                        <MenuItem text="%word_delete" onAction="#deleteItem"/>
+                        <MenuItem text="%list_op_insert_before" onAction="#insertItemBefore"/>
+                        <MenuItem text="%list_op_insert_after" onAction="#insertItemAfter"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="%word_delete" onAction="#deleteItem" accelerator="Delete"/>
                     </items>
                 </ContextMenu>
             </contextMenu>
         </ListView>
-
-        <HBox>
-            <TextField HBox.hgrow="ALWAYS" fx:id="txtNewItemValue"/>
-        </HBox>
-
-        <HBox alignment="BASELINE_LEFT" spacing="10">
-            <Button text="%list_op_delete" fx:id="btnDelete" onAction="#deleteItem"/>
-            <Label text=" " prefWidth="20"/>
-            <Button text="%list_op_append" fx:id="btnAppend" onAction="#appendItem"/>
-            <Button text="%list_op_replace_selected" fx:id="btnReplace" onAction="#replaceItem"/>
-            <Label text="%lbl_or"/>
-            <ComboBox fx:id="cmbInsertType"/>
-            <Button text="%list_op_insert" fx:id="btnInsert" onAction="#insertItem"/>
-        </HBox>
     </VBox>
     <TabPane>
         <Tab text="LTRIM" closable="false">
+            <HBox styleClass="normalPane">
+                <Label text="%word_from"/>
+                <IntegerSpinner fx:id="spnTrimFrom" prefWidth="100"/>
+                <Label text="%word_to"/>
+                <IntegerSpinner fx:id="spnTrimTo" prefWidth="100"/>
+                <Button text="%list_op_trim"/>
+            </HBox>
         </Tab>
         <Tab text="RPOPLPUSH" closable="false">
         </Tab>

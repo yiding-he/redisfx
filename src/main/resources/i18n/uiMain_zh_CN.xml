@@ -13,6 +13,8 @@
     <entry key="word_yes">是(_Y)</entry>
     <entry key="word_no">否(_N)</entry>
     <entry key="word_database">数据库</entry>
+    <entry key="word_from">从</entry>
+    <entry key="word_to">到</entry>
 
     <entry key="mnu_connections">连接(_C)</entry>
     <entry key="mnu_connections_choose">选择连接(_O)...</entry>
@@ -68,13 +70,10 @@
     <entry key="list_lbl_from">范围：从</entry>
     <entry key="list_lbl_to">到</entry>
     <entry key="list_op_list_values">列出元素</entry>
-    <entry key="list_op_append">添加</entry>
     <entry key="list_op_edit">编辑...</entry>
-    <entry key="list_op_delete">删除选择项</entry>
-    <entry key="list_op_replace_selected">替换选择项</entry>
-    <entry key="list_op_insert">插入</entry>
-    <entry key="list_lbl_before_selected">在选择项之前</entry>
-    <entry key="list_lbl_after_selected">在选择项之后</entry>
+    <entry key="list_op_insert_before">在前面插入...</entry>
+    <entry key="list_op_insert_after">在后面插入...</entry>
+    <entry key="list_op_trim">执行</entry>
     <entry key="list_msg_op_failed">操作失败，可能是网络错误或 key 已经被修改。</entry>
     <entry key="list_msg_type_error">Key 不存在或值不是 List。</entry>
     <entry key="list_msg_delete_confirm">保存为空值等同于删除该项。&#10;&#10;确定要删除该项吗？</entry>
