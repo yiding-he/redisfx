@@ -1,20 +1,19 @@
 # redisfx
 
-(This project is now under development)
+（项目功能并未全部完成）
 
-A JavaFX Client for Redis.
+基于 JavaFX 的 Redis 客户端。
 
 All icons are from [icons8.com](https://icons8.com/). Very much appreciated.
 
-What it looks like for now:
+截图：
 
-![java_2017-07-12_11-28-37](https://user-images.githubusercontent.com/900606/28100636-e158789e-66f5-11e7-8c73-bd83f3328ff8.png)
+![2017-09-24_09h21_42](https://user-images.githubusercontent.com/900606/30778493-fa0692ba-a109-11e7-8b30-6f3d54b8f399.png)
 
-![java_2017-07-12_11-28-53](https://user-images.githubusercontent.com/900606/28100638-e159f4ee-66f5-11e7-940a-f4b6b5ec045c.png)
+![2017-09-24_09h23_14](https://user-images.githubusercontent.com/900606/30778499-235072e4-a10a-11e7-94b6-45feb22b5d3b.png)
 
-![java_2017-07-12_11-29-24](https://user-images.githubusercontent.com/900606/28100635-e157def2-66f5-11e7-83c9-c11424f52798.png)
+![2017-09-24_09h24_02](https://user-images.githubusercontent.com/900606/30778503-3f486614-a10a-11e7-92ad-67e5135e8362.png)
 
-![java_2017-07-12_11-31-21](https://user-images.githubusercontent.com/900606/28100637-e158a9f4-66f5-11e7-8b68-4e2bed20240b.png)
+![2017-09-24_09h26_09](https://user-images.githubusercontent.com/900606/30778511-8b1244d4-a10a-11e7-916c-0c8c249407c3.png)
 
-
-
+![2017-09-24_09h27_02](https://user-images.githubusercontent.com/900606/30778514-acd519fc-a10a-11e7-896d-49d58b9f1be9.png)
