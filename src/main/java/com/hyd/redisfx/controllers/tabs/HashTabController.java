@@ -54,6 +54,10 @@ public class HashTabController extends AbstractTabController {
     }
 
     private void editHashValue(HashItem selectedItem) {
+        if (selectedItem == null) {
+            return;
+        }
+
         HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(selectedItem);
         hashPropertyDialog.setOnItemSubmit(() -> submitValue(selectedItem));
         hashPropertyDialog.show();

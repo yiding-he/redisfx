@@ -48,6 +48,7 @@
     <entry key="tab_title_key">Key</entry>
     <entry key="tab_title_list">List</entry>
     <entry key="tab_title_pubsub">Pub/Sub</entry>
+    <entry key="tab_title_config">Config</entry>
     <entry key="tab_title_raw">命令行</entry>
     <entry key="tab_title_set">Set</entry>
     <entry key="tab_title_string">String</entry>

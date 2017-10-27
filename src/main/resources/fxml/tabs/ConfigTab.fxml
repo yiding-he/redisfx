@@ -1,0 +1,30 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.ConfigTabController">
+    <center>
+        <VBox spacing="10">
+
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+
+            <TableView fx:id="tblConfigs" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">
+                <columns>
+                    <TableColumn fx:id="colConfigKey" text="%word_key" prefWidth="200"/>
+                    <TableColumn fx:id="colConfigValue" text="%word_value" prefWidth="200"/>
+                </columns>
+                <contextMenu>
+                    <ContextMenu fx:id="mnuConfigValues">
+                        <items>
+                            <MenuItem text="%hash_op_edit_item" onAction="#mnuEditConfigValue"/>
+                            <MenuItem text="%hash_op_copy_key" onAction="#mnuCopyConfigKey" accelerator="Shortcut+C"/>
+                            <MenuItem text="%hash_op_copy_value" onAction="#mnuCopyConfigValue" accelerator="Shortcut+B"/>
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

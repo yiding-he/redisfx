@@ -71,6 +71,9 @@
                     </center>
                 </BorderPane>
             </Tab>
+            <Tab closable="false" text="%tab_title_config" userData="Config">
+                <fx:include source="tabs/ConfigTab.fxml"/>
+            </Tab>
         </TabPane>
     </center>
 </BorderPane>
