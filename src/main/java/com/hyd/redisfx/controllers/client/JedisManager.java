@@ -6,12 +6,18 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.function.Consumer;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @author yiding.he
  */
 public class JedisManager {
+
+    public static final int DEFAULT_TIMEOUT = 10000;
 
     private static JedisPool jedisPool;
 
@@ -65,7 +71,7 @@ public class JedisManager {
     }
 
     public static String getHost() {
-        return connection == null? null: connection.getHost();
+        return connection == null ? null : connection.getHost();
     }
 
     public static int getPort() {
@@ -73,16 +79,45 @@ public class JedisManager {
     }
 
     public static JedisPool createJedisPool(Connection connection) {
-        return createJedisPool(connection.getHost(), connection.getPort(), connection.getPassphase());
+
+        Proxy proxy = null;
+
+        if (isNotBlank(connection.getProxyType()) &&
+                isNotBlank(connection.getProxyHost()) &&
+                connection.getProxyPort() > 0) {
+            proxy = new Proxy(
+                    Proxy.Type.valueOf(connection.getProxyType()),
+                    new InetSocketAddress(connection.getProxyHost(), connection.getProxyPort())
+            );
+        }
+
+        return createJedisPool(
+                connection.getHost(),
+                connection.getPort(),
+                connection.getPassphase(),
+                proxy
+        );
     }
 
-    public static JedisPool createJedisPool(String host, Integer port, String passphase) {
+    /**
+     * create a JedisPool instance.
+     *
+     * @param host      Redis server host
+     * @param port      Redis server port
+     * @param passphase (nullable) Redis server passphase
+     * @param proxy     (nullable) proxy
+     *
+     * @return a JedisPool instance
+     */
+    public static JedisPool createJedisPool(
+            String host, Integer port, String passphase, Proxy proxy) {
+
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
 
         if (!StringUtils.isBlank(passphase)) {
-            return new JedisPool(poolConfig, host, port, 10000, passphase);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
         } else {
-            return new JedisPool(poolConfig, host, port, 10000);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
         }
     }
 }

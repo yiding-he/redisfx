@@ -1,3 +1,4 @@
+<?import com.hyd.redisfx.nodes.IntegerSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -16,6 +17,11 @@
                             <Label text="%msg_please_create_connection"/>
                         </placeholder>
                     </ListView>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <Button text="%op_create" fx:id="btnCreate" onAction="#createClicked"/>
+                        <Button text="%op_copy" fx:id="btnCopy" onAction="#copyClicked" disable="true"/>
+                        <Button text="%op_delete" fx:id="btnDelete" onAction="#deleteClicked"/>
+                    </HBox>
                 </VBox>
                 <VBox spacing="10" HBox.hgrow="ALWAYS">
                     <HBox alignment="BASELINE_LEFT" spacing="10">
@@ -25,21 +31,22 @@
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Label text="%dlg_conn_lbl_host"/>
                         <TextField HBox.hgrow="ALWAYS" fx:id="txtHost"/>
-                    </HBox>
-                    <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Label text="%dlg_conn_lbl_port"/>
-                        <Spinner prefWidth="100" fx:id="spnPort"/>
+                        <IntegerSpinner prefWidth="80" fx:id="spnPort"/>
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Label text="%dlg_conn_lbl_pass"/>
                         <PasswordField HBox.hgrow="ALWAYS" fx:id="txtPassphase"/>
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Button text="%op_create" fx:id="btnCreate" onAction="#createClicked"/>
+                        <Label text="%dlg_conn_lbl_proxy_host"/>
+                        <TextField HBox.hgrow="ALWAYS" fx:id="txtProxyHost"/>
+                        <Label text="%dlg_conn_lbl_proxy_port"/>
+                        <IntegerSpinner prefWidth="80" fx:id="spnProxyPort"/>
+                    </HBox>
+                    <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Button text="%op_test" fx:id="btnTest" onAction="#testClicked" disable="true"/>
                         <Button text="%op_save" fx:id="btnSave" onAction="#saveClicked" disable="true"/>
-                        <Button text="%op_copy" fx:id="btnCopy" onAction="#copyClicked" disable="true"/>
-                        <Button text="%op_delete" fx:id="btnDelete" onAction="#deleteClicked"/>
                     </HBox>
                 </VBox>
             </HBox>

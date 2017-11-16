@@ -19,8 +19,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * (description)
  * created at 17/03/14
@@ -60,6 +58,8 @@ public class KeyTabController extends AbstractTabController {
                 }
             }
         });
+
+        this.txtKeyPattern.setOnAction(this::listKeys);
 
         App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
     }
@@ -115,41 +115,19 @@ public class KeyTabController extends AbstractTabController {
 
         String pattern = this.txtKeyPattern.getText();
         int limit = Integer.parseInt(String.valueOf(cmbLimit.getValue()));
-        AtomicInteger counter = new AtomicInteger();
 
         ObservableList<KeyItem> items = this.tblKeys.getItems();
         items.clear();
 
         if (pattern.trim().length() > 0) {
-
-            ScanResult<String> result = null;
-            String cursor = "0";
-            ScanParams scanParams = new ScanParams();
-            scanParams.match(pattern);
-
             try (Jedis jedis = JedisManager.getJedis()) {
-                while (result == null || counter.get() < limit) {
+                ScanParams scanParams = new ScanParams().match(pattern).count(limit);
+                ScanResult<String> result = jedis.scan(ScanParams.SCAN_POINTER_START, scanParams);
 
-                    if (result == null) {
-                        result = jedis.scan(cursor, scanParams);
-                    } else {
-                        result = jedis.scan(cursor);
-                    }
-
-                    for (String key : result.getResult()) {
-                        if (counter.incrementAndGet() <= limit) {
-                            String type = jedis.type(key);
-                            items.add(new KeyItem(key, type));
-                        } else {
-                            break;
-                        }
-                    }
-
-                    cursor = result.getStringCursor();
-                    if (cursor.equals("0")) {
-                        break;
-                    }
-                }
+                result.getResult().forEach(key -> {
+                    String type = jedis.type(key);
+                    items.add(new KeyItem(key, type));
+                });
             }
         }
     }

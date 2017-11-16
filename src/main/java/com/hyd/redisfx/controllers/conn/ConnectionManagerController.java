@@ -7,13 +7,18 @@ import com.hyd.redisfx.conn.ConnectionManager;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
+import com.hyd.redisfx.nodes.IntegerSpinner;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.*;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Protocol;
+
+import java.net.Proxy;
 
 /**
  * @author yiding_he
@@ -28,7 +33,7 @@ public class ConnectionManagerController extends BaseController {
 
     public TextField txtHost;
 
-    public Spinner<Integer> spnPort;
+    public IntegerSpinner spnPort;
 
     public PasswordField txtPassphase;
 
@@ -46,10 +51,17 @@ public class ConnectionManagerController extends BaseController {
 
     public ListView<Connection> lstConnections;
 
+    public TextField txtProxyHost;
+
+    public IntegerSpinner spnProxyPort;
+
     private SimpleObjectProperty<Connection> currentSelectedConnection = new SimpleObjectProperty<>();
 
     public void initialize() {
-        this.spnPort.setValueFactory(new IntegerSpinnerValueFactory(1, 65535, DEFAULT_PORT));
+
+        initSpinners();
+        initListView();
+
         this.txtHost.textProperty().addListener((_ob, _old, _new) -> {
             btnSave.setDisable(StringUtils.isBlank(txtHost.getText()));
             btnTest.setDisable(StringUtils.isBlank(txtHost.getText()));
@@ -57,19 +69,28 @@ public class ConnectionManagerController extends BaseController {
             btnOpen.setDisable(StringUtils.isBlank(txtHost.getText()));
         });
 
-        initListView();
-
         this.currentSelectedConnection.addListener((_ob, _old, _new) -> {
             this.btnDelete.setDisable(_new == null);
             if (_new != null) {
-                this.txtName.setText(_new.getName());
-                this.txtHost.setText(_new.getHost());
-                this.spnPort.getValueFactory().setValue(_new.getPort());
-                this.txtPassphase.setText(_new.getPassphase());
+                updateForm(_new);
             } else {
                 resetFields();
             }
         });
+    }
+
+    private void initSpinners() {
+        this.spnPort.setRangeAndValue(1, 65535, DEFAULT_PORT);
+        this.spnProxyPort.setRangeAndValue(0, 65535, 0);
+    }
+
+    private void updateForm(Connection _new) {
+        this.txtName.setText(_new.getName());
+        this.txtHost.setText(_new.getHost());
+        this.spnPort.getValueFactory().setValue(_new.getPort());
+        this.txtPassphase.setText(_new.getPassphase());
+        this.txtProxyHost.setText(_new.getProxyHost());
+        this.spnProxyPort.getValueFactory().setValue(_new.getProxyPort());
     }
 
     private void initListView() {
@@ -102,6 +123,8 @@ public class ConnectionManagerController extends BaseController {
         this.spnPort.getValueFactory().setValue(DEFAULT_PORT);
         this.txtPassphase.setText("");
         this.btnDelete.setDisable(true);
+        this.txtProxyHost.setText("");
+        this.spnProxyPort.getValueFactory().setValue(0);
     }
 
     public void saveClicked() {
@@ -114,13 +137,20 @@ public class ConnectionManagerController extends BaseController {
         Connection connection = this.currentSelectedConnection.get() != null ?
                 this.currentSelectedConnection.get() : new Connection();
 
+        updateConnectionFromUI(connection);
+
+        ConnectionManager.saveConnection(connection);
+        lstConnections.getSelectionModel().select(connection);
+    }
+
+    private void updateConnectionFromUI(Connection connection) {
         connection.setName(txtName.getText());
         connection.setHost(txtHost.getText());
         connection.setPort(spnPort.getValue());
         connection.setPassphase(txtPassphase.getText());
-
-        ConnectionManager.saveConnection(connection);
-        lstConnections.getSelectionModel().select(connection);
+        connection.setProxyType(Proxy.Type.SOCKS.name());
+        connection.setProxyHost(txtProxyHost.getText());
+        connection.setProxyPort(spnProxyPort.getValue());
     }
 
     public void copyClicked() {
@@ -151,16 +181,15 @@ public class ConnectionManagerController extends BaseController {
         btnTest.setDisable(true);
 
         Runnable runnable = () -> {
-            String host = txtHost.getText();
-            Integer port = spnPort.getValue();
-            String passphase = txtPassphase.getText();
+            Connection connection = new Connection();
+            updateConnectionFromUI(connection);
 
             try {
-                JedisManager.connect(host, port, passphase);
-                Fx.info("连接成功", "连接到 " + host + ":" + port + " 成功。");
+                JedisManager.connect(connection);
+                Fx.info("连接成功", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 成功。");
             } catch (Exception e) {
                 LOG.error("", e);
-                Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e.toString());
+                Fx.error("连接失败", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
             } finally {
                 btnTest.setDisable(false);
             }
@@ -171,12 +200,7 @@ public class ConnectionManagerController extends BaseController {
 
     public void openConnectionClicked() {
         Connection connection = new Connection();
-
-        connection.setName(txtName.getText());
-        connection.setHost(txtHost.getText());
-        connection.setPort(spnPort.getValue());
-        connection.setPassphase(txtPassphase.getText());
-
+        updateConnectionFromUI(connection);
         openConnection(connection);
     }
 

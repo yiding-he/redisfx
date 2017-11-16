@@ -29,9 +29,11 @@
     <entry key="app_title">RedisFx</entry>
     <entry key="dlg_conn_lbl_connections">连接</entry>
     <entry key="dlg_conn_lbl_host">主机：</entry>
+    <entry key="dlg_conn_lbl_port">端口：</entry>
+    <entry key="dlg_conn_lbl_proxy_host">代理（Socks，可选）：</entry>
+    <entry key="dlg_conn_lbl_proxy_port">端口：</entry>
     <entry key="dlg_conn_lbl_name">名称：</entry>
     <entry key="dlg_conn_lbl_pass">密码（可选）：</entry>
-    <entry key="dlg_conn_lbl_port">端口：</entry>
     <entry key="empty_mark">（空）</entry>
     <entry key="lbl_type">类型</entry>
     <entry key="lbl_or">或</entry>

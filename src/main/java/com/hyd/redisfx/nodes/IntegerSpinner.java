@@ -24,12 +24,22 @@ public class IntegerSpinner extends Spinner<Integer> {
         });
     }
 
+    public void setRangeAndValue(int min, int max, int value) {
+        setMin(min);
+        setMax(max);
+        setValue(value);
+    }
+
     public void setMin(int min) {
         getVF().setMin(min);
     }
 
     public void setMax(int max) {
         getVF().setMax(max);
+    }
+
+    public void setValue(int value) {
+        getVF().setValue(value);
     }
 
     private void checkEditorText() {
