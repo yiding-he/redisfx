@@ -36,6 +36,7 @@
     <entry key="dlg_conn_lbl_pass">密码（可选）：</entry>
     <entry key="empty_mark">（空）</entry>
     <entry key="lbl_type">类型</entry>
+    <entry key="lbl_length">长度</entry>
     <entry key="lbl_or">或</entry>
     <entry key="lbl_to"> 到 </entry>
     <entry key="op_list_key">列出 Key</entry>

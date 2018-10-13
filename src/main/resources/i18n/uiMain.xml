@@ -36,6 +36,7 @@
     <entry key="dlg_conn_lbl_pass">Pass phase (Optional):</entry>
     <entry key="empty_mark">( EMPTY )</entry>
     <entry key="lbl_type">Type</entry>
+    <entry key="lbl_length">Length</entry>
     <entry key="lbl_or">OR</entry>
     <entry key="lbl_to"> to </entry>
     <entry key="op_list_key">List Keys</entry>

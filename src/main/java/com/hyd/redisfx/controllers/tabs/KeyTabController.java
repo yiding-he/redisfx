@@ -5,6 +5,8 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -40,12 +42,16 @@ public class KeyTabController extends AbstractTabController {
 
     public TableColumn<KeyItem, String> typeColumn;
 
+    public TableColumn<KeyItem, Integer> lengthColumn;
+
     @Override
     public void initialize() {
         super.initialize();
 
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
+        this.lengthColumn.setCellValueFactory(data -> data.getValue().lengthProperty().asObject());
+
         this.cmbLimit.getSelectionModel().select(0);
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
@@ -126,9 +132,27 @@ public class KeyTabController extends AbstractTabController {
 
                 result.getResult().forEach(key -> {
                     String type = jedis.type(key);
-                    items.add(new KeyItem(key, type));
+                    int length = getLength(key, type, jedis);
+                    items.add(new KeyItem(key, type, length));
                 });
             }
+        }
+    }
+
+    private int getLength(String key, String type, Jedis jedis) {
+        switch (type) {
+            case "string":
+                return jedis.strlen(key).intValue();
+            case "list":
+                return jedis.llen(key).intValue();
+            case "hash":
+                return jedis.hlen(key).intValue();
+            case "set":
+                return jedis.scard(key).intValue();
+            case "zset":
+                return jedis.zcard(key).intValue();
+            default:
+                return 0;
         }
     }
 
@@ -160,6 +184,8 @@ public class KeyTabController extends AbstractTabController {
 
         private StringProperty type = new SimpleStringProperty();
 
+        private IntegerProperty length = new SimpleIntegerProperty();
+
         public KeyItem() {
         }
 
@@ -170,6 +196,12 @@ public class KeyTabController extends AbstractTabController {
         public KeyItem(String key, String type) {
             setKey(key);
             setType(type);
+        }
+
+        public KeyItem(String key, String type, int length) {
+            setKey(key);
+            setType(type);
+            setLength(length);
         }
 
         public String getKey() {
@@ -186,6 +218,18 @@ public class KeyTabController extends AbstractTabController {
 
         public void setType(String type) {
             this.type.set(type);
+        }
+
+        public int getLength() {
+            return length.get();
+        }
+
+        public IntegerProperty lengthProperty() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length.set(length);
         }
 
         public StringProperty keyProperty() {

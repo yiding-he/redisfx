@@ -40,6 +40,7 @@
                 <columns>
                     <TableColumn fx:id="keyColumn" text="Key" prefWidth="500"/>
                     <TableColumn fx:id="typeColumn" text="%lbl_type" prefWidth="150"/>
+                    <TableColumn fx:id="lengthColumn" text="%lbl_length" prefWidth="50"/>
                 </columns>
             </TableView>
 
