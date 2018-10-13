@@ -4,12 +4,10 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
+import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,6 +25,8 @@ public class HashTabController extends AbstractTabController {
     public TableColumn<HashItem, String> colHashValue;
 
     public ContextMenu mnuHashValues;
+
+    public Label lblHashSize;
 
     private String currentKey;
 
@@ -83,6 +83,7 @@ public class HashTabController extends AbstractTabController {
         JedisManager.withJedis(jedis -> {
             tblHashValues.getItems().clear();
             jedis.hgetAll(key).forEach((k, v) -> tblHashValues.getItems().add(new HashItem(k, v)));
+            lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
         });
     }
 

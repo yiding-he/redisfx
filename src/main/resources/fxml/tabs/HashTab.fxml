@@ -42,6 +42,7 @@
 
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <Button text="%hash_op_add_value" onAction="#addValue"/>
+                <Label text="0" fx:id="lblHashSize"/>
             </HBox>
         </VBox>
     </center>

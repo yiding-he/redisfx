@@ -91,5 +91,6 @@
     <entry key="hash_op_copy_value">复制值</entry>
     <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
     <entry key="hash_msg_nokey">请先键入 Key 值</entry>
+    <entry key="hash_lbl_size">大小：</entry>
 
 </properties>

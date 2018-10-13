@@ -91,5 +91,6 @@
     <entry key="hash_op_copy_value">Copy Value</entry>
     <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
     <entry key="hash_msg_nokey">Please enter Key first.</entry>
+    <entry key="hash_lbl_size">Size: </entry>
 
 </properties>
