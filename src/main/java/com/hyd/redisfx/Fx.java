@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -154,5 +157,22 @@ public class Fx {
         ClipboardContent content = new ClipboardContent();
         content.putString(text);
         Clipboard.getSystemClipboard().setContent(content);
+    }
+
+    ///////////////////////////////////////////////////////////////
+
+    public static void textFieldOnKeyPress(
+            TextField textField, KeyCode keyCode, Runnable onAction) {
+
+        textField.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == keyCode) {
+                try {
+                    onAction.run();
+                } catch (Exception e) {
+                    LOG.error("", e);
+                    error(e.toString());
+                }
+            }
+        });
     }
 }

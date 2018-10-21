@@ -10,7 +10,10 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 
+import java.util.Map;
 import java.util.Optional;
 
 @TabName("Hash")
@@ -28,6 +31,8 @@ public class HashTabController extends AbstractTabController {
 
     public Label lblHashSize;
 
+    public TextField txtHashFieldPattern;
+
     private String currentKey;
 
     public void initialize() {
@@ -36,11 +41,8 @@ public class HashTabController extends AbstractTabController {
         colHashKey.setCellValueFactory(item -> item.getValue().keyProperty());
         colHashValue.setCellValueFactory(item -> item.getValue().valueProperty());
 
-        txtKey.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                showValue();
-            }
-        });
+        Fx.textFieldOnKeyPress(txtKey, KeyCode.ENTER, this::showValue);
+        Fx.textFieldOnKeyPress(txtHashFieldPattern, KeyCode.ENTER, this::searchFieldPattern);
 
         tblHashValues.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && tblHashValues.getSelectionModel().getSelectedIndex() != -1) {
@@ -78,12 +80,43 @@ public class HashTabController extends AbstractTabController {
 
     public void showValue(String key) {
         txtKey.setText(key);
+        txtKey.selectAll();
         this.currentKey = key;
 
         JedisManager.withJedis(jedis -> {
             tblHashValues.getItems().clear();
             jedis.hgetAll(key).forEach((k, v) -> tblHashValues.getItems().add(new HashItem(k, v)));
             lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
+        });
+    }
+
+    public void showValueWithPattern(String fieldPattern) {
+        if (StringUtils.isBlank(txtKey.getText())) {
+            return;
+        }
+
+        showValueWithPattern(txtKey.getText(), fieldPattern);
+    }
+
+    public void showValueWithPattern(String key, String fieldPattern) {
+        txtKey.setText(key);
+        txtKey.selectAll();
+        this.currentKey = key;
+
+        JedisManager.withJedis(jedis -> {
+
+            lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
+            tblHashValues.getItems().clear();
+
+            ScanParams scanParams = new ScanParams().match(fieldPattern);
+            ScanResult<Map.Entry<String, String>> scanResult;
+
+            do {
+                scanResult = jedis.hscan(key, ScanParams.SCAN_POINTER_START, scanParams);
+                scanResult.getResult().forEach(entry -> {
+                    tblHashValues.getItems().add(new HashItem(entry.getKey(), entry.getValue()));
+                });
+            } while (!scanResult.isCompleteIteration());
         });
     }
 
@@ -127,6 +160,17 @@ public class HashTabController extends AbstractTabController {
     public void mnuCopyHashValue() {
         Optional.ofNullable(tblHashValues.getSelectionModel().getSelectedItem())
                 .ifPresent(hashItem -> Fx.copyText(hashItem.getValue()));
+    }
+
+    public void searchFieldPattern() {
+        txtHashFieldPattern.selectAll();
+        String fieldPattern = txtHashFieldPattern.getText();
+
+        if (StringUtils.isBlank(fieldPattern)) {
+            showValue();
+        } else {
+            showValueWithPattern(fieldPattern);
+        }
     }
 
     //////////////////////////////////////////////////////////////

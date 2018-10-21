@@ -15,6 +15,7 @@
     <entry key="word_database">Database</entry>
     <entry key="word_from">From</entry>
     <entry key="word_to">To</entry>
+    <entry key="word_search">Search</entry>
 
     <entry key="mnu_connections">Connections</entry>
     <entry key="mnu_connections_choose">Choose to open...</entry>
@@ -91,6 +92,6 @@
     <entry key="hash_op_copy_value">Copy Value</entry>
     <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
     <entry key="hash_msg_nokey">Please enter Key first.</entry>
-    <entry key="hash_lbl_size">Size: </entry>
+    <entry key="hash_lbl_size">Hash Size: </entry>
 
 </properties>

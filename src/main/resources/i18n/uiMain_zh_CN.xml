@@ -15,6 +15,7 @@
     <entry key="word_database">数据库</entry>
     <entry key="word_from">从</entry>
     <entry key="word_to">到</entry>
+    <entry key="word_search">搜索</entry>
 
     <entry key="mnu_connections">连接(_C)</entry>
     <entry key="mnu_connections_choose">选择连接(_O)...</entry>
@@ -91,6 +92,6 @@
     <entry key="hash_op_copy_value">复制值</entry>
     <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
     <entry key="hash_msg_nokey">请先键入 Key 值</entry>
-    <entry key="hash_lbl_size">大小：</entry>
+    <entry key="hash_lbl_size">Hash大小：</entry>
 
 </properties>

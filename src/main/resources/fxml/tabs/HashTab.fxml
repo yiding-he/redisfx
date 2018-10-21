@@ -41,8 +41,10 @@
             </TableView>
 
             <HBox spacing="10" alignment="BASELINE_LEFT">
-                <Button text="%hash_op_add_value" onAction="#addValue"/>
+                <TextField fx:id="txtHashFieldPattern"/>
+                <Button text="%word_search" styleClass="narrowButton" onAction="#searchFieldPattern"/>
                 <Label text="0" fx:id="lblHashSize"/>
+                <Button text="%hash_op_add_value" onAction="#addValue"/>
             </HBox>
         </VBox>
     </center>

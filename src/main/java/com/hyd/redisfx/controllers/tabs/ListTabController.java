@@ -55,11 +55,7 @@ public class ListTabController extends AbstractTabController {
 
         //////////////////////////////////////////////////////////////
 
-        txtKey.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                listValues();
-            }
-        });
+        Fx.textFieldOnKeyPress(txtKey, KeyCode.ENTER, this::listValues);
 
         //////////////////////////////////////////////////////////////
 
@@ -158,6 +154,8 @@ public class ListTabController extends AbstractTabController {
             // 在界面上回填 key
             this.txtKey.setText(key);
         });
+
+        this.txtKey.selectAll();
     }
 
     // return true if a list is displaying

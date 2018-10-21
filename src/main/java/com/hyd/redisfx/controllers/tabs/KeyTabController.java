@@ -119,6 +119,8 @@ public class KeyTabController extends AbstractTabController {
             this.txtKeyPattern.setText("*");
         }
 
+        txtKeyPattern.selectAll();  // 方便用户继续键入
+
         String pattern = this.txtKeyPattern.getText();
         int limit = Integer.parseInt(String.valueOf(cmbLimit.getValue()));
 

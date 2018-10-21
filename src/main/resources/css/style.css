@@ -15,6 +15,11 @@
     -fx-min-width: 60;
 }
 
+.button.narrowButton {
+    -fx-padding: 5 15;
+    -fx-min-width: 20;
+}
+
 .button.smallButton {
     -fx-padding: 3 5;
     -fx-min-width: 20;

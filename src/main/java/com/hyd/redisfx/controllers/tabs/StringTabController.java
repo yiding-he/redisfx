@@ -3,7 +3,6 @@ package com.hyd.redisfx.controllers.tabs;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.i18n.I18n;
 import com.hyd.redisfx.nodes.DoubleSpinner;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 
 @TabName("String")
@@ -40,8 +39,7 @@ public class StringTabController extends AbstractTabController {
             return;
         }
 
-        // 如果是外部调用，则需要在界面上回填 key
-        this.txtKey.setText(key);
+        this.txtKey.setText(key);       // 在界面上回填 key
 
         JedisManager.withJedis(jedis -> {
             String value = jedis.get(key);
@@ -58,7 +56,7 @@ public class StringTabController extends AbstractTabController {
         });
     }
 
-    public void deleteKey(ActionEvent actionEvent) {
+    public void deleteKey() {
         String key = this.txtKey.getText();
 
         if (key.length() <= 0) {
@@ -75,7 +73,7 @@ public class StringTabController extends AbstractTabController {
         });
     }
 
-    public void saveKey(ActionEvent actionEvent) {
+    public void saveKey() {
         String key = this.txtKey.getText();
 
         if (key.length() <= 0) {
@@ -87,7 +85,7 @@ public class StringTabController extends AbstractTabController {
         this.lblMessage.setText("Value saved.");
     }
 
-    public void increment(ActionEvent actionEvent) {
+    public void increment() {
         String key = txtKey.getText();
         double incr = this.spnIncrement.getValue();
 
@@ -99,7 +97,7 @@ public class StringTabController extends AbstractTabController {
         }
     }
 
-    public void decrement(ActionEvent actionEvent) {
+    public void decrement() {
         String key = txtKey.getText();
         double incr = this.spnDecrement.getValue();
 
