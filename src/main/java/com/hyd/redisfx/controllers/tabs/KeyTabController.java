@@ -5,13 +5,22 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +41,8 @@ public class KeyTabController extends AbstractTabController {
 
     private static final Logger LOG = LoggerFactory.getLogger(KeyTabController.class);
 
+    public static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public TextField txtKeyPattern;
 
     public ComboBox<Integer> cmbLimit;
@@ -44,6 +55,8 @@ public class KeyTabController extends AbstractTabController {
 
     public TableColumn<KeyItem, Integer> lengthColumn;
 
+    public TableColumn<KeyItem, String> expireColumn;
+
     @Override
     public void initialize() {
         super.initialize();
@@ -51,6 +64,7 @@ public class KeyTabController extends AbstractTabController {
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
         this.lengthColumn.setCellValueFactory(data -> data.getValue().lengthProperty().asObject());
+        this.expireColumn.setCellValueFactory(data -> data.getValue().expireAtProperty());
 
         this.cmbLimit.getSelectionModel().select(0);
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -89,11 +103,11 @@ public class KeyTabController extends AbstractTabController {
         }
 
         String type = selectedItem.getType();
-        if (type.equals("string")) {
+        if (Objects.equals(type, "string")) {
             Tabs.switchTab(StringTabController.class, c -> c.showValue(selectedItem.getKey()));
-        } else if (type.equals("list")) {
+        } else if (Objects.equals(type, "list")) {
             Tabs.switchTab(ListTabController.class, c -> c.showList(selectedItem.getKey()));
-        } else if (type.equals("hash")) {
+        } else if (Objects.equals(type, "hash")) {
             Tabs.switchTab(HashTabController.class, c -> c.showValue(selectedItem.getKey()));
         }
     }
@@ -135,9 +149,20 @@ public class KeyTabController extends AbstractTabController {
                 result.getResult().forEach(key -> {
                     String type = jedis.type(key);
                     int length = getLength(key, type, jedis);
-                    items.add(new KeyItem(key, type, length));
+                    String expireAt = getExpireAt(key, jedis);
+                    items.add(new KeyItem(key, type, length, expireAt));
                 });
             }
+        }
+    }
+
+    private String getExpireAt(String key, Jedis jedis) {
+        Long seconds = jedis.ttl(key);
+        if (seconds <= 0) {
+            return "";
+        } else {
+            LocalDateTime expireTime = LocalDateTime.now().plusSeconds(seconds);
+            return expireTime.format(DATE_TIME_PATTERN);
         }
     }
 
@@ -188,22 +213,16 @@ public class KeyTabController extends AbstractTabController {
 
         private IntegerProperty length = new SimpleIntegerProperty();
 
+        private StringProperty expireAt = new SimpleStringProperty();
+
         public KeyItem() {
         }
 
-        public KeyItem(String key) {
-            setKey(key);
-        }
-
-        public KeyItem(String key, String type) {
-            setKey(key);
-            setType(type);
-        }
-
-        public KeyItem(String key, String type, int length) {
+        public KeyItem(String key, String type, int length, String expireAt) {
             setKey(key);
             setType(type);
             setLength(length);
+            setExpireAt(expireAt);
         }
 
         public String getKey() {
@@ -240,6 +259,18 @@ public class KeyTabController extends AbstractTabController {
 
         public StringProperty typeProperty() {
             return this.type;
+        }
+
+        public String getExpireAt() {
+            return expireAt.get();
+        }
+
+        public StringProperty expireAtProperty() {
+            return expireAt;
+        }
+
+        public void setExpireAt(String expireAt) {
+            this.expireAt.set(expireAt);
         }
     }
 }

@@ -20,6 +20,7 @@ public class RedisFxMain extends Application {
         Application.launch(args);
     }
 
+    @Override
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader fxmlLoader = Fx.getFxmlLoader("/fxml/Main.fxml");
