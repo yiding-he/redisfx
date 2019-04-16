@@ -4,15 +4,12 @@ import com.hyd.redisfx.controllers.conn.BaseController;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -27,6 +24,12 @@ import java.io.IOException;
  * @author yiding_he
  */
 public class Fx {
+
+    public static final KeyCodeCombination ENTER = new KeyCodeCombination(KeyCode.ENTER);
+
+    public static final KeyCodeCombination CTRL_C = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
+
+    public static final KeyCodeCombination CTRL_B = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
 
     private static final Logger LOG = LoggerFactory.getLogger(Fx.class);
 
@@ -161,18 +164,22 @@ public class Fx {
 
     ///////////////////////////////////////////////////////////////
 
-    public static void textFieldOnKeyPress(
-            TextField textField, KeyCode keyCode, Runnable onAction) {
+    public static void nodeOnKeyPress(
+            Node node, KeyCombination keyCombination, Runnable onAction) {
 
-        textField.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == keyCode) {
+        node.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (keyCombination.match(event)) {
                 try {
                     onAction.run();
                 } catch (Exception e) {
                     LOG.error("", e);
                     error(e.toString());
+                } finally {
+                    event.consume();
                 }
             }
         });
     }
+
+
 }

@@ -5,22 +5,13 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +20,11 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * (description)
@@ -41,7 +37,7 @@ public class KeyTabController extends AbstractTabController {
 
     private static final Logger LOG = LoggerFactory.getLogger(KeyTabController.class);
 
-    public static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public TextField txtKeyPattern;
 
@@ -56,6 +52,8 @@ public class KeyTabController extends AbstractTabController {
     public TableColumn<KeyItem, Integer> lengthColumn;
 
     public TableColumn<KeyItem, String> expireColumn;
+
+    public ContextMenu mnuConfigValues;
 
     @Override
     public void initialize() {
@@ -81,6 +79,7 @@ public class KeyTabController extends AbstractTabController {
 
         this.txtKeyPattern.setOnAction(this::listKeys);
 
+        Fx.nodeOnKeyPress(this.tblKeys, Fx.CTRL_C, this::mnuCopyKey);
         App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
     }
 
@@ -201,6 +200,11 @@ public class KeyTabController extends AbstractTabController {
         });
 
         listKeys(actionEvent);
+    }
+
+    public void mnuCopyKey() {
+        Optional.ofNullable(tblKeys.getSelectionModel().getSelectedItem())
+                .ifPresent(keyItem -> Fx.copyText(keyItem.getKey()));
     }
 
     //////////////////////////////////////////////////////////////

@@ -52,6 +52,9 @@ public class ConfigTabController extends AbstractTabController {
 
             tblConfigs.getItems().sort(Comparator.comparing(ConfigItem::getKey));
         });
+
+        Fx.nodeOnKeyPress(this.tblConfigs, Fx.CTRL_C, this::mnuCopyConfigKey);
+        Fx.nodeOnKeyPress(this.tblConfigs, Fx.CTRL_B, this::mnuCopyConfigValue);
     }
 
     public void mnuEditConfigValue() {
