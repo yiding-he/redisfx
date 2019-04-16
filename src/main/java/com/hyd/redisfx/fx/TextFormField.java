@@ -27,6 +27,10 @@ public class TextFormField extends FormField {
         return this.textField.getText();
     }
 
+    public void setEditable(boolean editable) {
+        this.textField.setEditable(editable);
+    }
+
     @Override
     public void renderTo(GridPane contentPane, int rowIndex) {
         GridPane.setHgrow(this.textField, Priority.ALWAYS);

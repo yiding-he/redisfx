@@ -23,6 +23,8 @@ public class HashPropertyDialog extends FormDialog {
 
     private Runnable onItemSubmit;
 
+    private boolean editable = true;
+
     public HashPropertyDialog(HashTabController.HashItem hashItem) {
         this.hashItem = hashItem;
         this.setTitle("Hash 属性");
@@ -33,6 +35,16 @@ public class HashPropertyDialog extends FormDialog {
 
         this.addField(keyField);
         this.addField(valueField);
+
+        setOnShown(event -> keyField.setEditable(editable));
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
     }
 
     public void setOnItemSubmit(Runnable onItemSubmit) {

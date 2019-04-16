@@ -61,6 +61,7 @@ public class HashTabController extends AbstractTabController {
         }
 
         HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(selectedItem);
+        hashPropertyDialog.setEditable(false);
         hashPropertyDialog.setOnItemSubmit(() -> submitValue(selectedItem));
         hashPropertyDialog.show();
     }
