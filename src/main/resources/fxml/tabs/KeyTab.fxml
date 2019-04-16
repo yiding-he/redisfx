@@ -44,6 +44,7 @@
                     <ContextMenu fx:id="mnuConfigValues">
                         <items>
                             <MenuItem text="%hash_op_copy_key" onAction="#mnuCopyKey" accelerator="Shortcut+C"/>
+                            <MenuItem text="%key_set_expiry" onAction="#mnuSetExpiry"/>
                         </items>
                     </ContextMenu>
                 </contextMenu>

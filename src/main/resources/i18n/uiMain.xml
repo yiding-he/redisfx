@@ -12,6 +12,7 @@
     <entry key="word_cancel">Cancel</entry>
     <entry key="word_yes">Yes</entry>
     <entry key="word_no">No</entry>
+    <entry key="word_error">Error</entry>
     <entry key="word_database">Database</entry>
     <entry key="word_from">From</entry>
     <entry key="word_to">To</entry>
@@ -72,6 +73,11 @@
     <entry key="msg_confirm_delete_value">Are you sure to delete selected value(s)?</entry>
     <entry key="op_test">Test...</entry>
 
+    <!-- Key Tab -->
+    <entry key="key_set_expiry">Set Expiry...</entry>
+    <entry key="key_set_expiry_title">Set Expiry</entry>
+    <entry key="key_lbl_expiry">TTL Seconds</entry>
+
     <!-- List Tab -->
     <entry key="list_lbl_length">Length:</entry>
     <entry key="list_lbl_display">, Display from</entry>
@@ -84,9 +90,9 @@
     <entry key="list_op_trim">Trim</entry>
     <entry key="list_msg_op_failed">Operation Failed.</entry>
     <entry key="list_msg_type_error">Key not exists or is not a list.</entry>
-    <entry key="list_msg_delete_confirm">Saving item with empty value will delete it.&#10;&#10;Are you sure to delete
-        this
-        item?
+    <entry key="list_msg_delete_confirm">
+        Saving item with empty value will
+        delete it.&#10;&#10;Are you sure to delete this item?
     </entry>
 
     <!-- Hash Tab -->

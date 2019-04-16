@@ -18,7 +18,7 @@ public class I18n {
         try {
             return UI_MAIN_BUNDLE.getString(key);
         } catch (MissingResourceException e) {
-            return "%" + key + "%";
+            return key;
         }
     }
 

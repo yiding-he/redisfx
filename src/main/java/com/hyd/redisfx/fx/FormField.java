@@ -18,6 +18,7 @@ public abstract class FormField {
     public FormField(String labelName) {
         this.label = new Label(labelName);
         this.label.setMinWidth(USE_PREF_SIZE);
+        this.label.setTranslateY(5);
     }
 
     protected Label getLabel() {

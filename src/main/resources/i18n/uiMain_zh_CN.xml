@@ -12,6 +12,7 @@
     <entry key="word_cancel">取消(_C)</entry>
     <entry key="word_yes">是(_Y)</entry>
     <entry key="word_no">否(_N)</entry>
+    <entry key="word_error">错误</entry>
     <entry key="word_database">数据库</entry>
     <entry key="word_from">从</entry>
     <entry key="word_to">到</entry>
@@ -71,6 +72,11 @@
     <entry key="msg_confirm_delete_key">确定要删除指定的 KEY 吗？</entry>
     <entry key="msg_confirm_delete_value">确定要删除指定的值吗？</entry>
     <entry key="op_test">测试...</entry>
+
+    <!-- Key Tab -->
+    <entry key="key_set_expiry">设置超时时间...</entry>
+    <entry key="key_set_expiry_title">设置超时时间</entry>
+    <entry key="key_lbl_expiry">超时时间（秒）</entry>
 
     <!-- List Tab -->
     <entry key="list_lbl_length">列表长度：</entry>

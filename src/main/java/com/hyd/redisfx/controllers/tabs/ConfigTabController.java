@@ -5,6 +5,7 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.event.EventType;
+import com.hyd.redisfx.fx.Alerts;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -66,8 +67,18 @@ public class ConfigTabController extends AbstractTabController {
             return;
         }
 
-        HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(selectedItem);
-        hashPropertyDialog.setOnItemSubmit(() -> submitValue(selectedItem));
+        ConfigItem duplicate = new ConfigItem(selectedItem.getKey(), selectedItem.getValue());
+
+        HashPropertyDialog hashPropertyDialog = new HashPropertyDialog(duplicate);
+        hashPropertyDialog.setKeyEditable(false);
+        hashPropertyDialog.setOnItemSubmit(() -> {
+            try {
+                submitValue(duplicate);
+                selectedItem.setValue(duplicate.getValue());
+            } catch (Exception e) {
+                Alerts.error("word_error", e.toString());
+            }
+        });
         hashPropertyDialog.show();
     }
 

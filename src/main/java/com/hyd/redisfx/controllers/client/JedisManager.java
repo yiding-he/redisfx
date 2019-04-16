@@ -9,6 +9,7 @@ import redis.clients.jedis.JedisPool;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -37,6 +38,13 @@ public class JedisManager {
         try (Jedis jedis = jedisPool.getResource()) {
             jedis.select(currentDatabase);
             operation.accept(jedis);
+        }
+    }
+
+    public static <T> T usingJedis(Function<Jedis, T> function) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.select(currentDatabase);
+            return function.apply(jedis);
         }
     }
 

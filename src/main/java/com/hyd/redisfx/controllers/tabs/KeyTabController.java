@@ -3,6 +3,7 @@ package com.hyd.redisfx.controllers.tabs;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.controllers.dialogs.SetExpiryDialog;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.IntegerProperty;
@@ -155,7 +156,7 @@ public class KeyTabController extends AbstractTabController {
         }
     }
 
-    private String getExpireAt(String key, Jedis jedis) {
+    private static String getExpireAt(String key, Jedis jedis) {
         Long seconds = jedis.ttl(key);
         if (seconds <= 0) {
             return "";
@@ -205,6 +206,15 @@ public class KeyTabController extends AbstractTabController {
     public void mnuCopyKey() {
         Optional.ofNullable(tblKeys.getSelectionModel().getSelectedItem())
                 .ifPresent(keyItem -> Fx.copyText(keyItem.getKey()));
+    }
+
+    public void mnuSetExpiry() {
+        Optional.ofNullable(tblKeys.getSelectionModel().getSelectedItem())
+                .ifPresent(keyItem -> {
+                    String key = keyItem.getKey();
+                    int ttl = JedisManager.usingJedis(jedis -> jedis.ttl(key).intValue());
+                    new SetExpiryDialog(keyItem, ttl).show();
+                });
     }
 
     //////////////////////////////////////////////////////////////
@@ -275,6 +285,11 @@ public class KeyTabController extends AbstractTabController {
 
         public void setExpireAt(String expireAt) {
             this.expireAt.set(expireAt);
+        }
+
+        public void refreshExpiry() {
+            JedisManager.withJedis(jedis ->
+                    setExpireAt(KeyTabController.getExpireAt(getKey(), jedis)));
         }
     }
 }
