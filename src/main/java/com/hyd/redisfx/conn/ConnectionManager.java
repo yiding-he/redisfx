@@ -23,7 +23,7 @@ public class ConnectionManager {
 
     private static ObservableList<Connection> connections = FXCollections.observableArrayList();
 
-    private static UserConfig userConfig;
+    private static UserConfig userConfig = new UserConfig();
 
     static {
         File file = new File(saveFilePath);

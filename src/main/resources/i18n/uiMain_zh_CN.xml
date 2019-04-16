@@ -96,5 +96,6 @@
     <entry key="hash_msg_confirm_delete">确定要删除该属性吗？</entry>
     <entry key="hash_msg_nokey">请先键入 Key 值</entry>
     <entry key="hash_lbl_size">Hash大小：</entry>
+    <entry key="hash_wrap_text">自动换行</entry>
 
 </properties>
