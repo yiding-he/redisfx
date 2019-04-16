@@ -9,7 +9,6 @@ import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -24,11 +23,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MainController {
 
-    static final Logger LOG = LoggerFactory.getLogger(MainController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
     public TabPane tabs;
-
-    public Menu mnuRecentConnections;
 
     private Stage primaryStage;
 

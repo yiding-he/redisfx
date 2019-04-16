@@ -1,100 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-  <entry key="word_key">Key</entry>
-  <entry key="word_value">Value</entry>
-  <entry key="word_copy">Copy</entry>
-  <entry key="word_paste">Paste</entry>
-  <entry key="word_edit">Edit</entry>
-  <entry key="word_delete">Delete</entry>
-  <entry key="word_delete_confirm">Confirm Deletion</entry>
-  <entry key="word_ok">OK</entry>
-  <entry key="word_cancel">Cancel</entry>
-  <entry key="word_yes">Yes</entry>
-  <entry key="word_no">No</entry>
-  <entry key="word_database">Database</entry>
-  <entry key="word_from">From</entry>
-  <entry key="word_to">To</entry>
-  <entry key="word_search">Search</entry>
+    <entry key="word_key">Key</entry>
+    <entry key="word_value">Value</entry>
+    <entry key="word_copy">Copy</entry>
+    <entry key="word_paste">Paste</entry>
+    <entry key="word_edit">Edit</entry>
+    <entry key="word_delete">Delete</entry>
+    <entry key="word_delete_confirm">Confirm Deletion</entry>
+    <entry key="word_ok">OK</entry>
+    <entry key="word_cancel">Cancel</entry>
+    <entry key="word_yes">Yes</entry>
+    <entry key="word_no">No</entry>
+    <entry key="word_database">Database</entry>
+    <entry key="word_from">From</entry>
+    <entry key="word_to">To</entry>
+    <entry key="word_search">Search</entry>
 
-  <entry key="mnu_connections">Connections</entry>
-  <entry key="mnu_connections_choose">Choose to open...</entry>
-  <entry key="mnu_connections_recent">Open recent connection...</entry>
-  <entry key="mnu_databases">Databases</entry>
-  <entry key="mnu_change_database">Change database...</entry>
-  <entry key="mnu_switch_database">Switch database...</entry>
-  <entry key="mnu_clear_database">Clear database</entry>
+    <entry key="msg_user_config_error">Unable to read user config.</entry>
 
-  <entry key="title_change_database">Change database</entry>
+    <entry key="mnu_connections">Connections</entry>
+    <entry key="mnu_connections_choose">Choose to open...</entry>
+    <entry key="mnu_connections_recent">Open recent connection...</entry>
+    <entry key="mnu_databases">Databases</entry>
+    <entry key="mnu_change_database">Change database...</entry>
+    <entry key="mnu_switch_database">Switch database...</entry>
+    <entry key="mnu_clear_database">Clear database</entry>
 
-  <entry key="app_title">RedisFx</entry>
-  <entry key="dlg_conn_lbl_connections">Connections</entry>
-  <entry key="dlg_conn_lbl_host">Host:</entry>
-  <entry key="dlg_conn_lbl_port">Port:</entry>
-  <entry key="dlg_conn_lbl_proxy_host">Socks Proxy(Optional)：</entry>
-  <entry key="dlg_conn_lbl_proxy_port">Port：</entry>
-  <entry key="dlg_conn_lbl_name">Name:</entry>
-  <entry key="dlg_conn_lbl_pass">Pass phase (Optional):</entry>
-  <entry key="empty_mark">( EMPTY )</entry>
-  <entry key="lbl_type">Type</entry>
-  <entry key="lbl_length">Length</entry>
-  <entry key="lbl_expire_at">Expire At</entry>
-  <entry key="lbl_or">OR</entry>
-  <entry key="lbl_to">to</entry>
-  <entry key="op_list_key">List Keys</entry>
-  <entry key="op_open_conn">Open Connection</entry>
-  <entry key="op_copy">Copy</entry>
-  <entry key="op_delete">Delete</entry>
-  <entry key="op_save">Save</entry>
-  <entry key="op_increase">Increase</entry>
-  <entry key="op_decrease">Decrease</entry>
-  <entry key="tab_title_geo">Geo</entry>
-  <entry key="tab_title_hash">Hash</entry>
-  <entry key="tab_title_key">Key</entry>
-  <entry key="tab_title_list">List</entry>
-  <entry key="tab_title_pubsub">Pub/Sub</entry>
-  <entry key="tab_title_config">Config</entry>
-  <entry key="tab_title_raw">Raw command</entry>
-  <entry key="tab_title_set">Set</entry>
-  <entry key="tab_title_string">String</entry>
-  <entry key="tab_title_zset">ZSet</entry>
-  <entry key="title_conn_manager">Connection Manager</entry>
-  <entry key="title_op_fail">Operation Failed</entry>
-  <entry key="title_op_error">Error</entry>
-  <entry key="op_close">Close</entry>
-  <entry key="op_create">Create</entry>
-  <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
-  <entry key="msg_create_confirm">Clear fields to create new connection?</entry>
-  <entry key="msg_delete_confirm">Are you sure to delete this connection?</entry>
-  <entry key="msg_confirm_delete_key">Are you sure to delete selected key(s)?</entry>
-  <entry key="msg_confirm_delete_value">Are you sure to delete selected value(s)?</entry>
-  <entry key="op_test">Test...</entry>
+    <entry key="title_change_database">Change database</entry>
 
-  <!-- List Tab -->
-  <entry key="list_lbl_length">Length:</entry>
-  <entry key="list_lbl_display">, Display from</entry>
-  <entry key="list_lbl_from">Range: from</entry>
-  <entry key="list_lbl_to">to</entry>
-  <entry key="list_op_list_values">List Values</entry>
-  <entry key="list_op_edit">Edit...</entry>
-  <entry key="list_op_insert_before">Insert Before...</entry>
-  <entry key="list_op_insert_after">Insert After...</entry>
-  <entry key="list_op_trim">Trim</entry>
-  <entry key="list_msg_op_failed">Operation Failed.</entry>
-  <entry key="list_msg_type_error">Key not exists or is not a list.</entry>
-  <entry key="list_msg_delete_confirm">Saving item with empty value will delete it.&#10;&#10;Are you sure to delete this
-    item?
-  </entry>
+    <entry key="app_title">RedisFx</entry>
+    <entry key="dlg_conn_lbl_connections">Connections</entry>
+    <entry key="dlg_conn_lbl_host">Host:</entry>
+    <entry key="dlg_conn_lbl_port">Port:</entry>
+    <entry key="dlg_conn_lbl_proxy_host">Socks Proxy(Optional)：</entry>
+    <entry key="dlg_conn_lbl_proxy_port">Port：</entry>
+    <entry key="dlg_conn_lbl_name">Name:</entry>
+    <entry key="dlg_conn_lbl_pass">Pass phase (Optional):</entry>
+    <entry key="empty_mark">( EMPTY )</entry>
+    <entry key="lbl_type">Type</entry>
+    <entry key="lbl_length">Length</entry>
+    <entry key="lbl_expire_at">Expire At</entry>
+    <entry key="lbl_or">OR</entry>
+    <entry key="lbl_to">to</entry>
+    <entry key="op_list_key">List Keys</entry>
+    <entry key="op_open_conn">Open Connection</entry>
+    <entry key="op_copy">Copy</entry>
+    <entry key="op_delete">Delete</entry>
+    <entry key="op_save">Save</entry>
+    <entry key="op_increase">Increase</entry>
+    <entry key="op_decrease">Decrease</entry>
+    <entry key="tab_title_geo">Geo</entry>
+    <entry key="tab_title_hash">Hash</entry>
+    <entry key="tab_title_key">Key</entry>
+    <entry key="tab_title_list">List</entry>
+    <entry key="tab_title_pubsub">Pub/Sub</entry>
+    <entry key="tab_title_config">Config</entry>
+    <entry key="tab_title_raw">Raw command</entry>
+    <entry key="tab_title_set">Set</entry>
+    <entry key="tab_title_string">String</entry>
+    <entry key="tab_title_zset">ZSet</entry>
+    <entry key="title_conn_manager">Connection Manager</entry>
+    <entry key="title_op_fail">Operation Failed</entry>
+    <entry key="title_op_error">Error</entry>
+    <entry key="op_close">Close</entry>
+    <entry key="op_create">Create</entry>
+    <entry key="msg_please_create_connection">(Create a connection on the right)</entry>
+    <entry key="msg_create_confirm">Clear fields to create new connection?</entry>
+    <entry key="msg_delete_confirm">Are you sure to delete this connection?</entry>
+    <entry key="msg_confirm_delete_key">Are you sure to delete selected key(s)?</entry>
+    <entry key="msg_confirm_delete_value">Are you sure to delete selected value(s)?</entry>
+    <entry key="op_test">Test...</entry>
 
-  <!-- Hash Tab -->
-  <entry key="hash_op_list_values">List Values</entry>
-  <entry key="hash_op_add_value">Add Value...</entry>
-  <entry key="hash_op_edit_item">Edit...</entry>
-  <entry key="hash_op_delete_item">Delete</entry>
-  <entry key="hash_op_copy_key">Copy Key</entry>
-  <entry key="hash_op_copy_value">Copy Value</entry>
-  <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
-  <entry key="hash_msg_nokey">Please enter Key first.</entry>
-  <entry key="hash_lbl_size">Hash Size:</entry>
+    <!-- List Tab -->
+    <entry key="list_lbl_length">Length:</entry>
+    <entry key="list_lbl_display">, Display from</entry>
+    <entry key="list_lbl_from">Range: from</entry>
+    <entry key="list_lbl_to">to</entry>
+    <entry key="list_op_list_values">List Values</entry>
+    <entry key="list_op_edit">Edit...</entry>
+    <entry key="list_op_insert_before">Insert Before...</entry>
+    <entry key="list_op_insert_after">Insert After...</entry>
+    <entry key="list_op_trim">Trim</entry>
+    <entry key="list_msg_op_failed">Operation Failed.</entry>
+    <entry key="list_msg_type_error">Key not exists or is not a list.</entry>
+    <entry key="list_msg_delete_confirm">Saving item with empty value will delete it.&#10;&#10;Are you sure to delete
+        this
+        item?
+    </entry>
+
+    <!-- Hash Tab -->
+    <entry key="hash_op_list_values">List Values</entry>
+    <entry key="hash_op_add_value">Add Value...</entry>
+    <entry key="hash_op_edit_item">Edit...</entry>
+    <entry key="hash_op_delete_item">Delete</entry>
+    <entry key="hash_op_copy_key">Copy Key</entry>
+    <entry key="hash_op_copy_value">Copy Value</entry>
+    <entry key="hash_msg_confirm_delete">Are you sure to delete selected property?</entry>
+    <entry key="hash_msg_nokey">Please enter Key first.</entry>
+    <entry key="hash_lbl_size">Hash Size:</entry>
 
 </properties>
