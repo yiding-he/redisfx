@@ -5,6 +5,8 @@ import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
 import com.hyd.redisfx.nodes.IntegerSpinner;
+import java.util.List;
+import java.util.Objects;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -16,9 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.Transaction;
-
-import java.util.List;
-import java.util.Objects;
 
 @TabName("List")
 public class ListTabController extends AbstractTabController {
@@ -233,11 +232,14 @@ public class ListTabController extends AbstractTabController {
             return;
         }
 
+        if (!lstValues.getItems().isEmpty() &&
+            lstValues.getSelectionModel().getSelectedIndex() == -1) {
+            return;
+        }
+
         // append if list is empty
         long[] length = {0};
-        JedisManager.withJedis(jedis -> {
-            length[0] = jedis.llen(currentKey);
-        });
+        JedisManager.withJedis(jedis -> length[0] = jedis.llen(currentKey));
         if (length[0] == 0) {
             appendItem();
             return;

@@ -15,17 +15,18 @@
     -fx-min-width: 60;
 }
 
+.button.iconButton {
+    -fx-translate-y: -1.5;
+    -fx-padding: 3.5 8;
+    -fx-min-width: 30;
+}
+
 .button.narrowButton {
     -fx-padding: 5 15;
     -fx-min-width: 20;
 }
 
 .button.smallButton {
-    -fx-padding: 3 5;
-    -fx-min-width: 20;
-}
-
-.button.iconButton {
     -fx-padding: 3 5;
     -fx-min-width: 20;
 }

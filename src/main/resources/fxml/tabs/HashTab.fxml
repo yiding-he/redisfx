@@ -1,8 +1,15 @@
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
         <VBox spacing="10">
@@ -16,9 +23,7 @@
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
                 <Button onAction="#showValue" styleClass="iconButton">
                     <graphic>
-                        <ImageView fitWidth="24" fitHeight="24">
-                            <Image url="@/icons/search.png"/>
-                        </ImageView>
+                        <FontIcon iconSize="16" iconLiteral="ion4-ios-search"/>
                     </graphic>
                 </Button>
             </HBox>

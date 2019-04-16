@@ -4,7 +4,7 @@
 
 基于 JavaFX 的 Redis 客户端。
 
-All icons are from [icons8.com](https://icons8.com/). Very much appreciated.
+Some icons are from [icons8.com](https://icons8.com/). Very much appreciated.
 
 截图：
 

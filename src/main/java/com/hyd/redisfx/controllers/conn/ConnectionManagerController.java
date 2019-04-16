@@ -8,6 +8,7 @@ import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import com.hyd.redisfx.nodes.IntegerSpinner;
+import java.net.Proxy;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -17,8 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Protocol;
-
-import java.net.Proxy;
 
 /**
  * @author yiding_he
@@ -67,6 +66,7 @@ public class ConnectionManagerController extends BaseController {
             btnTest.setDisable(StringUtils.isBlank(txtHost.getText()));
             btnCopy.setDisable(StringUtils.isBlank(txtHost.getText()));
             btnOpen.setDisable(StringUtils.isBlank(txtHost.getText()));
+            btnDelete.setDisable(StringUtils.isBlank(txtHost.getText()));
         });
 
         this.currentSelectedConnection.addListener((_ob, _old, _new) -> {
@@ -172,6 +172,7 @@ public class ConnectionManagerController extends BaseController {
         }
 
         this.lstConnections.getItems().remove(this.currentSelectedConnection.get());
+        this.lstConnections.getSelectionModel().select(null);
         resetFields();
         ConnectionManager.saveConnections();
     }

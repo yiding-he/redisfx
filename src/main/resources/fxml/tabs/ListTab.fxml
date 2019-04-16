@@ -1,10 +1,19 @@
 <?import com.hyd.redisfx.nodes.IntegerSpinner?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
     <VBox spacing="10">
@@ -22,9 +31,7 @@
             <Spinner fx:id="spnToIndex" prefWidth="80" editable="true"/>
             <Button onAction="#listValues" styleClass="iconButton">
                 <graphic>
-                    <ImageView fitWidth="24" fitHeight="24">
-                        <Image url="@/icons/search.png"/>
-                    </ImageView>
+                    <FontIcon iconSize="16" iconLiteral="ion4-ios-search"/>
                 </graphic>
             </Button>
         </HBox>

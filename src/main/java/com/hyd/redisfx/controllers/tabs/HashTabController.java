@@ -1,20 +1,24 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
+
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
 import com.hyd.redisfx.i18n.I18n;
+import java.util.Map;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
-
-import java.util.Map;
-import java.util.Optional;
 
 @TabName("Hash")
 public class HashTabController extends AbstractTabController {
@@ -51,8 +55,8 @@ public class HashTabController extends AbstractTabController {
         });
 
         mnuHashValues.getItems().forEach(menuItem ->
-                menuItem.disableProperty().bind(
-                        tblHashValues.getSelectionModel().selectedIndexProperty().isEqualTo(-1)));
+            menuItem.disableProperty().bind(
+                tblHashValues.getSelectionModel().selectedIndexProperty().isEqualTo(-1)));
     }
 
     private void editHashValue(HashItem selectedItem) {
@@ -66,8 +70,8 @@ public class HashTabController extends AbstractTabController {
     }
 
     private void submitValue(HashItem hashItem) {
-        JedisManager.withJedis(jedis ->
-                jedis.hset(this.currentKey, hashItem.getKey(), hashItem.getValue()));
+        withJedis(jedis ->
+            jedis.hset(this.currentKey, hashItem.getKey(), hashItem.getValue()));
     }
 
     public void showValue() {
@@ -83,11 +87,16 @@ public class HashTabController extends AbstractTabController {
         txtKey.selectAll();
         this.currentKey = key;
 
-        JedisManager.withJedis(jedis -> {
+        withJedis(jedis -> {
             tblHashValues.getItems().clear();
             jedis.hgetAll(key).forEach((k, v) -> tblHashValues.getItems().add(new HashItem(k, v)));
-            lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
         });
+
+        showKeySize(txtKey.getText());
+    }
+
+    private void showKeySize(String key) {
+        withJedis(jedis -> lblHashSize.setText(I18n.getString("hash_lbl_size") + jedis.hlen(key)));
     }
 
     public void showValueWithPattern(String fieldPattern) {
@@ -103,7 +112,7 @@ public class HashTabController extends AbstractTabController {
         txtKey.selectAll();
         this.currentKey = key;
 
-        JedisManager.withJedis(jedis -> {
+        withJedis(jedis -> {
 
             lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
             tblHashValues.getItems().clear();
@@ -147,19 +156,20 @@ public class HashTabController extends AbstractTabController {
     public void mnuDeleteHashValue() {
         if (Alerts.confirm("word_delete_confirm", "hash_msg_confirm_delete")) {
             HashItem selectedItem = tblHashValues.getSelectionModel().getSelectedItem();
-            JedisManager.withJedis(jedis -> jedis.hdel(this.currentKey, selectedItem.getKey()));
+            withJedis(jedis -> jedis.hdel(this.currentKey, selectedItem.getKey()));
             tblHashValues.getItems().remove(selectedItem);
+            showKeySize(this.currentKey);
         }
     }
 
     public void mnuCopyHashKey() {
         Optional.ofNullable(tblHashValues.getSelectionModel().getSelectedItem())
-                .ifPresent(hashItem -> Fx.copyText(hashItem.getKey()));
+            .ifPresent(hashItem -> Fx.copyText(hashItem.getKey()));
     }
 
     public void mnuCopyHashValue() {
         Optional.ofNullable(tblHashValues.getSelectionModel().getSelectedItem())
-                .ifPresent(hashItem -> Fx.copyText(hashItem.getValue()));
+            .ifPresent(hashItem -> Fx.copyText(hashItem.getValue()));
     }
 
     public void searchFieldPattern() {

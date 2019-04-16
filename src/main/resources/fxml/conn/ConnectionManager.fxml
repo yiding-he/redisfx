@@ -1,52 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import com.hyd.redisfx.nodes.IntegerSpinner?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<BorderPane fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController" xmlns:fx="javafx">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController">
 
     <center>
         <VBox spacing="10">
             <padding>
-                <Insets top="10" right="10" left="10" bottom="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="%dlg_conn_lbl_connections"/>
+            <Label text="%dlg_conn_lbl_connections" />
             <HBox spacing="10" VBox.vgrow="ALWAYS">
                 <VBox spacing="10">
-                    <ListView VBox.vgrow="ALWAYS" prefWidth="200" fx:id="lstConnections">
+                    <ListView fx:id="lstConnections" prefWidth="200" VBox.vgrow="ALWAYS">
                         <placeholder>
-                            <Label text="%msg_please_create_connection"/>
+                            <Label text="%msg_please_create_connection" />
                         </placeholder>
                     </ListView>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Button text="%op_create" fx:id="btnCreate" onAction="#createClicked"/>
-                        <Button text="%op_copy" fx:id="btnCopy" onAction="#copyClicked" disable="true"/>
-                        <Button text="%op_delete" fx:id="btnDelete" onAction="#deleteClicked"/>
+                        <Button fx:id="btnCreate" minWidth="-Infinity" onAction="#createClicked" text="%op_create">
+                            <graphic>
+                                <FontIcon iconLiteral="ion4-ios-create" iconSize="18" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnCopy" disable="true" minWidth="-Infinity" onAction="#copyClicked" text="%op_copy">
+                            <graphic>
+                                <FontIcon iconLiteral="ion4-ios-copy" iconSize="18" />
+                            </graphic>
+                        </Button>
+                        <Button fx:id="btnDelete" disable="true" minWidth="-Infinity" onAction="#deleteClicked" text="%op_delete">
+                            <graphic>
+                                <FontIcon iconLiteral="ion4-md-trash" iconSize="18" />
+                            </graphic>
+                        </Button>
                     </HBox>
                 </VBox>
                 <VBox spacing="10" HBox.hgrow="ALWAYS">
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Label text="%dlg_conn_lbl_name"/>
-                        <TextField HBox.hgrow="ALWAYS" fx:id="txtName"/>
+                        <Label text="%dlg_conn_lbl_name" />
+                        <TextField fx:id="txtName" HBox.hgrow="ALWAYS" />
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Label text="%dlg_conn_lbl_host"/>
-                        <TextField HBox.hgrow="ALWAYS" fx:id="txtHost"/>
-                        <Label text="%dlg_conn_lbl_port"/>
-                        <IntegerSpinner prefWidth="80" fx:id="spnPort"/>
+                        <Label text="%dlg_conn_lbl_host" />
+                        <TextField fx:id="txtHost" HBox.hgrow="ALWAYS" />
+                        <Label text="%dlg_conn_lbl_port" />
+                        <IntegerSpinner fx:id="spnPort" prefWidth="80" />
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Label text="%dlg_conn_lbl_pass"/>
-                        <PasswordField HBox.hgrow="ALWAYS" fx:id="txtPassphase"/>
+                        <Label text="%dlg_conn_lbl_pass" />
+                        <PasswordField fx:id="txtPassphase" HBox.hgrow="ALWAYS" />
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Label text="%dlg_conn_lbl_proxy_host"/>
-                        <TextField HBox.hgrow="ALWAYS" fx:id="txtProxyHost"/>
-                        <Label text="%dlg_conn_lbl_proxy_port"/>
-                        <IntegerSpinner prefWidth="80" fx:id="spnProxyPort"/>
+                        <Label text="%dlg_conn_lbl_proxy_host" />
+                        <TextField fx:id="txtProxyHost" HBox.hgrow="ALWAYS" />
+                        <Label text="%dlg_conn_lbl_proxy_port" />
+                        <IntegerSpinner fx:id="spnProxyPort" prefWidth="80" />
                     </HBox>
                     <HBox alignment="BASELINE_LEFT" spacing="10">
-                        <Button text="%op_test" fx:id="btnTest" onAction="#testClicked" disable="true"/>
-                        <Button text="%op_save" fx:id="btnSave" onAction="#saveClicked" disable="true"/>
+                        <Button fx:id="btnTest" disable="true" onAction="#testClicked" text="%op_test" />
+                        <Button fx:id="btnSave" disable="true" onAction="#saveClicked" text="%op_save" />
                     </HBox>
                 </VBox>
             </HBox>
@@ -54,14 +76,14 @@
     </center>
     <bottom>
         <VBox>
-            <Separator/>
+            <Separator />
             <HBox alignment="BASELINE_RIGHT" spacing="10">
                 <padding>
-                    <Insets top="5" right="10" left="10" bottom="10"/>
+                    <Insets bottom="10" left="10" right="10" top="5" />
                 </padding>
 
-                <Button text="%op_open_conn" disable="true" fx:id="btnOpen" onAction="#openConnectionClicked"/>
-                <Button text="%op_close" onAction="#closeClicked"/>
+                <Button fx:id="btnOpen" disable="true" onAction="#openConnectionClicked" text="%op_open_conn" />
+                <Button onAction="#closeClicked" text="%op_close" />
             </HBox>
         </VBox>
     </bottom>
