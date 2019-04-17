@@ -107,4 +107,8 @@
     <entry key="hash_lbl_size">Hash Size:</entry>
     <entry key="hash_wrap_text">Wrap Text</entry>
 
+    <!-- Set Tab -->
+    <entry key="set_op_insert">Insert...</entry>
+    <entry key="set_op_delete">Delete</entry>
+
 </properties>

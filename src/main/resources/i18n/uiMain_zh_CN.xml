@@ -104,4 +104,7 @@
     <entry key="hash_lbl_size">Hash大小：</entry>
     <entry key="hash_wrap_text">自动换行</entry>
 
+    <!-- Set Tab -->
+    <entry key="set_op_insert">添加...</entry>
+    <entry key="set_op_delete">删除</entry>
 </properties>

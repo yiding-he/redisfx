@@ -6,13 +6,24 @@ import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.SetExpiryDialog;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+import java.util.Optional;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -21,11 +32,6 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * (description)
@@ -109,6 +115,8 @@ public class KeyTabController extends AbstractTabController {
             Tabs.switchTab(ListTabController.class, c -> c.showList(selectedItem.getKey()));
         } else if (Objects.equals(type, "hash")) {
             Tabs.switchTab(HashTabController.class, c -> c.showValue(selectedItem.getKey()));
+        } else if (Objects.equals(type, "set")) {
+            Tabs.switchTab(SetTabController.class, c -> c.showSet(selectedItem.getKey()));
         }
     }
 

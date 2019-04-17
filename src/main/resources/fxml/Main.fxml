@@ -46,11 +46,7 @@
                 <fx:include source="tabs/HashTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_set" userData="Set">
-                <BorderPane>
-                    <center>
-                        <Label text="Not implemented yet."/>
-                    </center>
-                </BorderPane>
+                <fx:include source="tabs/SetTab.fxml"/>
             </Tab>
             <Tab closable="false" text="%tab_title_zset" userData="ZSet">
                 <BorderPane>

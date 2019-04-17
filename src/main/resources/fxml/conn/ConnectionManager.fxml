@@ -30,17 +30,17 @@
                     <HBox alignment="BASELINE_LEFT" spacing="10">
                         <Button fx:id="btnCreate" minWidth="-Infinity" onAction="#createClicked" text="%op_create">
                             <graphic>
-                                <FontIcon iconLiteral="ion4-ios-create" iconSize="18" />
+                                <FontIcon iconLiteral="ion4-ios-create" iconSize="18" iconColor="dodgerblue"/>
                             </graphic>
                         </Button>
                         <Button fx:id="btnCopy" disable="true" minWidth="-Infinity" onAction="#copyClicked" text="%op_copy">
                             <graphic>
-                                <FontIcon iconLiteral="ion4-ios-copy" iconSize="18" />
+                                <FontIcon iconLiteral="ion4-ios-copy" iconSize="18" iconColor="dodgerblue"/>
                             </graphic>
                         </Button>
                         <Button fx:id="btnDelete" disable="true" minWidth="-Infinity" onAction="#deleteClicked" text="%op_delete">
                             <graphic>
-                                <FontIcon iconLiteral="ion4-md-trash" iconSize="18" />
+                                <FontIcon iconLiteral="ion4-md-trash" iconSize="18" iconColor="crimson" />
                             </graphic>
                         </Button>
                     </HBox>
