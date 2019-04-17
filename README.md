@@ -4,6 +4,8 @@
 
 基于 JavaFX 的 Redis 客户端。
 
+下载项目后请先执行 lib 目录下的 install.cmd (Windows) 或 install.sh (Linux)
+
 Some icons are from [icons8.com](https://icons8.com/). Very much appreciated.
 
 截图：
