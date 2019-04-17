@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -84,7 +83,7 @@ public class KeyTabController extends AbstractTabController {
             }
         });
 
-        this.txtKeyPattern.setOnAction(this::listKeys);
+        this.txtKeyPattern.setOnAction(event -> this.listKeys());
 
         Fx.nodeOnKeyPress(this.tblKeys, Fx.CTRL_C, this::mnuCopyKey);
         App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
@@ -127,7 +126,7 @@ public class KeyTabController extends AbstractTabController {
         }
     }
 
-    public void listKeys(ActionEvent actionEvent) {
+    public void listKeys() {
         try {
             listKeys0();
         } catch (Exception e) {
@@ -151,15 +150,20 @@ public class KeyTabController extends AbstractTabController {
 
         if (pattern.trim().length() > 0) {
             try (Jedis jedis = JedisManager.getJedis()) {
-                ScanParams scanParams = new ScanParams().match(pattern).count(limit);
-                ScanResult<String> result = jedis.scan(ScanParams.SCAN_POINTER_START, scanParams);
+                String cursor = ScanParams.SCAN_POINTER_START;
+                ScanParams scanParams = new ScanParams().match(pattern);
+                ScanResult<String> result;
+                do {
+                    result = jedis.scan(cursor, scanParams);
+                    cursor = result.getStringCursor();
 
-                result.getResult().forEach(key -> {
-                    String type = jedis.type(key);
-                    int length = getLength(key, type, jedis);
-                    String expireAt = getExpireAt(key, jedis);
-                    items.add(new KeyItem(key, type, length, expireAt));
-                });
+                    result.getResult().forEach(key -> {
+                        String type = jedis.type(key);
+                        int length = getLength(key, type, jedis);
+                        String expireAt = getExpireAt(key, jedis);
+                        items.add(new KeyItem(key, type, length, expireAt));
+                    });
+                } while (!result.isCompleteIteration() && items.size() < limit);
             }
         }
     }
@@ -191,7 +195,7 @@ public class KeyTabController extends AbstractTabController {
         }
     }
 
-    public void deleteKeys(ActionEvent actionEvent) {
+    public void deleteKeys() {
 
         ObservableList<KeyItem> selectedItems = this.tblKeys.getSelectionModel().getSelectedItems();
         if (selectedItems.isEmpty()) {
@@ -208,7 +212,7 @@ public class KeyTabController extends AbstractTabController {
             }
         });
 
-        listKeys(actionEvent);
+        listKeys();
     }
 
     public void mnuCopyKey() {
