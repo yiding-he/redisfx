@@ -123,9 +123,9 @@ public class JedisManager {
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
 
         if (!StringUtils.isBlank(passphase)) {
-            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
+            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
         } else {
-            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
+            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
         }
     }
 }
