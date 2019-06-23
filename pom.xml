@@ -8,6 +8,13 @@
     <artifactId>redisfx</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>yiding-he-github</id>
+            <url>https://raw.githubusercontent.com/yiding-he/mvn-repo/master</url>
+        </repository>
+    </repositories>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -67,6 +74,19 @@
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-ionicons4-pack</artifactId>
             <version>${ikonli.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.kordamp.jipsy/jipsy -->
+        <dependency>
+            <groupId>org.kordamp.jipsy</groupId>
+            <artifactId>jipsy</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.hyd</groupId>
+            <artifactId>jfapps-app-base</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

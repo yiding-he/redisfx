@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 /**
  * (description)
@@ -37,8 +38,20 @@ public class Fx {
         new Alert(Alert.AlertType.ERROR, message, ButtonType.OK).showAndWait();
     }
 
+    private static Function<String, FXMLLoader> fxmlLoaderSupplier = fxmlPath -> {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(Fx.class.getResource(fxmlPath));
+        return fxmlLoader;
+    };
+
+    public static void setFxmlLoaderSupplier(Function<String, FXMLLoader> fxmlLoaderSupplier) {
+        Fx.fxmlLoaderSupplier = fxmlLoaderSupplier;
+    }
+
     public static FXMLLoader getFxmlLoader(String fxmlPath) {
-        return new FXMLLoader(Fx.class.getResource(fxmlPath), I18n.UI_MAIN_BUNDLE);
+        FXMLLoader fxmlLoader = fxmlLoaderSupplier.apply(fxmlPath);
+        fxmlLoader.setResources(I18n.UI_MAIN_BUNDLE);
+        return fxmlLoader;
     }
 
     @SuppressWarnings("unchecked")
