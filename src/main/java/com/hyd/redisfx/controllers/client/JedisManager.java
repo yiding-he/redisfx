@@ -1,17 +1,16 @@
 package com.hyd.redisfx.controllers.client;
 
-import com.hyd.redisfx.conn.Connection;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import com.hyd.redisfx.conn.Connection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 /**
  * @author yiding.he
@@ -76,6 +75,10 @@ public class JedisManager {
         // Assign values after successfully connected.
         JedisManager.jedisPool = jedisPool;
         JedisManager.connection = connection;
+    }
+
+    public static void shutdown() {
+        jedisPool.destroy();
     }
 
     public static String getHost() {
