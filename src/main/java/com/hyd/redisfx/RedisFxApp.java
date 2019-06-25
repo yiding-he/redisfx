@@ -1,5 +1,6 @@
 package com.hyd.redisfx;
 
+import com.hyd.jfapps.appbase.AppCategory;
 import com.hyd.jfapps.appbase.AppInfo;
 import com.hyd.jfapps.appbase.JfappsApp;
 import com.hyd.redisfx.controllers.MainController;
@@ -8,7 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
-@AppInfo(name = "Redis 客户端")
+@AppInfo(
+    name = "Redis 客户端",
+    author = "yiding-he",
+    url = "https://github.com/yiding-he/redisfx",
+    category = AppCategory.DATABASE
+)
 public class RedisFxApp extends JfappsApp {
 
     @Override
