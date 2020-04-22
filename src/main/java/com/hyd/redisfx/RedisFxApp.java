@@ -1,6 +1,7 @@
 package com.hyd.redisfx;
 
 import com.hyd.fx.Fxml;
+import com.hyd.fx.app.AppLogo;
 import com.hyd.fx.app.AppPrimaryStage;
 import com.hyd.redisfx.controllers.MainController;
 import com.hyd.redisfx.i18n.I18n;
@@ -20,6 +21,8 @@ public class RedisFxApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         AppPrimaryStage.setPrimaryStage(primaryStage);
+        AppLogo.setStageLogo(primaryStage);
+
         primaryStage.setTitle("RedisFX");
         primaryStage.setScene(new Scene(getRoot(primaryStage)));
         primaryStage.show();
