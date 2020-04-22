@@ -27,13 +27,16 @@ public class HashPropertyDialog extends FormDialog {
     public HashPropertyDialog(HashTabController.HashItem hashItem) {
         this.hashItem = hashItem;
         this.setTitle("Hash 属性");
-        this.setWidth(400);
+        this.setWidth(700);
 
         keyField = new TextAreaFormField(I18n.getString("word_key") + ": ", hashItem.getKey(), 5, true);
         valueField = new TextAreaFormField(I18n.getString("word_value") + ": ", hashItem.getValue(), 5, true);
 
         this.addField(keyField);
         this.addField(valueField);
+
+        okButton.setText(I18n.getString("op_save"));
+        cancelButton.setText(I18n.getString("op_close"));
 
         setOnShown(event -> keyField.setEditable(keyEditable));
     }

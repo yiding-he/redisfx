@@ -2,7 +2,7 @@ package com.hyd.redisfx.fx;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
-import com.hyd.redisfx.App;
+import com.hyd.fx.app.AppPrimaryStage;
 import com.hyd.redisfx.Icons;
 import com.hyd.redisfx.i18n.I18n;
 import java.util.ArrayList;
@@ -34,16 +34,16 @@ import javafx.stage.WindowEvent;
  */
 public abstract class FormDialog extends Stage {
 
-    private final Button cancelButton = new Button(I18n.getString("word_cancel"));
+    protected final Button cancelButton = new Button(I18n.getString("word_cancel"));
 
-    private final Button okButton = new Button(I18n.getString("word_ok"));
+    protected final Button okButton = new Button(I18n.getString("word_ok"));
 
     private final GridPane contentPane = new GridPane();
 
     private boolean ok;
 
     public FormDialog() {
-        this(App.getMainController().getPrimaryStage());
+        this(AppPrimaryStage.getPrimaryStage());
     }
 
     public FormDialog(Stage owner) {

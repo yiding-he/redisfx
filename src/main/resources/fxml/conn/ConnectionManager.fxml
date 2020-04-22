@@ -12,9 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController">
-
+<BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController">
   <center>
     <VBox spacing="10">
       <padding>

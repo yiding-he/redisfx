@@ -1,18 +1,17 @@
 package com.hyd.redisfx.controllers;
 
+import com.hyd.fx.app.AppPrimaryStage;
+import com.hyd.fx.dialog.DialogBuilder;
 import com.hyd.redisfx.App;
-import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.ChangeDatabaseDialog;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
-import javafx.event.ActionEvent;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +28,6 @@ public class MainController {
     public TabPane tabs;
 
     public Menu mnuCurrentDatabase;
-
-    private Stage primaryStage;
 
     public void initialize() {
         App.setMainController(this);
@@ -58,18 +55,6 @@ public class MainController {
         JedisManager.setCurrentDatabase(0);
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    public void onShown() {
-
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     private void initializeTabs() {
         this.tabs.getTabs().forEach(tab -> {
             String tabName = (String) tab.getUserData();
@@ -91,22 +76,16 @@ public class MainController {
         // 作为小应用不再操作主窗体
     }
 
-    public void openConnectionManager(ActionEvent actionEvent) {
+    public void openConnectionManager() {
         String fxml = "/fxml/conn/ConnectionManager.fxml";
-        Fx.showDialog(primaryStage, I18n.getString("title_conn_manager"), fxml);
-    }
-
-    public void openConnection(ActionEvent actionEvent) {
-        String host = "localhost";
-        int port = 6379;
-
-        try {
-            JedisManager.connect(host, port);
-            App.getEventBus().post(EventType.ConnectionOpened);
-        } catch (Exception e) {
-            LOG.error("", e);
-            Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e.toString());
-        }
+        new DialogBuilder()
+            .body(fxml)
+            .noDefaultButtons()
+            .resizable(true)
+            .resources(I18n.UI_MAIN_BUNDLE)
+            .owner(AppPrimaryStage.getPrimaryStage())
+            .title(I18n.getString("title_conn_manager"))
+            .build().showAndWait();
     }
 
     public void changeDatabaseClicked() {
