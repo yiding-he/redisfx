@@ -1,20 +1,27 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
+
+import com.hyd.fx.NodeUtils;
+import com.hyd.fx.concurrency.BackgroundTask;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
 import com.hyd.redisfx.i18n.I18n;
+import java.util.Map;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.*;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
-
-import java.util.Map;
-import java.util.Optional;
-
-import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
 
 @TabName("Hash")
 public class HashTabController extends AbstractTabController {
@@ -32,6 +39,8 @@ public class HashTabController extends AbstractTabController {
     public Label lblHashSize;
 
     public TextField txtHashFieldPattern;
+
+    public Button searchButton;
 
     private String currentKey;
 
@@ -109,19 +118,29 @@ public class HashTabController extends AbstractTabController {
         txtKey.selectAll();
         this.currentKey = key;
 
+        BackgroundTask
+            .runTask(() -> runSearch(key, fieldPattern, tblHashValues.getItems()))
+            .whenBeforeStart(() -> NodeUtils.setDisable(true, searchButton))
+            .whenTaskFinish(() -> NodeUtils.setDisable(false, searchButton))
+            .start();
+    }
+
+    private void runSearch(String key, String fieldPattern, ObservableList<HashItem> items) {
         withJedis(jedis -> {
 
-            lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
-            tblHashValues.getItems().clear();
+            lblHashSize.setText(I18n.getString("hash_lbl_size") + jedis.hlen(key));
+            items.clear();
 
-            ScanParams scanParams = new ScanParams().match(fieldPattern);
+            ScanParams scanParams = new ScanParams().match(fieldPattern).count(1000);
             ScanResult<Map.Entry<String, String>> scanResult;
+            String cursor = ScanParams.SCAN_POINTER_START;
 
             do {
-                scanResult = jedis.hscan(key, ScanParams.SCAN_POINTER_START, scanParams);
+                scanResult = jedis.hscan(key, cursor, scanParams);
                 scanResult.getResult().forEach(entry -> {
-                    tblHashValues.getItems().add(new HashItem(entry.getKey(), entry.getValue()));
+                    items.add(new HashItem(entry.getKey(), entry.getValue()));
                 });
+                cursor = scanResult.getStringCursor();
             } while (!scanResult.isCompleteIteration());
         });
     }

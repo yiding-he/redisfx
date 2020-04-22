@@ -1,5 +1,7 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.fx.NodeUtils;
+import com.hyd.fx.concurrency.BackgroundTask;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
@@ -8,14 +10,17 @@ import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -25,6 +30,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +39,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
-/**
- * (description)
- * created at 17/03/14
- *
- * @author yidin
- */
 @TabName("Key")
 public class KeyTabController extends AbstractTabController {
 
@@ -61,9 +62,20 @@ public class KeyTabController extends AbstractTabController {
 
     public ContextMenu mnuConfigValues;
 
+    public HBox searchKeyIndicator;
+
+    public Button searchButton;
+
+    public BorderPane root;
+
+    private boolean searchCancelled;
+
     @Override
     public void initialize() {
         super.initialize();
+
+        NodeUtils.setManaged(this.searchKeyIndicator);
+        this.searchKeyIndicator.setVisible(false);
 
         this.keyColumn.setCellValueFactory(data -> data.getValue().keyProperty());
         this.typeColumn.setCellValueFactory(data -> data.getValue().typeProperty());
@@ -76,10 +88,9 @@ public class KeyTabController extends AbstractTabController {
 
         this.tblKeys.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.C && event.isControlDown()) {  // Ctrl+C
-                KeyItem selectedItem = this.tblKeys.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    Fx.copyText(selectedItem.getKey());
-                }
+                mnuCopyKey();
+            } else if (event.getCode() == KeyCode.DELETE) {
+                deleteKeys();
             }
         });
 
@@ -149,22 +160,46 @@ public class KeyTabController extends AbstractTabController {
         items.clear();
 
         if (pattern.trim().length() > 0) {
-            try (Jedis jedis = JedisManager.getJedis()) {
-                String cursor = ScanParams.SCAN_POINTER_START;
-                ScanParams scanParams = new ScanParams().match(pattern);
-                ScanResult<String> result;
-                do {
-                    result = jedis.scan(cursor, scanParams);
-                    cursor = result.getStringCursor();
+            BackgroundTask
+                .runTask(() -> runSearch(pattern, limit, items))
+                .whenBeforeStart(() -> {
+                    NodeUtils.setDisable(true, searchButton);
+                    searchKeyIndicator.setVisible(true);
+                    searchCancelled = false;
+                })
+                .whenTaskFinish(() -> {
+                    NodeUtils.setDisable(false, searchButton);
+                    searchKeyIndicator.setVisible(false);
+                })
+                .start();
+        }
+    }
 
-                    result.getResult().forEach(key -> {
-                        String type = jedis.type(key);
-                        int length = getLength(key, type, jedis);
-                        String expireAt = getExpireAt(key, jedis);
-                        items.add(new KeyItem(key, type, length, expireAt));
-                    });
-                } while (!result.isCompleteIteration() && items.size() < limit);
-            }
+    private void runSearch(String pattern, int limit, ObservableList<KeyItem> items) {
+        try (Jedis jedis = JedisManager.getJedis()) {
+            String cursor = ScanParams.SCAN_POINTER_START;
+            ScanParams scanParams = new ScanParams().match(pattern).count(200);
+            ScanResult<String> result;
+            do {
+                if (searchCancelled) {
+                    break;
+                }
+
+                result = jedis.scan(cursor, scanParams);
+                cursor = result.getStringCursor();
+
+                for (String key : result.getResult()) {
+                    String type = jedis.type(key);
+                    int length = getLength(key, type, jedis);
+                    String expireAt = getExpireAt(key, jedis);
+                    items.add(new KeyItem(key, type, length, expireAt));
+
+                    if (searchCancelled) {
+                        break;
+                    }
+                }
+
+            } while (!result.isCompleteIteration() && items.size() < limit);
         }
     }
 
@@ -204,29 +239,40 @@ public class KeyTabController extends AbstractTabController {
 
         String message = I18n.getString("msg_confirm_delete_key");
         new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO)
-                .showAndWait().ifPresent(result -> {
+            .showAndWait().ifPresent(result -> {
             if (result == ButtonType.YES) {
                 JedisManager.withJedis(jedis ->
-                        selectedItems.forEach(item ->
-                                jedis.del(item.getKey())));
+                    selectedItems.forEach(item ->
+                        jedis.del(item.getKey())));
             }
         });
 
         listKeys();
     }
 
+    private void forSelectedItems(Consumer<List<KeyItem>> itemsConsumer) {
+        ObservableList<KeyItem> selectedItems = this.tblKeys.getSelectionModel().getSelectedItems();
+        if (!selectedItems.isEmpty()) {
+            itemsConsumer.accept(selectedItems);
+        }
+    }
+
     public void mnuCopyKey() {
-        Optional.ofNullable(tblKeys.getSelectionModel().getSelectedItem())
-                .ifPresent(keyItem -> Fx.copyText(keyItem.getKey()));
+        forSelectedItems(
+            items -> Fx.copyText(
+                items.stream().map(KeyItem::getKey).collect(Collectors.joining("\n"))
+            )
+        );
     }
 
     public void mnuSetExpiry() {
-        Optional.ofNullable(tblKeys.getSelectionModel().getSelectedItem())
-                .ifPresent(keyItem -> {
-                    String key = keyItem.getKey();
-                    int ttl = JedisManager.usingJedis(jedis -> jedis.ttl(key).intValue());
-                    new SetExpiryDialog(keyItem, ttl).show();
-                });
+        forSelectedItems(
+            items -> new SetExpiryDialog(items).show()
+        );
+    }
+
+    public void cancelSearch() {
+        this.searchCancelled = true;
     }
 
     //////////////////////////////////////////////////////////////
@@ -301,7 +347,7 @@ public class KeyTabController extends AbstractTabController {
 
         public void refreshExpiry() {
             JedisManager.withJedis(jedis ->
-                    setExpireAt(KeyTabController.getExpireAt(getKey(), jedis)));
+                setExpireAt(KeyTabController.getExpireAt(getKey(), jedis)));
         }
     }
 }

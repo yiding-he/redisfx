@@ -8,51 +8,34 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane xmlns:fx="javafx"
-    fx:controller="com.hyd.redisfx.controllers.tabs.SetTabController">
-    <center>
-        <VBox spacing="10">
+            fx:controller="com.hyd.redisfx.controllers.tabs.SetTabController">
+  <center>
+    <VBox spacing="10">
 
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
-            </padding>
+      <padding>
+        <Insets bottom="10" left="10" right="10" top="10"/>
+      </padding>
 
-            <HBox alignment="BASELINE_LEFT" spacing="10">
-                <Label text="Key:"/>
-                <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-                <Button onAction="#listValues" styleClass="iconButton">
-                    <graphic>
-                        <FontIcon iconSize="16" iconLiteral="ion4-ios-search"/>
-                    </graphic>
-                </Button>
-            </HBox>
+      <HBox alignment="BASELINE_LEFT" spacing="10">
+        <Label text="Key:"/>
+        <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
+        <Button onAction="#listValues" text="打开" styleClass="iconButton"/>
+      </HBox>
 
-            <Label fx:id="lblMessage" text="%word_value"/>
+      <Label fx:id="lblMessage" text="%word_value"/>
 
-            <ListView fx:id="lstValues" style="-fx-font-family: monospace" VBox.vgrow="ALWAYS">
-                <contextMenu>
-                    <ContextMenu>
-                        <items>
-                            <MenuItem text="%word_copy" onAction="#listItemCopyClicked" accelerator="Shortcut+C">
-                                <graphic>
-                                    <FontIcon iconSize="18" iconLiteral="ion4-md-copy" iconColor="dodgerblue"/>
-                                </graphic>
-                            </MenuItem>
-                            <MenuItem text="%set_op_insert" onAction="#insertItem">
-                                <graphic>
-                                    <FontIcon iconSize="18" iconLiteral="ion4-ios-add-circle-outline" iconColor="dodgerblue"/>
-                                </graphic>
-                            </MenuItem>
-                            <MenuItem text="%set_op_delete" onAction="#deleteItem" accelerator="Delete">
-                                <graphic>
-                                    <FontIcon iconSize="18" iconLiteral="ion4-md-trash" iconColor="crimson"/>
-                                </graphic>
-                            </MenuItem>
-                        </items>
-                    </ContextMenu>
-                </contextMenu>
-            </ListView>
-        </VBox>
-    </center>
+      <ListView fx:id="lstValues" style="-fx-font-family: monospace" VBox.vgrow="ALWAYS">
+        <contextMenu>
+          <ContextMenu>
+            <items>
+              <MenuItem text="%word_copy" onAction="#listItemCopyClicked" accelerator="Shortcut+C"/>
+              <MenuItem text="%set_op_insert" onAction="#insertItem"/>
+              <MenuItem text="%set_op_delete" onAction="#deleteItem" accelerator="Delete"/>
+            </items>
+          </ContextMenu>
+        </contextMenu>
+      </ListView>
+    </VBox>
+  </center>
 </BorderPane>

@@ -1,8 +1,12 @@
 package com.hyd.redisfx.fx;
 
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Icons;
 import com.hyd.redisfx.i18n.I18n;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -13,13 +17,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * (description)
@@ -99,7 +104,8 @@ public abstract class FormDialog extends Stage {
         });
 
         ColumnConstraints titleCC = new ColumnConstraints();
-        titleCC.setPrefWidth(100);
+        titleCC.setPrefWidth(USE_COMPUTED_SIZE);
+        titleCC.setMinWidth(USE_COMPUTED_SIZE);
 
         ColumnConstraints valueCC = new ColumnConstraints();
         valueCC.setFillWidth(true);

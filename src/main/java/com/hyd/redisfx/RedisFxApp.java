@@ -1,34 +1,38 @@
 package com.hyd.redisfx;
 
-import com.hyd.jfapps.appbase.AppCategory;
-import com.hyd.jfapps.appbase.AppInfo;
-import com.hyd.jfapps.appbase.JfappsApp;
+import com.hyd.fx.Fxml;
+import com.hyd.fx.app.AppPrimaryStage;
 import com.hyd.redisfx.controllers.MainController;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.i18n.I18n;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-@AppInfo(
-    name = "Redis 客户端",
-    author = "yiding-he",
-    url = "https://github.com/yiding-he/redisfx",
-    category = AppCategory.DATABASE
-)
-public class RedisFxApp extends JfappsApp {
+public class RedisFxApp extends Application {
+
+    public static void main(String[] args) {
+        launch(RedisFxApp.class);
+    }
 
     @Override
-    public Parent getRoot() throws Exception {
-        Fx.setFxmlLoaderSupplier(this::fxmlLoader);
-        FXMLLoader fxmlLoader = Fx.getFxmlLoader("/fxml/Main.fxml");
-        BorderPane mainPane = fxmlLoader.load();
+    public void start(Stage primaryStage) throws Exception {
+        AppPrimaryStage.setPrimaryStage(primaryStage);
+        primaryStage.setTitle("RedisFX");
+        primaryStage.setScene(new Scene(getRoot(primaryStage)));
+        primaryStage.show();
+    }
+
+    public Parent getRoot(Stage primaryStage) throws Exception {
+        FXMLLoader fxmlLoader = Fxml.load("/fxml/Main.fxml", I18n.UI_MAIN_BUNDLE);
+        BorderPane mainPane = fxmlLoader.getRoot();
+
         MainController mainController = fxmlLoader.getController();
-        mainController.setPrimaryStage(globalContext.get("primaryStage"));
+        mainController.setPrimaryStage(primaryStage);
+
         return mainPane;
     }
 
-    @Override
-    public void onCloseRequest() {
-        JedisManager.shutdown();
-    }
 }

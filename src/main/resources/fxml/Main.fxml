@@ -1,3 +1,4 @@
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -16,10 +17,18 @@
     <top>
         <MenuBar>
             <Menu text="%mnu_connections">
-                <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager"/>
+                <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager">
+                  <graphic>
+                    <FontAwesomeIconView glyphName="FILE" glyphSize="16"/>
+                  </graphic>
+                </MenuItem>
             </Menu>
             <Menu text="%mnu_databases">
-                <MenuItem text="%mnu_change_database" onAction="#changeDatabaseClicked"/>
+                <Menu text="%mnu_change_database" fx:id="mnuCurrentDatabase">
+                  <graphic>
+                    <FontAwesomeIconView glyphName="DATABASE" glyphSize="16"/>
+                  </graphic>
+                </Menu>
                 <MenuItem text="%mnu_switch_database" onAction="#switchDatabaseClicked" disable="true"/>
                 <SeparatorMenuItem/>
                 <MenuItem text="%mnu_clear_database" onAction="#clearDatabaseClicked" disable="true"/>
@@ -28,11 +37,6 @@
     </top>
     <center>
         <TabPane fx:id="tabs" visible="false">
-<!--
-            <Tab closable="false" text="%tab_title_raw" userData="Raw">
-                <fx:include source="tabs/RawCommand.fxml"/>
-            </Tab>
--->
             <Tab closable="false" text="%tab_title_key" userData="Key">
                 <fx:include source="tabs/KeyTab.fxml"/>
             </Tab>

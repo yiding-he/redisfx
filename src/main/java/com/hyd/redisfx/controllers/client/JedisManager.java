@@ -2,7 +2,9 @@ package com.hyd.redisfx.controllers.client;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import com.hyd.redisfx.App;
 import com.hyd.redisfx.conn.Connection;
+import com.hyd.redisfx.event.EventType;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.function.Consumer;
@@ -27,6 +29,7 @@ public class JedisManager {
 
     public static void setCurrentDatabase(int currentDatabase) {
         JedisManager.currentDatabase = currentDatabase;
+        App.getEventBus().post(EventType.DatabaseChanged);
     }
 
     public static int getCurrentDatabase() {
@@ -78,7 +81,9 @@ public class JedisManager {
     }
 
     public static void shutdown() {
-        jedisPool.destroy();
+        if (jedisPool != null) {
+            jedisPool.destroy();
+        }
     }
 
     public static String getHost() {

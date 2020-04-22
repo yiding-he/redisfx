@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 <BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
         <VBox spacing="10">
@@ -21,11 +20,7 @@
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <Label text="Key:"/>
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-                <Button onAction="#showValue" styleClass="iconButton">
-                    <graphic>
-                        <FontIcon iconSize="16" iconLiteral="ion4-ios-search"/>
-                    </graphic>
-                </Button>
+                <Button onAction="#showValue" text="打开" styleClass="iconButton"/>
             </HBox>
 
             <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">
@@ -47,7 +42,7 @@
 
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <TextField fx:id="txtHashFieldPattern"/>
-                <Button text="%word_search" styleClass="narrowButton" onAction="#searchFieldPattern"/>
+                <Button text="%word_search" styleClass="narrowButton" fx:id="searchButton" onAction="#searchFieldPattern"/>
                 <Label text="0" fx:id="lblHashSize"/>
                 <Button text="%hash_op_add_value" onAction="#addValue"/>
             </HBox>
