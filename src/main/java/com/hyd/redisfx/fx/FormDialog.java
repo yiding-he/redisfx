@@ -24,6 +24,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
@@ -62,6 +63,7 @@ public abstract class FormDialog extends Stage {
         if (owner != null) {
             this.initModality(Modality.WINDOW_MODAL);
             this.initOwner(owner);
+            adjustPosition(this, owner);
         }
 
         Icons.Logo.setToStage(this);
@@ -69,6 +71,13 @@ public abstract class FormDialog extends Stage {
         okButton.setOnAction(this::okButtonClicked);
         cancelButton.setOnAction(this::cancelButtonClicked);
         this.setOnCloseRequest(this::closeButtonClicked);
+    }
+
+    private void adjustPosition(Window dialog, Window owner) {
+        dialog.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+            dialog.setX(Math.max(0, owner.getX() + owner.getWidth() / 2 - dialog.getWidth() / 2));
+            dialog.setY(Math.max(0, owner.getY() + owner.getHeight() / 2 - dialog.getHeight() / 2));
+        });
     }
 
     public boolean isOk() {

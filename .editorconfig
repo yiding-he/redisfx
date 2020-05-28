@@ -4,3 +4,6 @@ end_of_line = lf
 [*.{java,xml,properties}]
 indent_size = 4
 indent_style = space
+
+[*.xml]
+indent_size = 2

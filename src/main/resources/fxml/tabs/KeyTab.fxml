@@ -50,14 +50,15 @@
 
       <TableView fx:id="tblKeys" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">
         <columns>
-          <TableColumn fx:id="keyColumn" text="Key" prefWidth="500"/>
-          <TableColumn fx:id="typeColumn" text="%lbl_type" prefWidth="150"/>
-          <TableColumn fx:id="lengthColumn" text="%lbl_length" prefWidth="50"/>
+          <TableColumn fx:id="keyColumn" text="Key" prefWidth="480"/>
+          <TableColumn fx:id="typeColumn" text="%lbl_type" prefWidth="100"/>
+          <TableColumn fx:id="lengthColumn" text="%lbl_length" prefWidth="100"/>
           <TableColumn fx:id="expireColumn" text="%lbl_expire_at" prefWidth="150"/>
         </columns>
         <contextMenu>
           <ContextMenu fx:id="mnuConfigValues">
             <items>
+              <MenuItem text="%key_open_entry" onAction="#mnuOpenEntry"/>
               <MenuItem text="%hash_op_copy_key" onAction="#mnuCopyKey" accelerator="Shortcut+C">
                 <graphic>
                   <FontAwesomeIconView glyphName="COPY" glyphSize="16"/>

@@ -74,6 +74,7 @@
     <entry key="op_test">Test...</entry>
 
     <!-- Key Tab -->
+    <entry key="key_open_entry">Open Entry</entry>
     <entry key="key_set_expiry">Set Expiry...</entry>
     <entry key="key_set_expiry_title">Set Expiry</entry>
     <entry key="key_lbl_expiry">TTL Seconds (0 for persist)</entry>

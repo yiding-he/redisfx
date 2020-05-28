@@ -98,6 +98,9 @@ public class KeyTabController extends AbstractTabController {
 
         Fx.nodeOnKeyPress(this.tblKeys, Fx.CTRL_C, this::mnuCopyKey);
         App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
+
+        // 连接到新数据库时刷新一下 key 列表，以免旧的 key 列表对用户产生误导
+        App.getEventBus().on(EventType.ConnectionOpened, event -> listKeys());
     }
 
     private void reset() {
@@ -269,6 +272,10 @@ public class KeyTabController extends AbstractTabController {
         forSelectedItems(
             items -> new SetExpiryDialog(items).show()
         );
+    }
+
+    public void mnuOpenEntry() {
+        tableItemDoubleClicked();
     }
 
     public void cancelSearch() {
