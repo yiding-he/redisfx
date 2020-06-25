@@ -3,6 +3,7 @@ package com.hyd.redisfx;
 import com.hyd.fx.Fxml;
 import com.hyd.fx.app.AppLogo;
 import com.hyd.fx.app.AppPrimaryStage;
+import com.hyd.redisfx.fx.BackgroundExecutor;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ public class RedisFxApp extends Application {
 
         primaryStage.setTitle("RedisFX");
         primaryStage.setScene(new Scene(getRoot()));
+        primaryStage.setOnCloseRequest(event -> BackgroundExecutor.shutdown());
         primaryStage.show();
     }
 

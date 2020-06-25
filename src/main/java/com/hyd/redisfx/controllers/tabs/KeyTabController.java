@@ -7,11 +7,14 @@ import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.SetExpiryDialog;
 import com.hyd.redisfx.event.EventType;
+import com.hyd.redisfx.fx.BackgroundExecutor;
 import com.hyd.redisfx.i18n.I18n;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javafx.beans.property.IntegerProperty;
@@ -26,6 +29,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -70,6 +74,7 @@ public class KeyTabController extends AbstractTabController {
 
     private boolean searchCancelled;
 
+
     @Override
     public void initialize() {
         super.initialize();
@@ -85,6 +90,27 @@ public class KeyTabController extends AbstractTabController {
         this.cmbLimit.getSelectionModel().select(0);
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
+
+        this.tblKeys.setRowFactory(tv -> new TableRow<KeyItem>() {
+            @Override
+            protected void updateItem(KeyItem item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null || item.getType() != null) {
+                    return;
+                }
+                BackgroundExecutor.execute(() -> {
+                    try (Jedis jedis = JedisManager.getJedis()) {
+                        String key = item.getKey();
+                        String type = jedis.type(key);
+                        int length = getLength(key, type, jedis);
+                        String expireAt = getExpireAt(key, jedis);
+                        item.setType(type);
+                        item.setLength(length);
+                        item.setExpireAt(expireAt);
+                    }
+                });
+            }
+        });
 
         this.tblKeys.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.C && event.isControlDown()) {  // Ctrl+C
@@ -179,9 +205,13 @@ public class KeyTabController extends AbstractTabController {
     }
 
     private void runSearch(String pattern, int limit, ObservableList<KeyItem> items) {
+
+        // 扫描过程中一个 key 可能返回多次，因此需要排除重复结果
+        Set<String> keySet = new HashSet<>();
+
         try (Jedis jedis = JedisManager.getJedis()) {
             String cursor = ScanParams.SCAN_POINTER_START;
-            ScanParams scanParams = new ScanParams().match(pattern).count(200);
+            ScanParams scanParams = new ScanParams().match(pattern).count(limit);
             ScanResult<String> result;
             do {
                 if (searchCancelled) {
@@ -192,11 +222,10 @@ public class KeyTabController extends AbstractTabController {
                 cursor = result.getStringCursor();
 
                 for (String key : result.getResult()) {
-                    String type = jedis.type(key);
-                    int length = getLength(key, type, jedis);
-                    String expireAt = getExpireAt(key, jedis);
-                    items.add(new KeyItem(key, type, length, expireAt));
-
+                    if (!keySet.add(key)) {
+                        continue;
+                    }
+                    items.add(new KeyItem(key));
                     if (searchCancelled) {
                         break;
                     }
@@ -295,6 +324,10 @@ public class KeyTabController extends AbstractTabController {
         private StringProperty expireAt = new SimpleStringProperty();
 
         public KeyItem() {
+        }
+
+        public KeyItem(String key) {
+            setKey(key);
         }
 
         public KeyItem(String key, String type, int length, String expireAt) {
