@@ -1,18 +1,19 @@
 package com.hyd.redisfx.controllers.client;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.conn.Connection;
 import com.hyd.redisfx.event.EventType;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @author yiding.he
@@ -131,9 +132,9 @@ public class JedisManager {
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
 
         if (!StringUtils.isBlank(passphase)) {
-            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
         } else {
-            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
         }
     }
 }

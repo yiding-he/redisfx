@@ -27,7 +27,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.10.2-PROXY</version>
+            <version>3.3.0-PROXY</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

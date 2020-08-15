@@ -1,27 +1,23 @@
 package com.hyd.redisfx.controllers.tabs;
 
-import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
-
 import com.hyd.fx.NodeUtils;
 import com.hyd.fx.concurrency.BackgroundTask;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
 import com.hyd.redisfx.i18n.I18n;
-import java.util.Map;
-import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
+
+import java.util.Map;
+import java.util.Optional;
+
+import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
 
 @TabName("Hash")
 public class HashTabController extends AbstractTabController {
@@ -140,7 +136,7 @@ public class HashTabController extends AbstractTabController {
                 scanResult.getResult().forEach(entry -> {
                     items.add(new HashItem(entry.getKey(), entry.getValue()));
                 });
-                cursor = scanResult.getStringCursor();
+                cursor = scanResult.getCursor();
             } while (!scanResult.isCompleteIteration());
         });
     }
