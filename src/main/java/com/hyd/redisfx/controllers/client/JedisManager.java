@@ -1,6 +1,8 @@
 package com.hyd.redisfx.controllers.client;
 
+import com.hyd.redisfx.App;
 import com.hyd.redisfx.conn.Connection;
+import com.hyd.redisfx.event.EventType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
@@ -28,6 +30,7 @@ public class JedisManager {
 
     public static void setCurrentDatabase(int currentDatabase) {
         JedisManager.currentDatabase = currentDatabase;
+        App.getEventBus().post(EventType.DatabaseChanged);
     }
 
     public static int getCurrentDatabase() {
@@ -78,6 +81,12 @@ public class JedisManager {
         JedisManager.connection = connection;
     }
 
+    public static void shutdown() {
+        if (jedisPool != null) {
+            jedisPool.destroy();
+        }
+    }
+
     public static String getHost() {
         return connection == null ? null : connection.getHost();
     }
@@ -123,9 +132,9 @@ public class JedisManager {
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
 
         if (!StringUtils.isBlank(passphase)) {
-            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
         } else {
-            return JedisPool.withProxy(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
+            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
         }
     }
 }

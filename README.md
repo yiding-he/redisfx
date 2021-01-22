@@ -6,22 +6,22 @@ _[deprecated]项目已经移到[jfapps](https://github.com/yiding-he/jfapps/tree
 
 基于 JavaFX 的 Redis 客户端。
 
-下载项目后请先执行 lib 目录下的 install.cmd (Windows) 或 install.sh (Linux)
+下载源码编译之前，请先执行 lib 目录下的 install.cmd (Windows) 或 install.sh (Linux)
 
-Some icons are from [icons8.com](https://icons8.com/). Very much appreciated.
+Logo from [icons8.com](https://icons8.com/). Very much appreciated.
 
 截图：
 
-![2017-09-24_09h21_42](https://user-images.githubusercontent.com/900606/30778493-fa0692ba-a109-11e7-8b30-6f3d54b8f399.png)
+![](imgs/01.jpg)
 
-![2017-09-24_09h23_14](https://user-images.githubusercontent.com/900606/30778499-235072e4-a10a-11e7-94b6-45feb22b5d3b.png)
+![](imgs/02.jpg)
 
-![2017-09-24_09h24_02](https://user-images.githubusercontent.com/900606/30778503-3f486614-a10a-11e7-92ad-67e5135e8362.png)
+![](imgs/03.jpg)
 
-![2017-09-24_09h26_09](https://user-images.githubusercontent.com/900606/30778511-8b1244d4-a10a-11e7-916c-0c8c249407c3.png)
-
-![2017-09-24_09h27_02](https://user-images.githubusercontent.com/900606/30778514-acd519fc-a10a-11e7-896d-49d58b9f1be9.png)
+![](imgs/04.jpg)
 
 ### Update:
+
+* 2020-08-15: Jedis 魔改升级到基于 jedis 3.3.0
 
 * 2017-11-16: 魔改 Jedis，添加了代理支持。当然原项目的 PR 我也提交了，如果不被接受我也没办法，好在改动量很小。

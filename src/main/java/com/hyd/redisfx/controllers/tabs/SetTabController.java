@@ -68,7 +68,7 @@ public class SetTabController extends AbstractTabController {
 
             if (!Objects.equals("set", jedis.type(key))) {
                 lstValues.getItems().clear();
-                lblMessage.setText(I18n.getString("list_msg_type_error"));
+                lblMessage.setText(I18n.getString("set_msg_type_error"));
                 return;
             }
 

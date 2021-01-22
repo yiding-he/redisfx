@@ -3,7 +3,11 @@ package com.hyd.redisfx.controllers.tabs;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.i18n.I18n;
 import com.hyd.redisfx.nodes.DoubleSpinner;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 @TabName("String")
 public class StringTabController extends AbstractTabController {

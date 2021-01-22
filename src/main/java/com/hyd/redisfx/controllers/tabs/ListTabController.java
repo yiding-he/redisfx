@@ -14,7 +14,7 @@ import javafx.scene.input.KeyCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.BinaryClient.LIST_POSITION;
+import redis.clients.jedis.ListPosition;
 import redis.clients.jedis.Transaction;
 
 import java.util.List;
@@ -138,9 +138,9 @@ public class ListTabController extends AbstractTabController {
 
             Long length = jedis.llen(key);
             lblMessage.setText(
-                    I18n.getString("list_lbl_length") + length +
-                            I18n.getString("list_lbl_display") + from +
-                            I18n.getString("lbl_to") + to);
+                I18n.getString("list_lbl_length") + length +
+                    I18n.getString("list_lbl_display") + from +
+                    I18n.getString("lbl_to") + to);
 
             List<String> values = jedis.lrange(key, from, to);
             lstValues.getItems().clear();
@@ -228,7 +228,7 @@ public class ListTabController extends AbstractTabController {
         refreshList();
     }
 
-    private void insertItem(LIST_POSITION position) {
+    private void insertItem(ListPosition position) {
         if (!prepareList()) {
             return;
         }
@@ -249,7 +249,7 @@ public class ListTabController extends AbstractTabController {
         // do insert
 
         int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
-        final LIST_POSITION finalPosition = selectedIndex < 0 ? LIST_POSITION.AFTER : position;
+        final ListPosition finalPosition = selectedIndex < 0 ? ListPosition.AFTER : position;
 
         String value = getStringByDialog("");
         if (StringUtils.isBlank(value)) {
@@ -257,8 +257,8 @@ public class ListTabController extends AbstractTabController {
         }
 
         int listIndex = selectedIndex + currentFrom;
-        int restoreIndex = finalPosition == LIST_POSITION.BEFORE ? listIndex + 1 : listIndex;
-        int restoreSelectionIndex = finalPosition == LIST_POSITION.BEFORE ? selectedIndex + 1 : selectedIndex;
+        int restoreIndex = finalPosition == ListPosition.BEFORE ? listIndex + 1 : listIndex;
+        int restoreSelectionIndex = finalPosition == ListPosition.BEFORE ? selectedIndex + 1 : selectedIndex;
 
         try {
             JedisManager.withJedis(jedis -> {
@@ -303,10 +303,10 @@ public class ListTabController extends AbstractTabController {
     }
 
     public void insertItemBefore() {
-        insertItem(LIST_POSITION.BEFORE);
+        insertItem(ListPosition.BEFORE);
     }
 
     public void insertItemAfter() {
-        insertItem(LIST_POSITION.AFTER);
+        insertItem(ListPosition.AFTER);
     }
 }

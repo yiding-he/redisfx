@@ -27,7 +27,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.10.2-PROXY</version>
+            <version>3.3.0-PROXY</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -66,14 +66,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-javafx</artifactId>
-            <version>${ikonli.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kordamp.ikonli</groupId>
-            <artifactId>ikonli-ionicons4-pack</artifactId>
-            <version>${ikonli.version}</version>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx</artifactId>
+            <version>8.9</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.kordamp.jipsy/jipsy -->
         <dependency>
@@ -81,12 +76,10 @@
             <artifactId>jipsy</artifactId>
             <version>0.6.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>com.hyd</groupId>
-            <artifactId>jfapps-app-base</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>hydrogen-fx</artifactId>
+            <version>2.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -97,7 +90,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.hyd.redisfx.RedisFxMain</mainClass>
+                            <mainClass>com.hyd.redisfx.RedisFxApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +97,7 @@ public class ConnectionManagerController extends BaseController {
     private void initListView() {
         this.lstConnections.setItems(ConnectionManager.connectionsProperty());
         this.lstConnections.getSelectionModel().selectedItemProperty()
-                .addListener((_ob, _old, _new) -> this.currentSelectedConnection.set(_new));
+            .addListener((_ob, _old, _new) -> this.currentSelectedConnection.set(_new));
 
         this.lstConnections.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -108,7 +109,11 @@ public class ConnectionManagerController extends BaseController {
     }
 
     public void closeClicked() {
-        this.getStage().close();
+        closeStage();
+    }
+
+    private void closeStage() {
+        ((Stage) this.lstConnections.getScene().getWindow()).close();
     }
 
     public void createClicked() {
@@ -135,7 +140,7 @@ public class ConnectionManagerController extends BaseController {
         }
 
         Connection connection = this.currentSelectedConnection.get() != null ?
-                this.currentSelectedConnection.get() : new Connection();
+            this.currentSelectedConnection.get() : new Connection();
 
         updateConnectionFromUI(connection);
 
@@ -190,7 +195,8 @@ public class ConnectionManagerController extends BaseController {
                 Fx.info("连接成功", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 成功。");
             } catch (Exception e) {
                 LOG.error("", e);
-                Fx.error("连接失败", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
+                Fx.error("连接失败",
+                    "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
             } finally {
                 btnTest.setDisable(false);
             }
@@ -209,11 +215,11 @@ public class ConnectionManagerController extends BaseController {
         try {
             JedisManager.connect(connection);
             App.getEventBus().post(EventType.ConnectionOpened);
-            this.getStage().close();
+            closeStage();
         } catch (Exception e) {
             LOG.error("", e);
             Fx.error("连接失败", "连接到 " + connection.getHost() +
-                    ":" + connection.getPort() + " 失败：\n\n" + e.toString());
+                ":" + connection.getPort() + " 失败：\n\n" + e.toString());
         }
     }
 }

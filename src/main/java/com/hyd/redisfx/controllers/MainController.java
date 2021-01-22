@@ -1,17 +1,17 @@
 package com.hyd.redisfx.controllers;
 
+import com.hyd.fx.app.AppPrimaryStage;
+import com.hyd.fx.dialog.DialogBuilder;
 import com.hyd.redisfx.App;
-import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.client.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.ChangeDatabaseDialog;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
-import javafx.event.ActionEvent;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,23 +27,32 @@ public class MainController {
 
     public TabPane tabs;
 
-    private Stage primaryStage;
+    public Menu mnuCurrentDatabase;
 
     public void initialize() {
         App.setMainController(this);
         Tabs.setTabs(tabs);
         initializeTabs();
+        initDatabaseMenuItems();
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
-            openConnectionManager(null);
+    private void initDatabaseMenuItems() {
+        for (int i = 0; i < 16; i++) {
+            CheckMenuItem item = new CheckMenuItem(String.valueOf(i));
+            final int index = i;
+            item.setOnAction(event -> JedisManager.setCurrentDatabase(index));
+            mnuCurrentDatabase.getItems().add(item);
+        }
+
+        App.getEventBus().on(EventType.DatabaseChanged, event -> {
+            int currentDatabase = JedisManager.getCurrentDatabase();
+            for (int i = 0; i < mnuCurrentDatabase.getItems().size(); i++) {
+                CheckMenuItem menuItem = (CheckMenuItem) mnuCurrentDatabase.getItems().get(i);
+                menuItem.setSelected(i == currentDatabase);
+            }
         });
-    }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
+        JedisManager.setCurrentDatabase(0);
     }
 
     private void initializeTabs() {
@@ -64,32 +73,19 @@ public class MainController {
     }
 
     private void updateTitle() {
-
-        JedisManager.withJedis(jedis -> {
-            primaryStage.setTitle(
-                    I18n.getString("app_title") +
-                            " - " + JedisManager.getHost() +
-                            ":" + JedisManager.getPort() +
-                            ":" + jedis.getDB());
-        });
+        // 作为小应用不再操作主窗体
     }
 
-    public void openConnectionManager(ActionEvent actionEvent) {
+    public void openConnectionManager() {
         String fxml = "/fxml/conn/ConnectionManager.fxml";
-        Fx.showDialog(primaryStage, I18n.getString("title_conn_manager"), fxml);
-    }
-
-    public void openConnection(ActionEvent actionEvent) {
-        String host = "localhost";
-        int port = 6379;
-
-        try {
-            JedisManager.connect(host, port);
-            App.getEventBus().post(EventType.ConnectionOpened);
-        } catch (Exception e) {
-            LOG.error("", e);
-            Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e.toString());
-        }
+        new DialogBuilder()
+            .body(fxml)
+            .noDefaultButtons()
+            .resizable(true)
+            .resources(I18n.UI_MAIN_BUNDLE)
+            .owner(AppPrimaryStage.getPrimaryStage())
+            .title(I18n.getString("title_conn_manager"))
+            .build().showAndWait();
     }
 
     public void changeDatabaseClicked() {

@@ -1,9 +1,9 @@
 package com.hyd.redisfx.fx;
 
+import static javafx.scene.layout.Region.USE_PREF_SIZE;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import static javafx.scene.layout.Region.USE_PREF_SIZE;
 
 /**
  * (description)

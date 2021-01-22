@@ -1,8 +1,6 @@
 package com.hyd.redisfx.controllers.dialogs;
 
-import com.hyd.redisfx.App;
 import com.hyd.redisfx.controllers.client.JedisManager;
-import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.fx.FormDialog;
 import com.hyd.redisfx.fx.IntegerSpinnerFormField;
 import com.hyd.redisfx.i18n.I18n;
@@ -30,10 +28,7 @@ public class ChangeDatabaseDialog extends FormDialog {
 
     @Override
     protected void okButtonClicked(ActionEvent event) {
-
         JedisManager.setCurrentDatabase(databaseField.getValue());
-        App.getEventBus().post(EventType.DatabaseChanged);
-
         this.close();
     }
 }

@@ -1,8 +1,12 @@
 package com.hyd.redisfx.fx;
 
-import com.hyd.redisfx.App;
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+
+import com.hyd.fx.app.AppPrimaryStage;
 import com.hyd.redisfx.Icons;
 import com.hyd.redisfx.i18n.I18n;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -13,13 +17,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * (description)
@@ -29,16 +35,16 @@ import java.util.List;
  */
 public abstract class FormDialog extends Stage {
 
-    private final Button cancelButton = new Button(I18n.getString("word_cancel"));
+    protected final Button cancelButton = new Button(I18n.getString("word_cancel"));
 
-    private final Button okButton = new Button(I18n.getString("word_ok"));
+    protected final Button okButton = new Button(I18n.getString("word_ok"));
 
     private final GridPane contentPane = new GridPane();
 
     private boolean ok;
 
     public FormDialog() {
-        this(App.getMainController().getPrimaryStage());
+        this(AppPrimaryStage.getPrimaryStage());
     }
 
     public FormDialog(Stage owner) {
@@ -57,6 +63,7 @@ public abstract class FormDialog extends Stage {
         if (owner != null) {
             this.initModality(Modality.WINDOW_MODAL);
             this.initOwner(owner);
+            adjustPosition(this, owner);
         }
 
         Icons.Logo.setToStage(this);
@@ -64,6 +71,13 @@ public abstract class FormDialog extends Stage {
         okButton.setOnAction(this::okButtonClicked);
         cancelButton.setOnAction(this::cancelButtonClicked);
         this.setOnCloseRequest(this::closeButtonClicked);
+    }
+
+    private void adjustPosition(Window dialog, Window owner) {
+        dialog.addEventHandler(WindowEvent.WINDOW_SHOWN, event -> {
+            dialog.setX(Math.max(0, owner.getX() + owner.getWidth() / 2 - dialog.getWidth() / 2));
+            dialog.setY(Math.max(0, owner.getY() + owner.getHeight() / 2 - dialog.getHeight() / 2));
+        });
     }
 
     public boolean isOk() {
@@ -99,7 +113,8 @@ public abstract class FormDialog extends Stage {
         });
 
         ColumnConstraints titleCC = new ColumnConstraints();
-        titleCC.setPrefWidth(100);
+        titleCC.setPrefWidth(USE_COMPUTED_SIZE);
+        titleCC.setMinWidth(USE_COMPUTED_SIZE);
 
         ColumnConstraints valueCC = new ColumnConstraints();
         valueCC.setFillWidth(true);

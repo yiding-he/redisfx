@@ -1,11 +1,14 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.fx.NodeUtils;
+import com.hyd.fx.concurrency.BackgroundTask;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.ScanParams;
@@ -32,6 +35,8 @@ public class HashTabController extends AbstractTabController {
     public Label lblHashSize;
 
     public TextField txtHashFieldPattern;
+
+    public Button searchButton;
 
     private String currentKey;
 
@@ -109,19 +114,29 @@ public class HashTabController extends AbstractTabController {
         txtKey.selectAll();
         this.currentKey = key;
 
+        BackgroundTask
+            .runTask(() -> runSearch(key, fieldPattern, tblHashValues.getItems()))
+            .whenBeforeStart(() -> NodeUtils.setDisable(true, searchButton))
+            .whenTaskFinish(() -> NodeUtils.setDisable(false, searchButton))
+            .start();
+    }
+
+    private void runSearch(String key, String fieldPattern, ObservableList<HashItem> items) {
         withJedis(jedis -> {
 
-            lblHashSize.setText(I18n.getString("hash_lbl_size") + String.valueOf(jedis.hlen(key)));
-            tblHashValues.getItems().clear();
+            lblHashSize.setText(I18n.getString("hash_lbl_size") + jedis.hlen(key));
+            items.clear();
 
-            ScanParams scanParams = new ScanParams().match(fieldPattern);
+            ScanParams scanParams = new ScanParams().match(fieldPattern).count(1000);
             ScanResult<Map.Entry<String, String>> scanResult;
+            String cursor = ScanParams.SCAN_POINTER_START;
 
             do {
-                scanResult = jedis.hscan(key, ScanParams.SCAN_POINTER_START, scanParams);
+                scanResult = jedis.hscan(key, cursor, scanParams);
                 scanResult.getResult().forEach(entry -> {
-                    tblHashValues.getItems().add(new HashItem(entry.getKey(), entry.getValue()));
+                    items.add(new HashItem(entry.getKey(), entry.getValue()));
                 });
+                cursor = scanResult.getCursor();
             } while (!scanResult.isCompleteIteration());
         });
     }

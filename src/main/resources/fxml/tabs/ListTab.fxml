@@ -13,7 +13,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
     <VBox spacing="10">
@@ -29,11 +28,7 @@
             <Spinner fx:id="spnFromIndex" prefWidth="80" editable="true"/>
             <Label text="%list_lbl_to"/>
             <Spinner fx:id="spnToIndex" prefWidth="80" editable="true"/>
-            <Button onAction="#listValues" styleClass="iconButton">
-                <graphic>
-                    <FontIcon iconSize="16" iconLiteral="ion4-ios-search"/>
-                </graphic>
-            </Button>
+            <Button onAction="#listValues" text="打开" styleClass="iconButton"/>
         </HBox>
 
         <Label fx:id="lblMessage" text="Value:"/>
