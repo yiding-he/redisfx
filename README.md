@@ -1,5 +1,7 @@
 # redisfx
 
+_[deprecated]项目已经移到[jfapps](https://github.com/yiding-he/jfapps/tree/master/jfapps-apps/redis-client)_
+
 （项目功能并未全部完成）
 
 基于 JavaFX 的 Redis 客户端。
