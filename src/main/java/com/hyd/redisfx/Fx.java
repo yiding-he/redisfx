@@ -12,8 +12,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.input.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -31,8 +29,6 @@ public class Fx {
     public static final KeyCodeCombination CTRL_C = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
 
     public static final KeyCodeCombination CTRL_B = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
-
-    private static final Logger LOG = LoggerFactory.getLogger(Fx.class);
 
     public static void error(String message) {
         new Alert(Alert.AlertType.ERROR, message, ButtonType.OK).showAndWait();
@@ -61,7 +57,6 @@ public class Fx {
         try {
             fxmlLoader.load();
         } catch (IOException e) {
-            LOG.error("", e);
             error(e.toString());
         }
 
@@ -185,7 +180,6 @@ public class Fx {
                 try {
                     onAction.run();
                 } catch (Exception e) {
-                    LOG.error("", e);
                     error(e.toString());
                 } finally {
                     event.consume();

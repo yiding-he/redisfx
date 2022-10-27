@@ -1,8 +1,8 @@
 package com.hyd.redisfx.jedis;
 
 import com.hyd.fx.utils.Nullable;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.params.ScanParams;
+import redis.clients.jedis.resps.ScanResult;
 
 import java.util.ArrayList;
 import java.util.List;

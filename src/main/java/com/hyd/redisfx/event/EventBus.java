@@ -1,8 +1,5 @@
 package com.hyd.redisfx.event;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.*;
 
 /**
@@ -13,8 +10,6 @@ import java.util.*;
  * @author yiding_he
  */
 public class EventBus<T> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(EventBus.class);
 
     private final Map<T, List<EventHandlerWrapper>> EVENT_MAP = new HashMap<>();
 
@@ -40,8 +35,6 @@ public class EventBus<T> {
         List<EventHandlerWrapper> handlers = EVENT_MAP.get(eventType);
         handlers.removeIf(handler -> Objects.equals(handler.getId(), handlerId));
         handlers.add(new EventHandlerWrapper(handlerId, eventHandler));
-
-        LOG.debug("Event '" + eventType + "' registered with " + eventHandler);
     }
 
     /**
@@ -135,7 +128,7 @@ public class EventBus<T> {
                 try {
                     eventHandlerWrapper.getEventHandler().handle(event);
                 } catch (Exception e) {
-                    LOG.error("处理事件失败", e);
+                    e.printStackTrace();
                 }
             }
         }

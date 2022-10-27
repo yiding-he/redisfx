@@ -2,19 +2,16 @@ package com.hyd.redisfx.controllers;
 
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.ChangeDatabaseDialog;
 import com.hyd.redisfx.controllers.tabs.AbstractTabController;
 import com.hyd.redisfx.controllers.tabs.Tabs;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
-import javafx.event.ActionEvent;
+import com.hyd.redisfx.jedis.JedisManager;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * (description)
@@ -23,8 +20,6 @@ import org.slf4j.LoggerFactory;
  * @author yidin
  */
 public class MainController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
     public TabPane tabs;
 
@@ -100,8 +95,7 @@ public class MainController {
             JedisManager.connect(host, port);
             App.getEventBus().post(EventType.ConnectionOpened);
         } catch (Exception e) {
-            LOG.error("", e);
-            Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e.toString());
+            Fx.error("连接失败", "连接到 " + host + ":" + port + " 失败：\n\n" + e);
         }
     }
 

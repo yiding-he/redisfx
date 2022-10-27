@@ -2,6 +2,7 @@ package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.fx.NodeUtils;
 import com.hyd.fx.concurrency.BackgroundTask;
+import com.hyd.fx.utils.Str;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.fx.Alerts;
@@ -10,9 +11,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import org.apache.commons.lang3.StringUtils;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.params.ScanParams;
+import redis.clients.jedis.resps.ScanResult;
 
 import java.util.Map;
 import java.util.Optional;
@@ -77,7 +77,7 @@ public class HashTabController extends AbstractTabController {
     }
 
     public void showValue() {
-        if (StringUtils.isBlank(txtKey.getText())) {
+        if (Str.isBlank(txtKey.getText())) {
             return;
         }
 
@@ -102,7 +102,7 @@ public class HashTabController extends AbstractTabController {
     }
 
     public void showValueWithPattern(String fieldPattern) {
-        if (StringUtils.isBlank(txtKey.getText())) {
+        if (Str.isBlank(txtKey.getText())) {
             return;
         }
 
@@ -143,11 +143,11 @@ public class HashTabController extends AbstractTabController {
 
     public void addValue() {
 
-        if (StringUtils.isBlank(this.currentKey)) {
+        if (Str.isBlank(this.currentKey)) {
             showValue();
         }
 
-        if (StringUtils.isBlank(this.currentKey)) {
+        if (Str.isBlank(this.currentKey)) {
             Alerts.error("title_op_error", "hash_msg_nokey");
             return;
         }
@@ -188,7 +188,7 @@ public class HashTabController extends AbstractTabController {
         txtHashFieldPattern.selectAll();
         String fieldPattern = txtHashFieldPattern.getText();
 
-        if (StringUtils.isBlank(fieldPattern)) {
+        if (Str.isBlank(fieldPattern)) {
             showValue();
         } else {
             showValueWithPattern(fieldPattern);

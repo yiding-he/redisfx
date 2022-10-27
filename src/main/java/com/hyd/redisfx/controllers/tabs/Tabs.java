@@ -1,8 +1,6 @@
 package com.hyd.redisfx.controllers.tabs;
 
 import javafx.scene.control.TabPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +14,6 @@ import java.util.function.Consumer;
  * @author yidin
  */
 public class Tabs {
-
-    private static final Logger LOG = LoggerFactory.getLogger(Tabs.class);
 
     private static Map<String, AbstractTabController> tabControllerMap = new HashMap<>();
 
@@ -57,9 +53,5 @@ public class Tabs {
                 afterSwitch.accept((T) c);
             }
         });
-
-        if (!tabController.isPresent()) {
-            LOG.error("Tab controller not found for type " + type);
-        }
     }
 }

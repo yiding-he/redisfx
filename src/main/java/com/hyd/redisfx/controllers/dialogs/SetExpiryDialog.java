@@ -25,8 +25,8 @@ public class SetExpiryDialog extends FormDialog {
             I18n.getString("key_lbl_expiry"), 0, Integer.MAX_VALUE);
 
         if (keyItems.size() == 1) {
-            int ttl = JedisManager.usingJedis(jedis -> jedis.ttl(keyItems.get(0).getKey()).intValue());
-            expiryField.setValue(ttl);
+            long ttl = JedisManager.usingJedis(jedis -> jedis.ttl(keyItems.get(0).getKey()));
+            expiryField.setValue((int) ttl);
         }
 
         this.addField(expiryField);

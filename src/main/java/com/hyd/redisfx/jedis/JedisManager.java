@@ -3,8 +3,9 @@ package com.hyd.redisfx.jedis;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.conn.Connection;
 import com.hyd.redisfx.event.EventType;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import redis.clients.jedis.DefaultJedisClientConfig;
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -13,7 +14,7 @@ import java.net.Proxy;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static com.hyd.fx.utils.Str.isNotBlank;
 
 /**
  * @author yiding.he
@@ -133,12 +134,15 @@ public class JedisManager {
     public static JedisPool createJedisPool(
         String host, Integer port, String passphase, Proxy proxy) {
 
-        GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+      var builder = DefaultJedisClientConfig.builder();
+      if (isNotBlank(passphase)) {
+        builder.password(passphase);
+      }
 
-        if (!StringUtils.isBlank(passphase)) {
-            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, passphase, proxy);
-        } else {
-            return new JedisPool(poolConfig, host, port, DEFAULT_TIMEOUT, proxy);
-        }
+      return new JedisPool(
+        new GenericObjectPoolConfig<>(),
+        new ProxiedJedisSocketFactory(proxy, new HostAndPort(host, port)),
+        builder.build()
+      );
     }
 }

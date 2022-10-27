@@ -1,21 +1,19 @@
 package com.hyd.redisfx.controllers.conn;
 
 import com.hyd.fx.components.IntegerSpinner;
+import com.hyd.fx.utils.Str;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.conn.Connection;
 import com.hyd.redisfx.conn.ConnectionManager;
-import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
+import com.hyd.redisfx.jedis.JedisManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Protocol;
 
 import java.net.Proxy;
@@ -24,8 +22,6 @@ import java.net.Proxy;
  * @author yiding_he
  */
 public class ConnectionManagerController extends BaseController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ConnectionManagerController.class);
 
     public static final int DEFAULT_PORT = Protocol.DEFAULT_PORT;
 
@@ -63,11 +59,11 @@ public class ConnectionManagerController extends BaseController {
         initListView();
 
         this.txtHost.textProperty().addListener((_ob, _old, _new) -> {
-            btnSave.setDisable(StringUtils.isBlank(txtHost.getText()));
-            btnTest.setDisable(StringUtils.isBlank(txtHost.getText()));
-            btnCopy.setDisable(StringUtils.isBlank(txtHost.getText()));
-            btnOpen.setDisable(StringUtils.isBlank(txtHost.getText()));
-            btnDelete.setDisable(StringUtils.isBlank(txtHost.getText()));
+            btnSave.setDisable  (Str.isBlank(txtHost.getText()));
+            btnTest.setDisable  (Str.isBlank(txtHost.getText()));
+            btnCopy.setDisable  (Str.isBlank(txtHost.getText()));
+            btnOpen.setDisable  (Str.isBlank(txtHost.getText()));
+            btnDelete.setDisable(Str.isBlank(txtHost.getText()));
         });
 
         this.currentSelectedConnection.addListener((_ob, _old, _new) -> {
@@ -81,8 +77,12 @@ public class ConnectionManagerController extends BaseController {
     }
 
     private void initSpinners() {
-        this.spnPort.setRangeAndValue(1, 65535, DEFAULT_PORT);
-        this.spnProxyPort.setRangeAndValue(0, 65535, 0);
+        this.spnPort.setMin(1);
+        this.spnPort.setMax(65535);
+        this.spnPort.setValue(DEFAULT_PORT);
+        this.spnProxyPort.setMin(0);
+        this.spnProxyPort.setMax(65535);
+        this.spnProxyPort.setValue(0);
     }
 
     private void updateForm(Connection _new) {
@@ -130,7 +130,7 @@ public class ConnectionManagerController extends BaseController {
 
     public void saveClicked() {
 
-        if (StringUtils.isBlank(txtName.getText())) {
+        if (Str.isBlank(txtName.getText())) {
             String name = txtHost.getText() + ":" + spnPort.getValue();
             txtName.setText(name);
         }
@@ -190,7 +190,6 @@ public class ConnectionManagerController extends BaseController {
                 JedisManager.connect(connection);
                 Fx.info("连接成功", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 成功。");
             } catch (Exception e) {
-                LOG.error("", e);
                 Fx.error("连接失败", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
             } finally {
                 btnTest.setDisable(false);
@@ -212,7 +211,6 @@ public class ConnectionManagerController extends BaseController {
             App.getEventBus().post(EventType.ConnectionOpened);
             this.getStage().close();
         } catch (Exception e) {
-            LOG.error("", e);
             Fx.error("连接失败", "连接到 " + connection.getHost() +
                     ":" + connection.getPort() + " 失败：\n\n" + e.toString());
         }

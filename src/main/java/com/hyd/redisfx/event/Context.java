@@ -1,6 +1,6 @@
 package com.hyd.redisfx.event;
 
-import org.apache.commons.lang3.StringUtils;
+import com.hyd.fx.utils.Str;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -166,7 +166,7 @@ public class Context {
     }
 
     public String getString(String key, String def) {
-        if (!this.map.containsKey(key) || StringUtils.isEmpty((String)this.map.get(key))) {
+        if (!this.map.containsKey(key) || Str.isBlank((String)this.map.get(key))) {
             return def;
         } else {
             return (String) this.map.get(key);

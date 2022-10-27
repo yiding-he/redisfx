@@ -1,29 +1,23 @@
 package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.fx.components.IntegerSpinner;
+import com.hyd.fx.utils.Str;
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
+import com.hyd.redisfx.jedis.JedisManager;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import redis.clients.jedis.ListPosition;
 import redis.clients.jedis.Transaction;
+import redis.clients.jedis.args.ListPosition;
 
 import java.util.List;
 import java.util.Objects;
 
 @TabName("List")
 public class ListTabController extends AbstractTabController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ListTabController.class);
 
     public TextField txtKey;
 
@@ -102,7 +96,7 @@ public class ListTabController extends AbstractTabController {
     }
 
     void showList(String key) {
-        if (StringUtils.isBlank(key)) {
+        if (Str.isBlank(key)) {
             return;
         }
 
@@ -154,7 +148,7 @@ public class ListTabController extends AbstractTabController {
     private boolean prepareList() {
         if (currentKey != null) {
             return true;
-        } else if (StringUtils.isNotBlank(txtKey.getText())) {
+        } else if (Str.isNotBlank(txtKey.getText())) {
             showList(txtKey.getText());
             return true;
         } else {
@@ -198,7 +192,6 @@ public class ListTabController extends AbstractTabController {
                 transaction.exec();
             });
         } catch (Exception e) {
-            LOG.error("delete failed", e);
             Fx.error(I18n.getString("title_op_fail"), I18n.getString("list_msg_op_failed"));
         }
 
@@ -244,7 +237,7 @@ public class ListTabController extends AbstractTabController {
         final ListPosition finalPosition = selectedIndex < 0 ? ListPosition.AFTER : position;
 
         String value = getStringByDialog("");
-        if (StringUtils.isBlank(value)) {
+        if (Str.isBlank(value)) {
             return;
         }
 
@@ -265,7 +258,6 @@ public class ListTabController extends AbstractTabController {
                 transaction.exec();
             });
         } catch (Exception e) {
-            LOG.error("insert failed", e);
             Fx.error(I18n.getString("title_op_fail"), I18n.getString("list_msg_op_failed"));
         }
 
@@ -279,7 +271,7 @@ public class ListTabController extends AbstractTabController {
 
     private void appendItem() {
         String value = getStringByDialog("");
-        if (StringUtils.isBlank(value)) {
+        if (Str.isBlank(value)) {
             return;
         }
 
