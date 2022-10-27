@@ -17,7 +17,7 @@ import redis.clients.jedis.ScanResult;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.hyd.redisfx.controllers.client.JedisManager.withJedis;
+import static com.hyd.redisfx.jedis.JedisManager.withJedis;
 
 @TabName("Hash")
 public class HashTabController extends AbstractTabController {
@@ -133,9 +133,9 @@ public class HashTabController extends AbstractTabController {
 
             do {
                 scanResult = jedis.hscan(key, cursor, scanParams);
-                scanResult.getResult().forEach(entry -> {
-                    items.add(new HashItem(entry.getKey(), entry.getValue()));
-                });
+                scanResult.getResult().forEach(
+                    entry -> items.add(new HashItem(entry.getKey(), entry.getValue()))
+                );
                 cursor = scanResult.getCursor();
             } while (!scanResult.isCompleteIteration());
         });

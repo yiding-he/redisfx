@@ -1,0 +1,4 @@
+org.kordamp.ikonli.IkonliIkonResolver
+org.kordamp.ikonli.ionicons4.Ionicons4IOSIkonHandler
+org.kordamp.ikonli.ionicons4.Ionicons4LogoIkonHandler
+org.kordamp.ikonli.ionicons4.Ionicons4MaterialIkonHandler

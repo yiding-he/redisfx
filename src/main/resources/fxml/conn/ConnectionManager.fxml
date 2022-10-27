@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.hyd.redisfx.nodes.IntegerSpinner?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.hyd.fx.components.IntegerSpinner?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="com.hyd.redisfx.controllers.conn.ConnectionManagerController">
+
   <center>
     <VBox spacing="10">
       <padding>
@@ -56,7 +51,7 @@
             <Label text="%dlg_conn_lbl_host"/>
             <TextField fx:id="txtHost" HBox.hgrow="ALWAYS"/>
             <Label text="%dlg_conn_lbl_port"/>
-            <IntegerSpinner fx:id="spnPort" prefWidth="80"/>
+            <IntegerSpinner fx:id="spnPort" prefWidth="80" editable="true"/>
           </HBox>
           <HBox alignment="BASELINE_LEFT" spacing="10">
             <Label text="%dlg_conn_lbl_pass"/>
@@ -66,7 +61,7 @@
             <Label text="%dlg_conn_lbl_proxy_host"/>
             <TextField fx:id="txtProxyHost" HBox.hgrow="ALWAYS"/>
             <Label text="%dlg_conn_lbl_proxy_port"/>
-            <IntegerSpinner fx:id="spnProxyPort" prefWidth="80"/>
+            <IntegerSpinner fx:id="spnProxyPort" prefWidth="80" editable="true"/>
           </HBox>
           <HBox alignment="BASELINE_LEFT" spacing="10">
             <Button fx:id="btnTest" disable="true" onAction="#testClicked" text="%op_test">

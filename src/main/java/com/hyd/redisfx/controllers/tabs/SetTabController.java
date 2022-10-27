@@ -1,19 +1,24 @@
 package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
-import java.util.Objects;
-import java.util.Set;
+import com.hyd.redisfx.jedis.JedisScanner;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.ScanParams;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @TabName("Set")
 public class SetTabController extends AbstractTabController {
@@ -25,6 +30,10 @@ public class SetTabController extends AbstractTabController {
     public ListView<String> lstValues;
 
     public Label lblMessage;
+
+    public Spinner<Integer> spnFromIndex;
+
+    public Spinner<Integer> spnToIndex;
 
     private String currentKey;           // key of currently displayed list
 
@@ -52,16 +61,18 @@ public class SetTabController extends AbstractTabController {
     }
 
     public void listValues() {
-        String key = txtKey.getText();
-        showSet(key);
+        showSet(txtKey.getText());
     }
 
     void showSet(String key) {
+        showSet(key, spnFromIndex.getValue(), spnToIndex.getValue());
+    }
+
+    void showSet(String key, int from, int to) {
         if (StringUtils.isBlank(key)) {
             return;
         }
 
-        int selectedIndex = lstValues.getSelectionModel().getSelectedIndex();
         currentKey = key;
 
         JedisManager.withJedis(jedis -> {
@@ -75,14 +86,13 @@ public class SetTabController extends AbstractTabController {
             Long length = jedis.scard(key);
             lblMessage.setText(I18n.getString("list_lbl_length") + length);
 
-            Set<String> values = jedis.smembers(key);
+            List<String> values = JedisScanner.scan(
+                cursor -> jedis.sscan(key, cursor),
+                from, to
+            );
+
             lstValues.getItems().clear();
             lstValues.getItems().addAll(values);
-
-            // restore selection
-            if (selectedIndex != -1) {
-                lstValues.getSelectionModel().select(selectedIndex);
-            }
 
             // 在界面上回填 key
             this.txtKey.setText(key);

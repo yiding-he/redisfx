@@ -2,7 +2,7 @@ package com.hyd.redisfx;
 
 import com.hyd.redisfx.conn.ConnectionManager;
 import com.hyd.redisfx.controllers.MainController;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.event.EventBus;
 import com.hyd.redisfx.event.EventType;
 

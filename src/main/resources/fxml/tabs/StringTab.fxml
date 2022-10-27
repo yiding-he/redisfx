@@ -1,7 +1,7 @@
-<?import com.hyd.redisfx.nodes.DoubleSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import com.hyd.fx.components.DoubleSpinner?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.StringTabController" xmlns:fx="javafx">
     <VBox spacing="10">

@@ -2,16 +2,17 @@ package com.hyd.redisfx.controllers.tabs;
 
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.HashPropertyDialog;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.fx.Alerts;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * (description)

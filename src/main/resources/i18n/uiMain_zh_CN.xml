@@ -74,7 +74,6 @@
   <entry key="op_test">测试...</entry>
 
   <!-- Key Tab -->
-  <entry key="key_open_entry">打开</entry>
   <entry key="key_set_expiry">设置超时时间...</entry>
   <entry key="key_set_expiry_title">设置超时时间</entry>
   <entry key="key_lbl_expiry">超时时间（秒，0 表示不超时）</entry>

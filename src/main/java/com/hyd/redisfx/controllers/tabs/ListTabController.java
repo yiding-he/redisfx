@@ -1,10 +1,10 @@
 package com.hyd.redisfx.controllers.tabs;
 
+import com.hyd.fx.components.IntegerSpinner;
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.EditStringValueDialog;
 import com.hyd.redisfx.i18n.I18n;
-import com.hyd.redisfx.nodes.IntegerSpinner;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -27,9 +27,9 @@ public class ListTabController extends AbstractTabController {
 
     public TextField txtKey;
 
-    public Spinner<Integer> spnFromIndex;
+    public IntegerSpinner spnFromIndex;
 
-    public Spinner<Integer> spnToIndex;
+    public IntegerSpinner spnToIndex;
 
     public ListView<String> lstValues;
 
@@ -45,15 +45,6 @@ public class ListTabController extends AbstractTabController {
 
     public void initialize() {
         super.initialize();
-
-        //////////////////////////////////////////////////////////////
-
-        spnFromIndex.setValueFactory(new IntegerSpinnerValueFactory(0, Integer.MAX_VALUE, 0));
-        spnToIndex.setValueFactory(new IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE, 100));
-
-        Fx.fixIntegerSpinners(spnFromIndex, spnToIndex);
-
-        //////////////////////////////////////////////////////////////
 
         Fx.nodeOnKeyPress(txtKey, Fx.ENTER, this::listValues);
 
@@ -138,9 +129,9 @@ public class ListTabController extends AbstractTabController {
 
             Long length = jedis.llen(key);
             lblMessage.setText(
-                I18n.getString("list_lbl_length") + length +
-                    I18n.getString("list_lbl_display") + from +
-                    I18n.getString("lbl_to") + to);
+                    I18n.getString("list_lbl_length") + length +
+                            I18n.getString("list_lbl_display") + from +
+                            I18n.getString("lbl_to") + to);
 
             List<String> values = jedis.lrange(key, from, to);
             lstValues.getItems().clear();
@@ -159,6 +150,7 @@ public class ListTabController extends AbstractTabController {
     }
 
     // return true if a list is displaying
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean prepareList() {
         if (currentKey != null) {
             return true;

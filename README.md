@@ -1,14 +1,8 @@
 # redisfx
 
-_[deprecated]项目已经移到[jfapps](https://github.com/yiding-he/jfapps/tree/master/jfapps-apps/redis-client)_
-
 （项目功能并未全部完成）
 
 基于 JavaFX 的 Redis 客户端。
-
-下载源码编译之前，请先执行 lib 目录下的 install.cmd (Windows) 或 install.sh (Linux)
-
-Logo from [icons8.com](https://icons8.com/). Very much appreciated.
 
 截图：
 

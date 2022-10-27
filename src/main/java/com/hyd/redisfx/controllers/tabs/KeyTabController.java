@@ -4,10 +4,9 @@ import com.hyd.fx.NodeUtils;
 import com.hyd.fx.concurrency.BackgroundTask;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.controllers.dialogs.SetExpiryDialog;
 import com.hyd.redisfx.event.EventType;
-import com.hyd.redisfx.fx.BackgroundExecutor;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -28,10 +27,8 @@ import redis.clients.jedis.ScanResult;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -66,7 +63,6 @@ public class KeyTabController extends AbstractTabController {
 
     private boolean searchCancelled;
 
-
     @Override
     public void initialize() {
         super.initialize();
@@ -83,27 +79,6 @@ public class KeyTabController extends AbstractTabController {
         this.tblKeys.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tblKeys.setOnMouseClicked(this::tableMouseClicked);
 
-        this.tblKeys.setRowFactory(tv -> new TableRow<KeyItem>() {
-            @Override
-            protected void updateItem(KeyItem item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null || item.getType() != null) {
-                    return;
-                }
-                BackgroundExecutor.execute(() -> {
-                    try (Jedis jedis = JedisManager.getJedis()) {
-                        String key = item.getKey();
-                        String type = jedis.type(key);
-                        int length = getLength(key, type, jedis);
-                        String expireAt = getExpireAt(key, jedis);
-                        item.setType(type);
-                        item.setLength(length);
-                        item.setExpireAt(expireAt);
-                    }
-                });
-            }
-        });
-
         this.tblKeys.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.C && event.isControlDown()) {  // Ctrl+C
                 mnuCopyKey();
@@ -115,9 +90,7 @@ public class KeyTabController extends AbstractTabController {
         this.txtKeyPattern.setOnAction(event -> this.listKeys());
 
         Fx.nodeOnKeyPress(this.tblKeys, Fx.CTRL_C, this::mnuCopyKey);
-        App.getEventBus().on(EventType.DatabaseChanged, event -> reset());
-
-        // 连接到新数据库时刷新一下 key 列表，以免旧的 key 列表对用户产生误导
+        App.getEventBus().on(EventType.DatabaseChanged, event -> listKeys());
         App.getEventBus().on(EventType.ConnectionOpened, event -> listKeys());
     }
 
@@ -197,13 +170,13 @@ public class KeyTabController extends AbstractTabController {
     }
 
     private void runSearch(String pattern, int limit, ObservableList<KeyItem> items) {
-
-        // 扫描过程中一个 key 可能返回多次，因此需要排除重复结果
-        Set<String> keySet = new HashSet<>();
-
         try (Jedis jedis = JedisManager.getJedis()) {
+            if (jedis == null) {
+                return;
+            }
+
             String cursor = ScanParams.SCAN_POINTER_START;
-            ScanParams scanParams = new ScanParams().match(pattern).count(limit);
+            ScanParams scanParams = new ScanParams().match(pattern).count(200);
             ScanResult<String> result;
             do {
                 if (searchCancelled) {
@@ -214,10 +187,11 @@ public class KeyTabController extends AbstractTabController {
                 cursor = result.getCursor();
 
                 for (String key : result.getResult()) {
-                    if (!keySet.add(key)) {
-                        continue;
-                    }
-                    items.add(new KeyItem(key));
+                    String type = jedis.type(key);
+                    int length = getLength(key, type, jedis);
+                    String expireAt = getExpireAt(key, jedis);
+                    items.add(new KeyItem(key, type, length, expireAt));
+
                     if (searchCancelled) {
                         break;
                     }
@@ -295,10 +269,6 @@ public class KeyTabController extends AbstractTabController {
         );
     }
 
-    public void mnuOpenEntry() {
-        tableItemDoubleClicked();
-    }
-
     public void cancelSearch() {
         this.searchCancelled = true;
     }
@@ -316,10 +286,6 @@ public class KeyTabController extends AbstractTabController {
         private StringProperty expireAt = new SimpleStringProperty();
 
         public KeyItem() {
-        }
-
-        public KeyItem(String key) {
-            setKey(key);
         }
 
         public KeyItem(String key, String type, int length, String expireAt) {

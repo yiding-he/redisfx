@@ -1,6 +1,6 @@
 package com.hyd.redisfx.controllers.dialogs;
 
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.fx.FormDialog;
 import com.hyd.redisfx.fx.IntegerSpinnerFormField;
 import com.hyd.redisfx.i18n.I18n;

@@ -1,14 +1,7 @@
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
         <VBox spacing="10">
@@ -20,7 +13,11 @@
             <HBox spacing="10" alignment="BASELINE_LEFT">
                 <Label text="Key:"/>
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-                <Button onAction="#showValue" text="打开" styleClass="iconButton"/>
+                <Button onAction="#showValue" styleClass="iconButton">
+                  <graphic>
+                    <FontAwesomeIconView glyphName="SEARCH" glyphSize="14"/>
+                  </graphic>
+                </Button>
             </HBox>
 
             <TableView fx:id="tblHashValues" VBox.vgrow="ALWAYS" style="-fx-font-family: monospace">

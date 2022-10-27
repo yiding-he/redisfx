@@ -1,24 +1,24 @@
 package com.hyd.redisfx.controllers.conn;
 
+import com.hyd.fx.components.IntegerSpinner;
 import com.hyd.redisfx.App;
 import com.hyd.redisfx.Fx;
 import com.hyd.redisfx.conn.Connection;
 import com.hyd.redisfx.conn.ConnectionManager;
-import com.hyd.redisfx.controllers.client.JedisManager;
+import com.hyd.redisfx.jedis.JedisManager;
 import com.hyd.redisfx.event.EventType;
 import com.hyd.redisfx.i18n.I18n;
-import com.hyd.redisfx.nodes.IntegerSpinner;
-import java.net.Proxy;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Protocol;
+
+import java.net.Proxy;
 
 /**
  * @author yiding_he
@@ -97,7 +97,7 @@ public class ConnectionManagerController extends BaseController {
     private void initListView() {
         this.lstConnections.setItems(ConnectionManager.connectionsProperty());
         this.lstConnections.getSelectionModel().selectedItemProperty()
-            .addListener((_ob, _old, _new) -> this.currentSelectedConnection.set(_new));
+                .addListener((_ob, _old, _new) -> this.currentSelectedConnection.set(_new));
 
         this.lstConnections.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -109,11 +109,7 @@ public class ConnectionManagerController extends BaseController {
     }
 
     public void closeClicked() {
-        closeStage();
-    }
-
-    private void closeStage() {
-        ((Stage) this.lstConnections.getScene().getWindow()).close();
+        this.getStage().close();
     }
 
     public void createClicked() {
@@ -140,7 +136,7 @@ public class ConnectionManagerController extends BaseController {
         }
 
         Connection connection = this.currentSelectedConnection.get() != null ?
-            this.currentSelectedConnection.get() : new Connection();
+                this.currentSelectedConnection.get() : new Connection();
 
         updateConnectionFromUI(connection);
 
@@ -195,8 +191,7 @@ public class ConnectionManagerController extends BaseController {
                 Fx.info("连接成功", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 成功。");
             } catch (Exception e) {
                 LOG.error("", e);
-                Fx.error("连接失败",
-                    "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
+                Fx.error("连接失败", "连接到 " + connection.getHost() + ":" + connection.getPort() + " 失败：\n\n" + e.toString());
             } finally {
                 btnTest.setDisable(false);
             }
@@ -215,11 +210,11 @@ public class ConnectionManagerController extends BaseController {
         try {
             JedisManager.connect(connection);
             App.getEventBus().post(EventType.ConnectionOpened);
-            closeStage();
+            this.getStage().close();
         } catch (Exception e) {
             LOG.error("", e);
             Fx.error("连接失败", "连接到 " + connection.getHost() +
-                ":" + connection.getPort() + " 失败：\n\n" + e.toString());
+                    ":" + connection.getPort() + " 失败：\n\n" + e.toString());
         }
     }
 }

@@ -1,13 +1,12 @@
 package com.hyd.redisfx.fx;
 
-import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
-import static javafx.scene.control.Alert.AlertType.WARNING;
-
 import com.hyd.fx.dialog.AlertDialog;
 import com.hyd.redisfx.i18n.I18n;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+
+import static javafx.scene.control.Alert.AlertType.*;
 
 /**
  * (description)

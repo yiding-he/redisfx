@@ -1,13 +1,8 @@
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.hyd.fx.components.IntegerSpinner?>
 <BorderPane xmlns:fx="javafx"
             fx:controller="com.hyd.redisfx.controllers.tabs.SetTabController">
   <center>
@@ -20,7 +15,15 @@
       <HBox alignment="BASELINE_LEFT" spacing="10">
         <Label text="Key:"/>
         <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
-        <Button onAction="#listValues" text="打开" styleClass="iconButton"/>
+        <Label text="%list_lbl_from"/>
+        <IntegerSpinner fx:id="spnFromIndex" prefWidth="80" editable="true" min="0" initialValue="0"/>
+        <Label text="%list_lbl_to"/>
+        <IntegerSpinner fx:id="spnToIndex" prefWidth="80" editable="true" min="0" initialValue="100"/>
+        <Button onAction="#listValues" styleClass="iconButton">
+          <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" glyphSize="14"/>
+          </graphic>
+        </Button>
       </HBox>
 
       <Label fx:id="lblMessage" text="%word_value"/>
