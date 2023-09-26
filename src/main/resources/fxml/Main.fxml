@@ -1,7 +1,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import java.net.URL?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <BorderPane fx:controller="com.hyd.redisfx.controllers.MainController" xmlns:fx="javafx">
 
     <stylesheets>
@@ -11,18 +10,10 @@
     <top>
         <MenuBar>
             <Menu text="%mnu_connections">
-                <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager">
-                  <graphic>
-                    <FontAwesomeIconView glyphName="FILE" glyphSize="16"/>
-                  </graphic>
-                </MenuItem>
+                <MenuItem text="%mnu_connections_choose" onAction="#openConnectionManager" />
             </Menu>
             <Menu text="%mnu_databases">
-                <Menu text="%mnu_change_database" fx:id="mnuCurrentDatabase">
-                  <graphic>
-                    <FontAwesomeIconView glyphName="DATABASE" glyphSize="16"/>
-                  </graphic>
-                </Menu>
+                <Menu text="%mnu_change_database" fx:id="mnuCurrentDatabase"/>
                 <MenuItem text="%mnu_switch_database" onAction="#switchDatabaseClicked" disable="true"/>
                 <SeparatorMenuItem/>
                 <MenuItem text="%mnu_clear_database" onAction="#clearDatabaseClicked" disable="true"/>

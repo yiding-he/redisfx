@@ -2,7 +2,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import com.hyd.fx.components.IntegerSpinner?>
 <SplitPane orientation="VERTICAL" dividerPositions="0.7"
            fx:controller="com.hyd.redisfx.controllers.tabs.ListTabController" xmlns:fx="javafx">
@@ -20,9 +19,6 @@
             <Label text="%list_lbl_to"/>
             <IntegerSpinner fx:id="spnToIndex" prefWidth="80" editable="true" min="0" initialValue="100"/>
             <Button onAction="#listValues" styleClass="iconButton">
-              <graphic>
-                <FontAwesomeIconView glyphName="SEARCH" glyphSize="14"/>
-              </graphic>
             </Button>
         </HBox>
 

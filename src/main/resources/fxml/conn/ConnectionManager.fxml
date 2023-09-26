@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -24,21 +23,12 @@
           <HBox alignment="BASELINE_LEFT" spacing="10">
             <Button fx:id="btnCreate" minWidth="-Infinity"
                     onAction="#createClicked" text="%op_create">
-              <graphic>
-                <FontAwesomeIconView glyphName="PLUS_CIRCLE" glyphSize="16"/>
-              </graphic>
             </Button>
             <Button fx:id="btnCopy" disable="true"
                     minWidth="-Infinity" onAction="#copyClicked" text="%op_copy">
-              <graphic>
-                <FontAwesomeIconView glyphName="COPY" glyphSize="16"/>
-              </graphic>
             </Button>
             <Button fx:id="btnDelete" disable="true"
                     minWidth="-Infinity" onAction="#deleteClicked" text="%op_delete">
-              <graphic>
-                <FontAwesomeIconView glyphName="TRASH_ALT" glyphSize="16"/>
-              </graphic>
             </Button>
           </HBox>
         </VBox>
@@ -65,14 +55,8 @@
           </HBox>
           <HBox alignment="BASELINE_LEFT" spacing="10">
             <Button fx:id="btnTest" disable="true" onAction="#testClicked" text="%op_test">
-              <graphic>
-                <FontAwesomeIconView glyphName="EYE" glyphSize="16"/>
-              </graphic>
             </Button>
             <Button fx:id="btnSave" disable="true" onAction="#saveClicked" text="%op_save">
-              <graphic>
-                <FontAwesomeIconView glyphName="SAVE" glyphSize="16"/>
-              </graphic>
             </Button>
           </HBox>
         </VBox>
@@ -88,14 +72,8 @@
         </padding>
 
         <Button fx:id="btnOpen" disable="true" onAction="#openConnectionClicked" text="%op_open_conn">
-          <graphic>
-            <FontAwesomeIconView glyphName="DATABASE" glyphSize="16"/>
-          </graphic>
         </Button>
         <Button onAction="#closeClicked" text="%op_close">
-          <graphic>
-            <FontAwesomeIconView glyphName="MINUS_CIRCLE" glyphSize="16"/>
-          </graphic>
         </Button>
       </HBox>
     </VBox>

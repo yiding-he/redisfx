@@ -1,7 +1,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <BorderPane xmlns:fx="javafx" fx:controller="com.hyd.redisfx.controllers.tabs.HashTabController">
     <center>
         <VBox spacing="10">
@@ -14,9 +13,6 @@
                 <Label text="Key:"/>
                 <TextField fx:id="txtKey" HBox.hgrow="ALWAYS"/>
                 <Button onAction="#showValue" styleClass="iconButton">
-                  <graphic>
-                    <FontAwesomeIconView glyphName="SEARCH" glyphSize="14"/>
-                  </graphic>
                 </Button>
             </HBox>
 

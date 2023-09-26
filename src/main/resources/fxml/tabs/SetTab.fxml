@@ -1,7 +1,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import com.hyd.fx.components.IntegerSpinner?>
 <BorderPane xmlns:fx="javafx"
             fx:controller="com.hyd.redisfx.controllers.tabs.SetTabController">
@@ -20,9 +19,6 @@
         <Label text="%list_lbl_to"/>
         <IntegerSpinner fx:id="spnToIndex" prefWidth="80" editable="true" min="0" initialValue="100"/>
         <Button onAction="#listValues" styleClass="iconButton">
-          <graphic>
-            <FontAwesomeIconView glyphName="SEARCH" glyphSize="14"/>
-          </graphic>
         </Button>
       </HBox>
 
